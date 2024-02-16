@@ -1,4 +1,5 @@
 "use client";
+import styles from "./LanguageSelector.module.css";
 interface LanguageSelectorProps {
   languages: { value: string; label: string }[];
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -6,7 +7,9 @@ interface LanguageSelectorProps {
 
 function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
   return (
-    <select onChange={onChange}>
+    <select onChange={onChange}
+    className={styles.languageSelector}
+    >
       {languages.map(({ value, label }) => (
         <option key={value} value={value}>
           {label}

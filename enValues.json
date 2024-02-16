@@ -5,5 +5,11 @@
     "emailLabel": "Username",
     "passwordLabel": "Password",
     "forgotPassword": "Forgot your Password?"
+  },
+
+  "dashboard": {
+    "header": "Dashboard",
+    "welcome": "Welcome",
+    "logout": "Log Out"
   }
 }

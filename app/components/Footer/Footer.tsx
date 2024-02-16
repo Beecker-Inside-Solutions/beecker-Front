@@ -3,6 +3,7 @@ import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import { ChangeEvent } from "react";
 import { FooterProps } from "@/app/interfaces/FooterProps";
 import { languages } from "@/Constants";
+import styles from "./Footer.module.css";
 
 export default function Footer({ updateLanguage }: FooterProps) {
   // Handler for language change
@@ -12,7 +13,9 @@ export default function Footer({ updateLanguage }: FooterProps) {
   };
 
   return (
-    <footer>
+    <footer
+      className={styles.footer}
+    >
       <LanguageSelector languages={languages} onChange={handleChange} />
     </footer>
   );

@@ -12,11 +12,13 @@ export default function Home() {
   const [language, setLanguage] = useState("en"); // Default language is English
 
   useEffect(() => {
-    // Update language values based on the selected language
-    const values = language === "es" ? esValues : enValues;
-    setLanguageValues(values);
-  }, [language]);
-  
+    const values = language === "es" ? { ...esValues } : { ...enValues };
+    setLanguageValues(prevValues => ({
+        ...prevValues,
+        ...values
+    }));
+}, [language]);
+
   const [languageValues, setLanguageValues] = useState(enValues);
 
   console.log("languageValues: ", languageValues);
