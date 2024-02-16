@@ -7,21 +7,13 @@ import enValues from "@/enValues.json";
 import Link from "next/link";
 import logo from "../app/images/logos/logo.png";
 import Footer from "./components/Footer/Footer";
-
+import useMultilingualValues from "./hooks/useMultilingualValues";
 export default function Home() {
-  const [language, setLanguage] = useState("en"); // Default language is English
-
-  useEffect(() => {
-    const values = language === "es" ? { ...esValues } : { ...enValues };
-    setLanguageValues(prevValues => ({
-        ...prevValues,
-        ...values
-    }));
-}, [language]);
-
-  const [languageValues, setLanguageValues] = useState(enValues);
-
-  console.log("languageValues: ", languageValues);
+  const { language, setLanguage, languageValues } = useMultilingualValues(
+    "en",
+    esValues,
+    enValues
+  );
 
   useEffect(() => {
     console.log("Language changed to: ", language);
