@@ -1,21 +1,41 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 import esValues from "@/esValues.json";
 import enValues from "@/enValues.json";
 import Link from "next/link";
+import logo from "../app/images/logos/logo.png";
+import Footer from "./components/Footer/Footer";
 
 export default function Home() {
   const [language, setLanguage] = useState("en"); // Default language is English
 
-  // Choose the language values based on the selected language
-  const languageValues = language === "es" ? esValues : enValues;
+  useEffect(() => {
+    // Update language values based on the selected language
+    const values = language === "es" ? esValues : enValues;
+    setLanguageValues(values);
+  }, [language]);
+  
+  const [languageValues, setLanguageValues] = useState(enValues);
+
+  console.log("languageValues: ", languageValues);
+
+  useEffect(() => {
+    console.log("Language changed to: ", language);
+  }, [language]);
 
   return (
     <>
       <main className={styles.main}>
         <div className={styles.container}>
+          <Image
+            src={logo}
+            alt="logo"
+            width={200}
+            height={200}
+            className={styles.logo}
+          />
           <form className={styles.form}>
             <h1 className={styles.title}>
               {languageValues.loginPage.loginHeader}
@@ -42,12 +62,8 @@ export default function Home() {
             </div>
           </form>
         </div>
-        <div>
-          <button onClick={() => setLanguage(language === "en" ? "es" : "en")}>
-            {language === "en" ? "Switch to Spanish" : "Switch to English"}
-          </button>
-        </div>
       </main>
+      <Footer updateLanguage={setLanguage} />
     </>
   );
 }
