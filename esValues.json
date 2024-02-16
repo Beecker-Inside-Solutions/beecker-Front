@@ -1,0 +1,9 @@
+{
+  "loginPage": {
+    "loginHeader": "Bienvenido",
+    "loginButton": "Iniciar sesión",
+    "emailLabel": "Usuario",
+    "passwordLabel": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?"
+  }
+}
