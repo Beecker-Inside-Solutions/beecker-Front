@@ -1,5 +1,4 @@
 import Swal, { SweetAlertIcon } from "sweetalert2";
-
 import { AlertOptions } from "../interfaces/IAlertOptions";
 
 const defaultOptions = {
@@ -21,7 +20,14 @@ export const showSuccessAlert = (
   text: string,
   func?: () => void
 ) => {
-  showAlert({ title, text, type: "success", confirmButtonText: "OK", func });
+  showAlert({
+    title,
+    text,
+    type: "success", // Add the missing 'type' property
+    icon: "success",
+    confirmButtonText: "OK",
+    func,
+  });
 };
 
 export const showErrorAlert = (
@@ -29,7 +35,14 @@ export const showErrorAlert = (
   text: string,
   func?: () => void
 ) => {
-  showAlert({ title, text, type: "error", confirmButtonText: "OK", func });
+  showAlert({
+    title,
+    text,
+    type: "error", // Add the missing 'type' property
+    icon: "error",
+    confirmButtonText: "OK",
+    func,
+  });
 };
 
 export const showInfoAlert = (
@@ -37,7 +50,14 @@ export const showInfoAlert = (
   text: string,
   func?: () => void
 ) => {
-  showAlert({ title, text, type: "info", confirmButtonText: "OK", func });
+  showAlert({
+    title,
+    text,
+    type: "info", // Add the missing 'type' property
+    icon: "info",
+    confirmButtonText: "OK",
+    func,
+  });
 };
 
 export const showWarningAlert = (
@@ -45,7 +65,14 @@ export const showWarningAlert = (
   text: string,
   func?: () => void
 ) => {
-  showAlert({ title, text, type: "warning", confirmButtonText: "OK", func });
+  showAlert({
+    title,
+    text,
+    type: "warning", // Add the missing 'type' property
+    icon: "warning",
+    confirmButtonText: "OK",
+    func,
+  });
 };
 
 export const showConfirmAlert = (
@@ -54,7 +81,14 @@ export const showConfirmAlert = (
   confirmButtonText: string,
   func: () => void
 ) => {
-  showAlert({ title, text, type: "warning", confirmButtonText, func });
+  showAlert({
+    title,
+    text,
+    type: "warning", // Add the missing 'type' property
+    icon: "warning",
+    confirmButtonText,
+    func,
+  });
 };
 
 export const showCustomAlert = (options: AlertOptions) => {
