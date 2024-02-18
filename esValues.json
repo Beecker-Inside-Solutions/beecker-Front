@@ -1,9 +1,27 @@
 {
+  "alerts": {
+    "warningAlertTitle": "Advertencia",
+    "errorAlertTitle": "Error",
+    "successAlertTitle": "Éxito",
+    "infoAlertTitle": "Info",
+    "loginFailed": "Inicio de sesión fallido. Por favor, inténtelo de nuevo.",
+    "loginSuccess": "Inicio de sesión exitoso.",
+    "logoutSuccess": "Cierre de sesión exitoso.",
+    "logoutFailed": "Cierre de sesión fallido. Por favor, inténtelo de nuevo.",
+    "forgotPassword": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña."
+  },
+
   "loginPage": {
     "loginHeader": "Bienvenido",
     "loginButton": "Iniciar sesión",
     "emailLabel": "Usuario",
     "passwordLabel": "Contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?"
+  },
+
+  "dashboard": {
+    "header": "Dashboard",
+    "welcome": "Welcome",
+    "logout": "Log Out"
   }
 }

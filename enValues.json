@@ -1,4 +1,16 @@
 {
+  "alerts": {
+    "warningAlertTitle": "Warning",
+    "errorAlertTitle": "Error",
+    "successAlertTitle": "Success",
+    "infoAlertTitle": "Info",
+    "loginFailed": "Login failed. Please try again.",
+    "loginSuccess": "Login successful.",
+    "logoutSuccess": "Logout successful.",
+    "logoutFailed": "Logout failed. Please try again.",
+    "forgotPassword": "Please contact your administrator to reset your password."
+  },
+
   "loginPage": {
     "loginHeader": "Welcome",
     "loginButton": "Log In",

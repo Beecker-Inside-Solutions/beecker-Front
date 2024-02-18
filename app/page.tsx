@@ -8,6 +8,12 @@ import Link from "next/link";
 import logo from "../app/images/logos/logo.png";
 import Footer from "./components/Footer/Footer";
 import useMultilingualValues from "./hooks/useMultilingualValues";
+import {
+  showSuccessAlert,
+  showWarningAlert,
+  showErrorAlert,
+} from "./lib/AlertUtils";
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -15,9 +21,31 @@ export default function Home() {
     enValues
   );
 
-  useEffect(() => {
-    console.log("Language changed to: ", language);
-  }, [language]);
+  const [usernameLogin, setUsernameLogin] = useState("");
+  const [passwordLogin, setPasswordLogin] = useState("");
+
+  const handleUsernameLogin = (e: any) => {
+    setUsernameLogin(e.target.value);
+  };
+
+  const handlePasswordLogin = (e: any) => {
+    setPasswordLogin(e.target.value);
+  };
+
+  const handleSubmitLogin = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (usernameLogin === "" || passwordLogin === "") {
+      showWarningAlert(
+        languageValues.alerts.warningAlertTitle,
+        languageValues.alerts.loginFailed
+      );
+    } else {
+      showSuccessAlert(
+        languageValues.loginPage.successAlertTitle,
+        languageValues.loginPage.successAlertText
+      );
+    }
+  };
 
   return (
     <>
@@ -26,8 +54,8 @@ export default function Home() {
           <Image
             src={logo}
             alt="logo"
-            width={200}
-            height={200}
+            width={300}
+            height={300}
             className={styles.logo}
           />
           <form className={styles.form}>
@@ -46,7 +74,11 @@ export default function Home() {
               </label>
               <input type="password" id="password" name="password" />
             </div>
-            <button type="submit" className={styles.button}>
+            <button
+              type="submit"
+              className={styles.button}
+              onClick={handleSubmitLogin}
+            >
               {languageValues.loginPage.loginButton}
             </button>
             <div className={styles.forgotPassword}>
