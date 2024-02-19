@@ -7,12 +7,14 @@ import enValues from "@/enValues.json";
 import Link from "next/link";
 import logo from "../app/images/logos/logo.png";
 import Footer from "./components/Footer/Footer";
+import InputContainer from "./components/InputContainer/InputContainer";
 import useMultilingualValues from "./hooks/useMultilingualValues";
 import {
   showSuccessAlert,
   showWarningAlert,
   showErrorAlert,
 } from "./lib/AlertUtils";
+import { apiURL } from "@/Constants";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -40,10 +42,36 @@ export default function Home() {
         languageValues.alerts.loginFailed
       );
     } else {
-      showSuccessAlert(
-        languageValues.loginPage.successAlertTitle,
-        languageValues.loginPage.successAlertText
-      );
+      const loginData = {
+        username: usernameLogin,
+        password: passwordLogin,
+      };
+      const requestData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      };
+
+      fetch(`${apiURL}/login`, requestData)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showSuccessAlert(
+              languageValues.alerts.successAlertTitle,
+              languageValues.alerts.loginSuccess
+            );
+          } else {
+            showWarningAlert(
+              languageValues.alerts.warningAlertTitle,
+              languageValues.alerts.loginFailed
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
   };
 
@@ -62,18 +90,20 @@ export default function Home() {
             <h1 className={styles.title}>
               {languageValues.loginPage.loginHeader}
             </h1>
-            <div className={styles.inputContainer}>
-              <label htmlFor="email">
-                {languageValues.loginPage.emailLabel}
-              </label>
-              <input type="email" id="email" name="email" />
-            </div>
-            <div className={styles.inputContainer}>
-              <label htmlFor="password">
-                {languageValues.loginPage.passwordLabel}
-              </label>
-              <input type="password" id="password" name="password" />
-            </div>
+            <InputContainer
+              label={languageValues.loginPage.emailLabel}
+              type="email"
+              id="email"
+              name="email"
+              onChange={handleUsernameLogin}
+            />
+            <InputContainer
+              label={languageValues.loginPage.passwordLabel}
+              type="password"
+              id="password"
+              name="password"
+              onChange={handlePasswordLogin}
+            />
             <button
               type="submit"
               className={styles.button}

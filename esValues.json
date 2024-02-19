@@ -19,6 +19,13 @@
     "forgotPassword": "¿Olvidaste tu contraseña?"
   },
 
+  "recoveryPage": {
+    "recoveryHeader": "Recuperar contraseña",
+    "recoveryButton": "Enviar",
+    "emailLabel": "Correo electrónico",
+    "backToLogin": "Correo enviado. Regresando al inicio de sesión."
+  },
+
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Welcome",
