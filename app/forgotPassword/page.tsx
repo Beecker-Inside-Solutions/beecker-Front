@@ -8,6 +8,8 @@ import esValues from "@/esValues.json";
 import enValues from "@/enValues.json";
 import InputContainer from "../components/InputContainer/InputContainer";
 import Footer from "../components/Footer/Footer";
+import Link from "next/link";
+import { routes } from "@/Constants";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -54,8 +56,11 @@ export default function Home() {
             <button className={styles.button} onClick={handleSubmitRecovery}>
               {languageValues.recoveryPage.recoveryButton}
             </button>
-            {recoverySent && <p>{languageValues.recoveryPage.backToLogin}</p>}
+            {recoverySent && <p>{languageValues.recoveryPage.emailSent}</p>}
           </form>
+          <Link href={routes.home} className={styles.backToLogin}>
+            {languageValues.recoveryPage.backToLogin}
+          </Link>
         </div>
       </main>
       <Footer updateLanguage={setLanguage} />

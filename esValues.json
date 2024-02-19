@@ -23,7 +23,8 @@
     "recoveryHeader": "Recuperar contraseña",
     "recoveryButton": "Enviar",
     "emailLabel": "Correo electrónico",
-    "backToLogin": "Correo enviado. Regresando al inicio de sesión."
+    "emailSent": "Correo enviado. Regresando al inicio de sesión.",
+    "backToLogin": "Volver al inicio de sesión"
   },
 
   "dashboard": {

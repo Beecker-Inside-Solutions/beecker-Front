@@ -23,7 +23,8 @@
     "recoveryHeader": "Recover Password",
     "recoveryButton": "Recover",
     "emailLabel": "Email",
-    "backToLogin": "Recover email sent."
+    "emailSent": "Recover email sent.",
+    "backToLogin": "Back to Login"
   },
 
   "dashboard": {

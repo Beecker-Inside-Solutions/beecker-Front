@@ -15,6 +15,7 @@ import {
   showErrorAlert,
 } from "./lib/AlertUtils";
 import { apiURL } from "@/Constants";
+import { routes } from "@/Constants";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -112,7 +113,7 @@ export default function Home() {
               {languageValues.loginPage.loginButton}
             </button>
             <div className={styles.forgotPassword}>
-              <Link className={styles.forgotPassword} href="/forgotPassword">
+              <Link className={styles.forgotPassword} href={routes.forgotPassword}>
                 {languageValues.loginPage.forgotPassword}
               </Link>
             </div>
