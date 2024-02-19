@@ -7,6 +7,7 @@ import enValues from "@/enValues.json";
 import Footer from "../components/Footer/Footer";
 import Link from "next/link";
 import { routes } from "@/Constants";
+import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import { lateralNavbarItems } from "@/Constants";
 export default function Home() {
@@ -20,11 +21,13 @@ export default function Home() {
 
   return (
     <>
-      <LateralNavbar lateralNavbar={lateralNavbarItems} />
+      <LateralNavbar lateralNavbar={lateralNavbarItems} logo={logo.src} />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>
-            <h1>{languageValues.dashboard.welcome}, {userName}</h1>
+            <h1>
+              {languageValues.dashboard.welcome}, {userName}
+            </h1>
           </div>
           <div className={styles.bottomContainer}>
             <h1>b</h1>

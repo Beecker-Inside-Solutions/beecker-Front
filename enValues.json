@@ -1,4 +1,10 @@
 {
+  "navbar": {
+    "dashboard": "Dashboard",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
   "alerts": {
     "warningAlertTitle": "Warning",
     "errorAlertTitle": "Error",
@@ -10,7 +16,6 @@
     "logoutFailed": "Logout failed. Please try again.",
     "forgotPassword": "Please contact your administrator to reset your password."
   },
-
   "loginPage": {
     "loginHeader": "Welcome",
     "loginButton": "Log In",
@@ -18,7 +23,6 @@
     "passwordLabel": "Password",
     "forgotPassword": "Forgot your Password?"
   },
-
   "recoveryPage": {
     "recoveryHeader": "Recover Password",
     "recoveryButton": "Recover",
@@ -26,7 +30,6 @@
     "emailSent": "Recover email sent.",
     "backToLogin": "Back to Login"
   },
-
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Welcome",

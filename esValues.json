@@ -1,4 +1,10 @@
 {
+  "navbar": {
+    "dashboard": "Dashboard",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
   "alerts": {
     "warningAlertTitle": "Advertencia",
     "errorAlertTitle": "Error",

@@ -1,6 +1,8 @@
 import { ILanguage } from "./app/interfaces/ILanguages";
 import { IRoutes } from "./app/interfaces/IRoutes";
 import { ILateralNavbar } from "./app/interfaces/ILateralNavbar";
+import dashboardImage from "@/app/images/icons/dashboard.png";
+import settingsImage from "@/app/images/icons/settings.png";
 
 export const apiURL = "";
 
@@ -22,9 +24,15 @@ export const routes: IRoutes = {
 
 export const lateralNavbarItems: ILateralNavbar = {
   Home: {
-    Dashboard: routes.dashboard,
+    Dashboard: {
+      link: routes.dashboard,
+      image: dashboardImage.src,
+    },
   },
   Preferences: {
-    Settings: routes.settings,
+    Settings: {
+      link: routes.settings,
+      image: settingsImage.src,
+    },
   },
 };

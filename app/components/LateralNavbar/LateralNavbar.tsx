@@ -1,20 +1,30 @@
 import React from "react";
-import { ILateralNavbar } from "@/app/interfaces/ILateralNavbar";
-import { lateralNavbarItems } from "@/Constants"; // Importing lateralNavbarItems directly
 import Link from "next/link";
+import { LateralProps } from "@/app/interfaces/ILateralNavbar";
+import styles from "./LateralNavbar.module.css";
+import Image from "next/image";
 
-const LateralNavbar: React.FC = () => {
+const LateralNavbar: React.FC<LateralProps> = ({ lateralNavbar, logo }) => {
   return (
-    <div>
-      <h2>Lateral Navbar</h2>
+    <div className={styles.lateralNavbar}>
+      <Image
+        src={logo || ""}
+        alt="Logo"
+        width={100}
+        height={100}
+        className={styles.logo}
+      />
       <ul>
-        {Object.keys(lateralNavbarItems).map((section) => ( // Using lateralNavbarItems instead of lateralNavbar
+        {Object.keys(lateralNavbar).map((section) => (
           <li key={section}>
             <strong>{section}</strong>
-            <ul>
-              {Object.keys(lateralNavbarItems[section]).map((item) => (
+            <ul className={styles.sectionValue}>
+              {Object.keys(lateralNavbar[section]).map((item) => (
                 <li key={item}>
-                  <a href={lateralNavbarItems[section][item]}>{item}</a>
+                  {lateralNavbar[section][item].image && (
+                    <img src={lateralNavbar[section][item].image} alt="Icon" />
+                  )}
+                  <Link href={lateralNavbar[section][item].link}>{item}</Link>
                 </li>
               ))}
             </ul>
