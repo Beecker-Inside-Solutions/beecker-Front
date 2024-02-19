@@ -1,15 +1,26 @@
-"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./LanguageSelector.module.css";
-interface LanguageSelectorProps {
-  languages: { value: string; label: string }[];
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}
-
+import { LanguageSelectorProps } from "@/app/interfaces/ILanguageSelectorProps";
 function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem("selectedLanguage");
+    if (savedLanguage) {
+      setSelectedLanguage(savedLanguage);
+      onChange({ target: { value: savedLanguage } } as React.ChangeEvent<HTMLSelectElement>);
+    }
+  }, [onChange]);
+
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    setSelectedLanguage(selectedValue);
+    localStorage.setItem("selectedLanguage", selectedValue);
+    onChange(event);
+  };
+
   return (
-    <select onChange={onChange}
-    className={styles.languageSelector}
-    >
+    <select value={selectedLanguage} onChange={handleLanguageChange} className={styles.languageSelector}>
       {languages.map(({ value, label }) => (
         <option key={value} value={value}>
           {label}
