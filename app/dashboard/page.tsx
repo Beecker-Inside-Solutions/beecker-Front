@@ -7,6 +7,8 @@ import enValues from "@/enValues.json";
 import Footer from "../components/Footer/Footer";
 import Link from "next/link";
 import { routes } from "@/Constants";
+import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
+import { lateralNavbarItems } from "@/Constants";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -18,6 +20,7 @@ export default function Home() {
 
   return (
     <>
+      <LateralNavbar lateralNavbar={lateralNavbarItems} />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>

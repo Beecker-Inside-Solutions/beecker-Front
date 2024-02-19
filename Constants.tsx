@@ -1,5 +1,6 @@
 import { ILanguage } from "./app/interfaces/ILanguages";
 import { IRoutes } from "./app/interfaces/IRoutes";
+import { ILateralNavbar } from "./app/interfaces/ILateralNavbar";
 
 export const apiURL = "";
 
@@ -9,7 +10,7 @@ export const languages: ILanguage[] = [
 ];
 
 export const routes: IRoutes = {
-  home: "/",
+  login: "/",
   register: "/register",
   forgotPassword: "/forgotPassword",
   resetPassword: "/reset-password",
@@ -17,4 +18,13 @@ export const routes: IRoutes = {
   profile: "/profile",
   settings: "/settings",
   logout: "/logout",
+};
+
+export const lateralNavbarItems: ILateralNavbar = {
+  Home: {
+    Dashboard: routes.dashboard,
+  },
+  Preferences: {
+    Settings: routes.settings,
+  },
 };

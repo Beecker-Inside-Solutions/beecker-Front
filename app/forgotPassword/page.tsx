@@ -58,7 +58,7 @@ export default function Home() {
             </button>
             {recoverySent && <p>{languageValues.recoveryPage.emailSent}</p>}
           </form>
-          <Link href={routes.home} className={styles.backToLogin}>
+          <Link href={routes.login} className={styles.backToLogin}>
             {languageValues.recoveryPage.backToLogin}
           </Link>
         </div>
