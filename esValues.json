@@ -29,7 +29,7 @@
 
   "dashboard": {
     "header": "Dashboard",
-    "welcome": "Welcome",
+    "welcome": "Bienvenido",
     "logout": "Log Out"
   }
 }
