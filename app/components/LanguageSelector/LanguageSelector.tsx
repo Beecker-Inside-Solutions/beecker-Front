@@ -8,11 +8,15 @@ function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
     const savedLanguage = localStorage.getItem("selectedLanguage");
     if (savedLanguage) {
       setSelectedLanguage(savedLanguage);
-      onChange({ target: { value: savedLanguage } } as React.ChangeEvent<HTMLSelectElement>);
+      onChange({
+        target: { value: savedLanguage },
+      } as React.ChangeEvent<HTMLSelectElement>);
     }
   }, [onChange]);
 
-  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedValue = event.target.value;
     setSelectedLanguage(selectedValue);
     localStorage.setItem("selectedLanguage", selectedValue);
@@ -20,9 +24,14 @@ function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
   };
 
   return (
-    <select value={selectedLanguage} onChange={handleLanguageChange} className={styles.languageSelector}>
-      {languages.map(({ value, label }) => (
+    <select
+      value={selectedLanguage}
+      onChange={handleLanguageChange}
+      className={styles.languageSelector}
+    >
+      {languages.map(({ value, label, icon }) => (
         <option key={value} value={value}>
+          <img src={icon} alt={label} />
           {label}
         </option>
       ))}

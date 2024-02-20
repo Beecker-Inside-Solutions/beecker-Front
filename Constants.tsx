@@ -3,12 +3,14 @@ import { IRoutes } from "./app/interfaces/IRoutes";
 import { ILateralNavbar } from "./app/interfaces/ILateralNavbar";
 import dashboardImage from "@/app/images/icons/dashboard.png";
 import settingsImage from "@/app/images/icons/settings.png";
+import mexicoIcon from "@/app/images/icons/mexico.png";
+import ukIcon from "@/app/images/icons/uk.png";
 
 export const apiURL = "";
 
 export const languages: ILanguage[] = [
-  { value: "en", label: "🇺🇸 English" },
-  { value: "es", label: "🇲🇽 Español" },
+  { value: "en", icon: ukIcon.src, label: "🇬🇧 English" },
+  { value: "es", icon: mexicoIcon.src, label: "🇲🇽 Español" },
 ];
 
 export const routes: IRoutes = {

@@ -1,6 +1,6 @@
 
 export interface LanguageSelectorProps {
-    languages: { value: string; label: string }[];
+    languages: { value: string; icon?:string; label: string }[];
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   }
   
