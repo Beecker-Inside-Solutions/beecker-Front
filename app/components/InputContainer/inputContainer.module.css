@@ -21,3 +21,9 @@
   background-color: #fff;
   color: #000;
 }
+
+@media (max-width: 767px) {
+  .inputContainer input {
+    padding: 0.5rem;
+  }
+}

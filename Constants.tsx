@@ -17,11 +17,9 @@ export const routes: IRoutes = {
   login: "/",
   register: "/register",
   forgotPassword: "/forgotPassword",
-  resetPassword: "/reset-password",
   dashboard: "/dashboard",
   profile: "/profile",
   settings: "/settings",
-  logout: "/logout",
 };
 
 export const lateralNavbarItems: ILateralNavbar = {

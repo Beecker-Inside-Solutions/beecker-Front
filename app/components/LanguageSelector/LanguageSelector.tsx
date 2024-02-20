@@ -31,7 +31,6 @@ function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
     >
       {languages.map(({ value, label, icon }) => (
         <option key={value} value={value}>
-          <img src={icon} alt={label} />
           {label}
         </option>
       ))}
@@ -40,3 +39,7 @@ function LanguageSelector({ languages, onChange }: LanguageSelectorProps) {
 }
 
 export default LanguageSelector;
+
+/*
+          <img src={icon} alt={label} />
+*/

@@ -1,7 +1,7 @@
 import React from "react";
 import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import { ChangeEvent } from "react";
-import { FooterProps } from "@/app/interfaces/FooterProps";
+import { FooterProps } from "@/app/interfaces/IFooterProps";
 import { languages } from "@/Constants";
 import styles from "./Footer.module.css";
 

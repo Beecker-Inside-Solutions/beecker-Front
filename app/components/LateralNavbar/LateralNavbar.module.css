@@ -10,6 +10,20 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 1.2rem;
   font-family: "Montserrat", sans-serif;
+  transition: transform 0.3s ease; /* Move transition property here */
+  transform: translateX(-100%);
+}
+
+.toggleButton {
+  padding: 1em;
+  font-size: 1.2rem;
+  position: absolute;
+  bottom: 0.02;
+  background-color: white;
+  border: none;
+  color: black;
+  z-index: 999;
+  cursor: pointer;
 }
 
 .logo {
@@ -17,8 +31,10 @@
   margin-top: 2em;
   width: 100%;
   text-align: center;
-  height: 3em;
-  object-fit: fill;
+  height: 2.5em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .lateralNavbar ul {
@@ -26,7 +42,6 @@
   padding: 0;
   margin: 0;
   margin-left: 0.2em;
-
 }
 
 .lateralNavbar ul li {
@@ -61,4 +76,8 @@
   border-radius: 5px;
   cursor: pointer;
   scale: 1.1;
+}
+
+.lateralNavbar.open {
+  transform: translateX(0);
 }
