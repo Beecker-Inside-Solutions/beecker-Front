@@ -48,27 +48,31 @@ const SearchPages = ({ searchablePages }: SearchPagesProps) => {
     <div className={styles.searchPages}>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search"
         value={searchQuery}
         onChange={handleInputChange}
         className={styles.searchInput}
       />
-      {searchQuery && Object.keys(filteredPages).map((category) => (
-        <div key={category} className={styles.suggestedPages}>
-          <ul className={styles.category}>
-            {Object.keys(filteredPages[category]).map((page) => (
-              <li key={page} className={styles.page}>
-                <Link href={filteredPages[category][page].link}>
-                  {filteredPages[category][page].icon && (
-                    <img src={filteredPages[category][page].image} alt="Icon" />
-                  )}
-                  {page}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {searchQuery &&
+        Object.keys(filteredPages).map((category) => (
+          <div key={category} className={styles.suggestedPages}>
+            <ul className={styles.category}>
+              {Object.keys(filteredPages[category]).map((page) => (
+                <li key={page} className={styles.page}>
+                  <Link href={filteredPages[category][page].link}>
+                    {filteredPages[category][page].image && (
+                      <img
+                        src={filteredPages[category][page].image}
+                        alt="Icon"
+                      />
+                    )}
+                    {page}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
     </div>
   );
 };
