@@ -1,0 +1,26 @@
+.searchPages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto; /* Change height to auto */
+    color: black;
+    background-color: #fff;
+  }
+  
+  .searchPages input {
+    width: 20%;
+    height: 2em;
+    border-radius: 5px;
+    border: 1px solid #000;
+    padding: 0 1em;
+    font-size: 1.2rem;
+    margin: 1em 0;
+    color: black;
+    background-color: #fff;
+  }
+  
+  .searchPages input:focus {
+    outline: none;
+    border: 1px solid #000;
+  }

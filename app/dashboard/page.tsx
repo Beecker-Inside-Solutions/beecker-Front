@@ -10,6 +10,7 @@ import { routes } from "@/Constants";
 import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import { lateralNavbarItems } from "@/Constants";
+import Navbar from "../components/Navbar/Navbar";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -22,6 +23,7 @@ export default function Home() {
   return (
     <>
       <LateralNavbar lateralNavbar={lateralNavbarItems} logo={logo.src} />
+      <Navbar />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>

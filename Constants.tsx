@@ -27,12 +27,15 @@ export const lateralNavbarItems: ILateralNavbar = {
     Dashboard: {
       link: routes.dashboard,
       image: dashboardImage.src,
+      adminRequired: true,
     },
   },
   Preferences: {
     Settings: {
       link: routes.settings,
       image: settingsImage.src,
+      adminRequired: false,
     },
   },
 };
+
