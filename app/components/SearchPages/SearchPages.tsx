@@ -1,26 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./SearchPages.module.css";
-
-interface PageData {
-  adminRequired?: boolean;
-  link?: string;
-  image?: string;
-  [key: string]: any;
-}
-
-interface CategoryData {
-  [key: string]: PageData;
-}
-
-interface SearchablePages {
-  [key: string]: CategoryData;
-}
-
-interface SearchPagesProps {
-  searchablePages: SearchablePages;
-  isAdmin: boolean; // Add isAdmin prop
-}
+import { SearchPagesProps, CategoryData } from "@/app/interfaces/IPageData";
 
 const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,7 +10,6 @@ const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
     setSearchQuery(event.target.value);
   };
 
-  // Filter pages based on search query
   const filteredPages = Object.keys(searchablePages).reduce(
     (acc: CategoryData, category: string) => {
       acc[category] = Object.keys(searchablePages[category])
@@ -38,7 +18,6 @@ const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
         )
         .reduce((pageAcc: CategoryData, page: string) => {
           const pageData = searchablePages[category][page];
-          // Check if page requires admin and user is admin
           if (!pageData.adminRequired || isAdmin) {
             pageAcc[page] = pageData;
           }
