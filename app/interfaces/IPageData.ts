@@ -1,15 +1,15 @@
-interface PageData {
+export interface PageData {
   adminRequired?: boolean;
   link?: string;
   image?: string;
   [key: string]: any;
 }
 
-interface CategoryData {
+export interface CategoryData {
   [key: string]: PageData;
 }
 
-interface SearchablePages {
+export interface SearchablePages {
   [key: string]: CategoryData;
 }
 

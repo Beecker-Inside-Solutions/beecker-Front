@@ -5,6 +5,9 @@
     "settings": "Configuración",
     "logout": "Cerrar sesión"
   },
+  "searchBar": {
+    "placeholder": "Search"
+  },
   "alerts": {
     "warningAlertTitle": "Advertencia",
     "errorAlertTitle": "Error",

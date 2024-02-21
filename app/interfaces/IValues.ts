@@ -1,6 +1,7 @@
 import { LanguageValues } from "./ILanguageValues";
 export interface Values {
   navbar: LanguageValues;
+  searchBar: LanguageValues;
   alerts: LanguageValues;
   loginPage: LanguageValues;
   recoveryPage: LanguageValues;

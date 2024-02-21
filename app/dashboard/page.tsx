@@ -11,6 +11,7 @@ import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import { lateralNavbarItems } from "@/Constants";
 import Navbar from "../components/Navbar/Navbar";
+import SearchPages from "../components/SearchPages/SearchPages";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -23,7 +24,7 @@ export default function Home() {
   return (
     <>
       <LateralNavbar lateralNavbar={lateralNavbarItems} logo={logo.src} />
-      <Navbar />
+      <SearchPages searchablePages={lateralNavbarItems} isAdmin={false} />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>

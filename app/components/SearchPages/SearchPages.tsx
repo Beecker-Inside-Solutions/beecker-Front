@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import esValues from "@/esValues.json";
+import enValues from "@/enValues.json";
 import styles from "./SearchPages.module.css";
 import { SearchPagesProps, CategoryData } from "@/app/interfaces/IPageData";
+import useMultilingualValues from "@/app/hooks/useMultilingualValues";
 
 const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const { language, setLanguage, languageValues } = useMultilingualValues(
+    "en",
+    esValues,
+    enValues
+  );
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
@@ -32,7 +39,7 @@ const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
     <div className={styles.searchPages}>
       <input
         type="text"
-        placeholder="Search"
+        placeholder={languageValues.searchBar.placeholder}
         value={searchQuery}
         onChange={handleInputChange}
         className={styles.searchInput}
