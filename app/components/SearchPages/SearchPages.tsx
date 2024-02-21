@@ -19,9 +19,10 @@ interface SearchablePages {
 
 interface SearchPagesProps {
   searchablePages: SearchablePages;
+  isAdmin: boolean; // Add isAdmin prop
 }
 
-const SearchPages = ({ searchablePages }: SearchPagesProps) => {
+const SearchPages = ({ searchablePages, isAdmin }: SearchPagesProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +37,11 @@ const SearchPages = ({ searchablePages }: SearchPagesProps) => {
           page.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .reduce((pageAcc: CategoryData, page: string) => {
-          pageAcc[page] = searchablePages[category][page];
+          const pageData = searchablePages[category][page];
+          // Check if page requires admin and user is admin
+          if (!pageData.adminRequired || isAdmin) {
+            pageAcc[page] = pageData;
+          }
           return pageAcc;
         }, {});
       return acc;
@@ -58,8 +63,8 @@ const SearchPages = ({ searchablePages }: SearchPagesProps) => {
           <div key={category} className={styles.suggestedPages}>
             <ul className={styles.category}>
               {Object.keys(filteredPages[category]).map((page) => (
-                <Link href={filteredPages[category][page].link}>
-                  <li key={page} className={styles.page}>
+                <Link href={filteredPages[category][page].link} key={page}>
+                  <li className={styles.page}>
                     {filteredPages[category][page].image && (
                       <img
                         src={filteredPages[category][page].image}

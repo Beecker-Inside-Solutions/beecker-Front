@@ -6,7 +6,9 @@ import { lateralNavbarItems } from "@/Constants";
 const Navbar: React.FC = () => {
   return (
     <nav className={styles.navbar}>
-      <SearchPages searchablePages={lateralNavbarItems} />
+      <SearchPages searchablePages={lateralNavbarItems}
+      isAdmin={false}
+      />
     </nav>
   );
 };
