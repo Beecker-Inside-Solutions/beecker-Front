@@ -30,6 +30,15 @@ export const lateralNavbarItems: ILateralNavbar = {
       adminRequired: true,
     },
   },
+
+  Profile : {
+    Profile: {
+      link: routes.profile,
+      image: settingsImage.src,
+      adminRequired: false,
+    },
+  },
+
   Preferences: {
     Settings: {
       link: routes.settings,

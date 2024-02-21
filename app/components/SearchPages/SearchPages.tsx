@@ -58,8 +58,8 @@ const SearchPages = ({ searchablePages }: SearchPagesProps) => {
           <div key={category} className={styles.suggestedPages}>
             <ul className={styles.category}>
               {Object.keys(filteredPages[category]).map((page) => (
-                <li key={page} className={styles.page}>
-                  <Link href={filteredPages[category][page].link}>
+                <Link href={filteredPages[category][page].link}>
+                  <li key={page} className={styles.page}>
                     {filteredPages[category][page].image && (
                       <img
                         src={filteredPages[category][page].image}
@@ -67,8 +67,8 @@ const SearchPages = ({ searchablePages }: SearchPagesProps) => {
                       />
                     )}
                     {page}
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>

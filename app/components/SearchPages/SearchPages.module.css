@@ -29,31 +29,37 @@
   border: 1px solid #000;
 }
 
-.suggestedPages {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 3em;
-  color: black;
-  position: fixed;
-  top: 5em;
-  left: 0;
-  right: 0;
-}
-
 .suggestedPages ul {
   list-style: none;
   width: 20%;
-  padding: 0;
-  margin: 0;
-  background-color: #fff;
+
 }
 
 .suggestedPages ul li {
-  padding: 0.5em 1em;
-  border: 1px solid #000;
   border-radius: 5px;
-  background-color: #fff;
   cursor: pointer;
-  width: 100%;
+  width: 20em;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  color: black;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  background-color: #fff;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: black;
+  border-bottom: 1px solid #000;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.suggestedPages ul li:hover {
+  scale: 1.1;
+}
+
+.suggestedPages ul li img {
+  width: 1em;
+  height: 1em;
+  margin-right: 1em;
 }
