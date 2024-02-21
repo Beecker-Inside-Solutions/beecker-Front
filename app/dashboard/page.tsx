@@ -10,7 +10,7 @@ import { routes } from "@/Constants";
 import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import { lateralNavbarItems } from "@/Constants";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/RightBar/RightBar";
 import SearchPages from "../components/SearchPages/SearchPages";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
