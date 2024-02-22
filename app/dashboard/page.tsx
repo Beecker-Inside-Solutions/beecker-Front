@@ -23,7 +23,11 @@ export default function Home() {
 
   return (
     <>
-      <LateralNavbar lateralNavbar={lateralNavbarItems} logo={logo.src} />
+      <LateralNavbar
+        lateralNavbar={lateralNavbarItems}
+        logo={logo.src}
+        user={{ isAdmin: false }}
+      />
       <SearchPages searchablePages={lateralNavbarItems} isAdmin={false} />
       <main className={styles.main}>
         <div className={styles.container}>
