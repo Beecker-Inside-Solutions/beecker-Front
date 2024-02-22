@@ -10,8 +10,9 @@ import { routes } from "@/Constants";
 import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import { lateralNavbarItems } from "@/Constants";
-import Navbar from "../components/RightBar/RightBar";
+import RightBar from "../components/RightBar/RightBar";
 import SearchPages from "../components/SearchPages/SearchPages";
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -19,7 +20,7 @@ export default function Home() {
     enValues
   );
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("Niggeron");
 
   return (
     <>
@@ -28,6 +29,8 @@ export default function Home() {
         logo={logo.src}
         user={{ isAdmin: false }}
       />
+      <RightBar profileName={userName} profileImageUrl={logo.src} />
+
       <SearchPages searchablePages={lateralNavbarItems} isAdmin={false} />
       <main className={styles.main}>
         <div className={styles.container}>

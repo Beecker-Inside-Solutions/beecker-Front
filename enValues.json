@@ -9,6 +9,12 @@
   "searchBar": {
     "placeholder": "Search"
   },
+
+  "lateralNavbar":{
+    "openMenu": "☰ Open Menu",
+    "closeMenu": "← Close Menu"
+  },
+
   "alerts": {
     "warningAlertTitle": "Warning",
     "errorAlertTitle": "Error",

@@ -8,6 +8,13 @@
   "searchBar": {
     "placeholder": "Search"
   },
+
+  "lateralNavbar":{
+    "openMenu": "☰ Abrir Menú",
+    "closeMenu": "← Cerrar Menú"
+  },
+
+
   "alerts": {
     "warningAlertTitle": "Advertencia",
     "errorAlertTitle": "Error",
