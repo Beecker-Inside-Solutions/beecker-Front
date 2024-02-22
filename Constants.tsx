@@ -1,6 +1,7 @@
 import { ILanguage } from "./app/interfaces/ILanguages";
 import { IRoutes } from "./app/interfaces/IRoutes";
 import { ILateralNavbar } from "./app/interfaces/ILateralNavbar";
+import { IRegex } from "./app/interfaces/IRegex";
 import dashboardImage from "@/app/images/icons/dashboard.png";
 import settingsImage from "@/app/images/icons/settings.png";
 import mexicoIcon from "@/app/images/icons/mexico.png";
@@ -31,7 +32,7 @@ export const lateralNavbarItems: ILateralNavbar = {
     },
   },
 
-  Profile : {
+  Profile: {
     Profile: {
       link: routes.profile,
       image: profileIcon.src,
@@ -47,4 +48,9 @@ export const lateralNavbarItems: ILateralNavbar = {
     },
   },
 };
-
+export const regex: IRegex = {
+  email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+  password: new RegExp(
+    `^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})`
+  ),
+};

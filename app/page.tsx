@@ -14,8 +14,7 @@ import {
   showWarningAlert,
   showErrorAlert,
 } from "./lib/AlertUtils";
-import { apiURL } from "@/Constants";
-import { routes } from "@/Constants";
+import { apiURL, routes, regex } from "@/Constants";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -35,12 +34,17 @@ export default function Home() {
     setPasswordLogin(e.target.value);
   };
 
-  const handleSubmitLogin = (e: { preventDefault: () => void }) => {
+  const handleSubmitLogin = (e: any) => {
     e.preventDefault();
     if (usernameLogin === "" || passwordLogin === "") {
       showErrorAlert(
         languageValues.alerts.errorAlertTitle,
         languageValues.alerts.loginFailed
+      );
+    } else if (!regex.email.test(usernameLogin)) {
+      showErrorAlert(
+        languageValues.alerts.errorAlertTitle,
+        languageValues.alerts.invalidEmail
       );
     } else {
       const loginData = {
@@ -113,7 +117,10 @@ export default function Home() {
               {languageValues.loginPage.loginButton}
             </button>
             <div className={styles.forgotPassword}>
-              <Link className={styles.forgotPassword} href={routes.forgotPassword}>
+              <Link
+                className={styles.forgotPassword}
+                href={routes.forgotPassword}
+              >
                 {languageValues.loginPage.forgotPassword}
               </Link>
             </div>

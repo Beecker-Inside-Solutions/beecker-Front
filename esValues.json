@@ -17,7 +17,11 @@
     "loginSuccess": "Inicio de sesión exitoso.",
     "logoutSuccess": "Cierre de sesión exitoso.",
     "logoutFailed": "Cierre de sesión fallido. Por favor, inténtelo de nuevo.",
-    "forgotPassword": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña."
+    "forgotPassword": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña.",
+    "invalidEmail": "Correo electrónico inválido.",
+    "emptyFields": "Por favor, rellene todos los campos.",
+    "recoveryEmailSent": "Correo enviado. Regresando al inicio de sesión.",
+    "recoveryEmailFailed": "Correo no enviado. Por favor, inténtelo de nuevo."
   },
 
   "loginPage": {

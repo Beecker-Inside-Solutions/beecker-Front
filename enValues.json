@@ -18,7 +18,11 @@
     "loginSuccess": "Login successful.",
     "logoutSuccess": "Logout successful.",
     "logoutFailed": "Logout failed. Please try again.",
-    "forgotPassword": "Please contact your administrator to reset your password."
+    "forgotPassword": "Please contact your administrator to reset your password.",
+    "invalidEmail": "Invalid email.",
+    "emptyFields": "Please fill in all fields.",
+    "recoveryEmailSent": "Recovery email sent.",
+    "recoveryEmailFailed": "Recovery email failed. Please try again."
   },
   "loginPage": {
     "loginHeader": "Welcome",

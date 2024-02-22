@@ -9,7 +9,8 @@ import enValues from "@/enValues.json";
 import InputContainer from "../components/InputContainer/InputContainer";
 import Footer from "../components/Footer/Footer";
 import Link from "next/link";
-import { routes } from "@/Constants";
+import { apiURL, routes, regex } from "@/Constants";
+import  { showSuccessAlert, showWarningAlert, showErrorAlert } from "../lib/AlertUtils";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -18,10 +19,54 @@ export default function Home() {
   );
 
   const [recoverySent, setRecoverySent] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleSubmitRecovery = (e: any) => {
     e.preventDefault();
-    setRecoverySent(true);
+    if (email === "") {
+      showErrorAlert(
+        languageValues.alerts.errorAlertTitle,
+        languageValues.alerts.emptyFields,
+      );
+    }else if (!regex.email.test(email)) {
+      showErrorAlert(
+        languageValues.alerts.errorAlertTitle,
+        languageValues.alerts.invalidEmail,
+      );
+    }else {
+      const recoveryData = {
+        email: email,
+      };
+      const requestData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recoveryData),
+      };
+      fetch(`${apiURL}/forgotPassword`, requestData)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "success") {
+            showSuccessAlert(
+              languageValues.alerts.successAlertTitle,
+              languageValues.alerts.recoveryEmailSent,
+            );
+            setRecoverySent(true);
+          } else {
+            showErrorAlert(
+              languageValues.alerts.errorAlertTitle,
+              languageValues.alerts.recoveryEmailFailed,
+            );
+          }
+        })
+        .catch(() => {
+          showErrorAlert(
+            languageValues.alerts.errorAlertTitle,
+            languageValues.alerts.recoveryEmailFailed,
+          );
+        });
+    }
   };
 
   useEffect(() => {
@@ -51,7 +96,7 @@ export default function Home() {
               label={languageValues.recoveryPage.emailLabel}
               id="email"
               name="email"
-              onChange={() => {}}
+              onChange={(e: any) => setEmail(e.target.value)}
             />
             <button className={styles.button} onClick={handleSubmitRecovery}>
               {languageValues.recoveryPage.recoveryButton}
