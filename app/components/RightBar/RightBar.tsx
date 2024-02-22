@@ -3,8 +3,9 @@ import styles from "./RightBar.module.css";
 import { IRightBar } from "@/app/interfaces/IRightBar";
 import downArrow from "@/app/images/icons/closeArrow.png";
 import upArrow from "@/app/images/icons/openArrow.png";
-import profile from "@/app/images/icons/profile.png";
 import Link from "next/link";
+import profile from "@/app/images/icons/profile.png";
+import logout from "@/app/images/icons/logout.png";
 
 const RightBar: React.FC<IRightBar> = ({
   profileName,
@@ -37,9 +38,15 @@ const RightBar: React.FC<IRightBar> = ({
         <div className={styles.dropdownMenu}>
           <ul>
             <Link href="/profile">
-              <li>Profile</li>
+              <li>
+                <img className={styles.profileIcon} src={profile.src} />
+                <p>Profile</p>
+              </li>
             </Link>
-            <li>Logout</li>
+            <li>
+              <img className={styles.logout} src={logout.src} />
+              <p>Log Out</p>
+            </li>
           </ul>
         </div>
       )}

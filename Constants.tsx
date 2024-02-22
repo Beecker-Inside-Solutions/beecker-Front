@@ -23,16 +23,6 @@ export const routes: IRoutes = {
   settings: "/settings",
 };
 
-export const dropdownMenuItems: ILateralNavbar = {
-  Profile: {
-    Profile: {
-      link: routes.profile,
-      image: profileIcon.src,
-    },
-  },
-};
-
-
 export const lateralNavbarItems: ILateralNavbar = {
   Home: {
     Dashboard: {
