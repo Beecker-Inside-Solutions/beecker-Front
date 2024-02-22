@@ -39,12 +39,10 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
             const sectionItems = Object.keys(lateralNavbar[section]).filter(
               (item) => {
                 const { adminRequired } = lateralNavbar[section][item];
-                // Return true if admin is not required or if the user is an admin
                 return !adminRequired || user.isAdmin;
               }
             );
 
-            // If there are no items to render in this section, skip rendering the entire section
             if (sectionItems.length === 0) {
               return null;
             }
