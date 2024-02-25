@@ -21,7 +21,13 @@ export default function Home() {
   );
 
   const [userName, setUserName] = useState("Niggeron");
-
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("username");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
+  
   return (
     <>
       <LateralNavbar

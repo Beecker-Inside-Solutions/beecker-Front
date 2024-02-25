@@ -7,7 +7,7 @@ import settingsImage from "@/app/images/icons/settings.png";
 import mexicoIcon from "@/app/images/icons/mexico.png";
 import ukIcon from "@/app/images/icons/uk.png";
 import profileIcon from "@/app/images/icons/profile.png";
-export const apiURL = "";
+export const apiURL = "https://dev.api.dashboard.beecker.ai/api";
 
 export const languages: ILanguage[] = [
   { value: "en", icon: ukIcon.src, label: "🇬🇧 English" },

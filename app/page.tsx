@@ -23,34 +23,44 @@ export default function Home() {
     enValues
   );
 
-  const [usernameLogin, setUsernameLogin] = useState("");
+  const [emailLogin, setemailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
 
-  const handleUsernameLogin = (e: any) => {
-    setUsernameLogin(e.target.value);
+  const handleemailLogin = (e: any) => {
+    setemailLogin(e.target.value);
   };
 
   const handlePasswordLogin = (e: any) => {
     setPasswordLogin(e.target.value);
   };
 
+  const localStorageKeys = {
+    token: "token",
+    firstName: "first_name",
+    lastName: "last_name",
+    email: "email",
+    phone: "phone",
+    profileImg: "profile_img",
+  } as { [key: string]: string };
+
   const handleSubmitLogin = (e: any) => {
     e.preventDefault();
-    if (usernameLogin === "" || passwordLogin === "") {
+    if (emailLogin === "" || passwordLogin === "") {
       showErrorAlert(
         languageValues.alerts.errorAlertTitle,
         languageValues.alerts.loginFailed
       );
-    } else if (!regex.email.test(usernameLogin)) {
+    } else if (!regex.email.test(emailLogin)) {
       showErrorAlert(
         languageValues.alerts.errorAlertTitle,
         languageValues.alerts.invalidEmail
       );
     } else {
       const loginData = {
-        username: usernameLogin,
+        email: emailLogin,
         password: passwordLogin,
       };
+
       const requestData = {
         method: "POST",
         headers: {
@@ -59,14 +69,29 @@ export default function Home() {
         body: JSON.stringify(loginData),
       };
 
+      console.log("Request Data:", requestData);
+
       fetch(`${apiURL}/login`, requestData)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
         .then((data) => {
           if (data.success) {
             showSuccessAlert(
               languageValues.alerts.successAlertTitle,
               languageValues.alerts.loginSuccess
             );
+            Object.entries(data).forEach(([key, value]) => {
+              if (localStorageKeys.hasOwnProperty(key)) {
+                localStorage.setItem(localStorageKeys[key], value as string);
+                console.log(
+                  `Key: ${key}, Value: ${value}, Local Storage Key: ${localStorageKeys[key]}`
+                );
+              }
+            });
           } else {
             showWarningAlert(
               languageValues.alerts.warningAlertTitle,
@@ -91,7 +116,7 @@ export default function Home() {
             height={300}
             className={styles.logo}
           />
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmitLogin}>
             <h1 className={styles.title}>
               {languageValues.loginPage.loginHeader}
             </h1>
@@ -100,7 +125,7 @@ export default function Home() {
               type="email"
               id="email"
               name="email"
-              onChange={handleUsernameLogin}
+              onChange={handleemailLogin}
             />
             <InputContainer
               label={languageValues.loginPage.passwordLabel}
@@ -109,11 +134,7 @@ export default function Home() {
               name="password"
               onChange={handlePasswordLogin}
             />
-            <button
-              type="submit"
-              className={styles.button}
-              onClick={handleSubmitLogin}
-            >
+            <button type="submit" className={styles.button}>
               {languageValues.loginPage.loginButton}
             </button>
             <div className={styles.forgotPassword}>
