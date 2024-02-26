@@ -36,8 +36,8 @@ export default function Home() {
 
   const localStorageKeys = {
     token: "token",
-    firstName: "first_name",
-    lastName: "last_name",
+    first_name: "first_name",
+    last_name: "last_name",
     email: "email",
     phone: "phone",
     profileImg: "profile_img",
@@ -71,7 +71,7 @@ export default function Home() {
 
       console.log("Request Data:", requestData);
 
-      fetch(`${apiURL}/login`, requestData)
+      fetch(`${apiURL}/login/`, requestData)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -79,11 +79,12 @@ export default function Home() {
           return response.json();
         })
         .then((data) => {
-          if (data.success) {
+          if (data.message === "login success") {
             showSuccessAlert(
               languageValues.alerts.successAlertTitle,
               languageValues.alerts.loginSuccess
             );
+            window.location.href = routes.dashboard;
             Object.entries(data).forEach(([key, value]) => {
               if (localStorageKeys.hasOwnProperty(key)) {
                 localStorage.setItem(localStorageKeys[key], value as string);

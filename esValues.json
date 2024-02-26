@@ -9,11 +9,17 @@
     "placeholder": "Search"
   },
 
-  "lateralNavbar":{
+  "rightBar": {
+    "profileButton": "Perfil",
+    "logoutHeader": "Sesión cerrada",
+    "logoutButton": "Cerrar sesión",
+    "logoutText": "Hasta luego."
+  },
+
+  "lateralNavbar": {
     "openMenu": "☰ Abrir Menú",
     "closeMenu": "← Cerrar Menú"
   },
-
 
   "alerts": {
     "warningAlertTitle": "Advertencia",

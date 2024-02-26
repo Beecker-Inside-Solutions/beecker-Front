@@ -10,7 +10,14 @@
     "placeholder": "Search"
   },
 
-  "lateralNavbar":{
+  "rightBar": {
+    "profileButton": "Profile",
+    "logoutHeader": "Logged Out",
+    "logoutButton": "Log Out",
+    "logoutText": "Session closed"
+  },
+
+  "lateralNavbar": {
     "openMenu": "☰ Open Menu",
     "closeMenu": "← Close Menu"
   },
