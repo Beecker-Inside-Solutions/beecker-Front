@@ -94,12 +94,25 @@
     background-color: white;
   }
 
+  .toggleButton {
+    padding: 1em;
+    font-size: 1rem;
+    background-color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    z-index: 999;
+    cursor: pointer;
+  }
+
   .logo {
     margin-bottom: 2em;
     margin-top: 5em;
     width: 100%;
     text-align: center;
-    height: 5.5em;
+    height: 2.5em;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

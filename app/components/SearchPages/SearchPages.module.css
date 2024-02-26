@@ -32,7 +32,6 @@
 .suggestedPages ul {
   list-style: none;
   width: 20%;
-
 }
 
 .suggestedPages ul li {
@@ -62,4 +61,18 @@
   width: 1em;
   height: 1em;
   margin-right: 1em;
+}
+
+@media (max-width: 767px) {
+  .searchPages {
+    height: 5em;
+  }
+
+  .searchPages input {
+    width: 30%;
+  }
+
+  .suggestedPages ul {
+    width: 80%;
+  }
 }
