@@ -6,7 +6,7 @@
   padding: 6rem;
   min-height: 100vh;
   background-color: #fff;
-  color: #000;
+  color: var(--gris-oscuro-beecker);
   font-family: "Montserrat", sans-serif;
 }
 
@@ -39,7 +39,7 @@
   margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 100;
-  color: #000;
+  color: var(--gris-oscuro-beecker);
 }
 
 .inputContainer {
@@ -52,12 +52,12 @@
 .inputContainer label {
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: #000;
+  color: var(--gris-oscuro-beecker)
 }
 
 .inputContainer input {
   padding: 1rem;
-  border: 1px solid #000;
+  border: 1px solid var(--gris-oscuro-beecker);
   border-radius: 10px;
   font-size: 1rem;
   width: 100%;
@@ -73,16 +73,29 @@
   font-size: 1.2rem;
   width: 50%;
   margin-bottom: 1rem;
-  background-color: #7741b9;
+  background-color: var(--morado-beecker);
   color: #fff;
   cursor: pointer;
 }
 
+.button:hover {
+  scale: 1.1;
+  transition: 0.3s;
+  background-color: var(--azul-beecker);
+}
+
 .forgotPassword {
   font-size: 1rem;
-  color: #db4759;
+  color: var(--rojo-beecker);
   text-decoration: none;
   margin-bottom: 1rem;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+  scale: 1.1;
+  transition: 0.3s;
+  color: var(--azul-beecker);
 }
 
 @media (max-width: 767px) {

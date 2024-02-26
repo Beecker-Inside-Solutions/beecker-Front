@@ -95,7 +95,8 @@
 }
 
 .dropdownMenu ul li:hover {
-  background-color: #f2f2f2;
+  background-color: var(--gris-claro-beecker);
+  color: var(--morado-beecker);
   scale: 1.1;
   transition: 0.3s;
 }
