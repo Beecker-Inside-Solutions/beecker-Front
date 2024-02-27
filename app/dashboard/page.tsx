@@ -14,7 +14,7 @@ import RightBar from "../components/RightBar/RightBar";
 import SearchPages from "../components/SearchPages/SearchPages";
 import ChartComponent from "../components/ChartComponent/ChartComponent";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
-import useChartData from "../hooks/useChartData";
+import useLineChartData from "../hooks/useLineChartData";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -22,7 +22,7 @@ export default function Home() {
     enValues
   );
 
-  const { chartDataLine, chartLinesLabels } = useChartData(
+  const { chartDataLine, chartLinesLabels } = useLineChartData(
     `${apiURL}/clientCharts/`,
     {
       method: "POST",

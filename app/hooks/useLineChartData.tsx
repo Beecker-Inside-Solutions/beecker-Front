@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
-
-interface ChartData {
-  chartDataLine: any[]; // Change 'any' to the actual type of chart data if possible
-  chartLinesLabels: any[]; // Change 'any' to the actual type of chart labels if possible
-}
-
-const useChartData = (
+import { ChartData } from "../interfaces/IChartData";
+const useLineChartData = (
   apiEndpoint: string,
   options: RequestInit = {}
 ): ChartData => {
@@ -18,12 +13,13 @@ const useChartData = (
         const response = await fetch(apiEndpoint, options);
         const data = await response.json();
         if (data.line_chart_client && data.line_chart_client.length > 0) {
-          const lineChartData = data.line_chart_client[0].this_month.dataSuccess;
+          const lineChartData =
+            data.line_chart_client[0].this_month.dataSuccess;
           const lineChartLabels =
             data.line_chart_client[0].this_month.labelsSuccess;
           setChartDataLine(lineChartData);
           setChartLinesLabels(lineChartLabels);
-          console.log("Data fetched", data); 
+          console.log("Data fetched", data);
         } else {
           alert("No data found");
         }
@@ -38,4 +34,4 @@ const useChartData = (
   return { chartDataLine, chartLinesLabels };
 };
 
-export default useChartData;
+export default useLineChartData;
