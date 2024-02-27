@@ -15,6 +15,7 @@ import SearchPages from "../components/SearchPages/SearchPages";
 import ChartComponent from "../components/ChartComponent/ChartComponent";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
+import useBarChartData from "../hooks/useBarChartData";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -23,7 +24,7 @@ export default function Home() {
   );
 
   const { chartDataLine, chartLinesLabels } = useLineChartData(
-    `${apiURL}/clientCharts/`,
+    `${apiURL}/lineChartClient/`,
     {
       method: "POST",
       headers: {
@@ -33,6 +34,22 @@ export default function Home() {
       body: JSON.stringify({
         id: 14,
         timezone: "America/Mexico_City",
+      }),
+    }
+  );
+
+  const { barChartDataLine, barChartLinesLabels } = useBarChartData(
+    `${apiURL}/barChartClient/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "token " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        id: 14,
+        timezone: "America/Mexico_City",
+        days: 90,
       }),
     }
   );
@@ -78,13 +95,18 @@ export default function Home() {
             </h1>
           </div>
           <div className={styles.bottomContainer}>
-            <ChartComponent
-              data={chartDataLine}
-              labels={chartLinesLabels}
-              chartType="line"
-              graphTitle="My Graph"
-              colors={["#803fe0"]}
-            />
+            <div className={styles.topGraphsContainer}>
+
+            </div>
+            <div className={styles.bottomGraphsContainer}>
+              <ChartComponent
+                data={barChartDataLine}
+                labels={barChartLinesLabels}
+                chartType="bar"
+                graphTitle="My Bar Graph"
+                colors={["#803fe0"]}
+              />
+            </div>
           </div>
         </div>
       </main>

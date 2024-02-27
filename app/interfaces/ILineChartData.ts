@@ -1,4 +1,4 @@
-export interface ChartData {
+export interface LineChartData {
   chartDataLine: any[];
   chartLinesLabels: any[];
 }

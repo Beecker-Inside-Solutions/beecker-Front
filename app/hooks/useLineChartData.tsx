@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ChartData } from "../interfaces/IChartData";
+import { LineChartData } from "../interfaces/ILineChartData";
 const useLineChartData = (
   apiEndpoint: string,
   options: RequestInit = {}
-): ChartData => {
+): LineChartData => {
   const [chartDataLine, setChartDataLine] = useState<any[]>([]);
   const [chartLinesLabels, setChartLinesLabels] = useState<any[]>([]);
 
