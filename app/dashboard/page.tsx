@@ -11,11 +11,9 @@ import ChartComponent from "../components/ChartComponent/ChartComponent";
 import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
-import useBarChartData from "../hooks/useBarChartData";
-import usePieChartData from "../hooks/usePieChartData";
-import useDoughnotChartData from "../hooks/useDoughnotChartData";
-import useFetchTransactionsData from "../hooks/useFetchTransactionsData";
 
+import useFetchTransactionsData from "../hooks/useFetchTransactionsData";
+import useBotBarChartData from "../hooks/useBotBarChartData";
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -32,12 +30,21 @@ export default function Home() {
     if (storedProfileImg) setProfileImg(storedProfileImg);
   }, []);
 
+  /*
+    Graph Hooks:
+  */
+
+  // Bot Hooks
+  const { transactions, transactionsLabels } = useFetchTransactionsData();
+  const { botBarData, botBarLabels } = useBotBarChartData();
+
+  /*
+    Functions:
+  */
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * graphColors.length);
     return graphColors[randomIndex].hexCode;
   };
-
-  const { transactions, transactionsLabels } = useFetchTransactionsData();
 
   return (
     <>
@@ -62,34 +69,40 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.topContainer}>
             <h1
-            className={styles.title}
+              className={styles.title}
             >{`${languageValues.dashboard.welcome}, ${userName}`}</h1>
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
-              <div className={styles.graphLeftContainer}>
-
-              </div>
+              <div className={styles.graphLeftContainer}></div>
               <div className={styles.graphCenterContainer}></div>
               <div className={styles.graphRightContainer}></div>
             </div>
             <div className={styles.bottomGraphsContainer}>
               <div className={styles.titleContainer}>
-                <p
-                className={styles.bottomTitle}
-                >{languageValues.dashboard.bottomTitle}</p>
+                <p className={styles.bottomTitle}>
+                  {languageValues.dashboard.botCharts}
+                </p>
               </div>
               <div className={styles.botGraphsContainer}>
                 <div className={styles.graphLeftContainer}>
-                <ChartComponent
-                  chartType="line"
-                  data={transactions}
-                  labels={transactionsLabels}
-                  graphTitle={languageValues.dashboard.transactionsTitle}
-                  borderColor={getRandomColor()}
-                />
+                  <ChartComponent
+                    chartType="line"
+                    data={transactions}
+                    labels={transactionsLabels}
+                    graphTitle={languageValues.dashboard.transactionsTitle}
+                    borderColor={getRandomColor()}
+                  />
                 </div>
-                <div className={styles.graphCenterContainer}></div>
+                <div className={styles.graphCenterContainer}>
+                  <ChartComponent
+                    chartType="bar"
+                    data={botBarData}
+                    labels={botBarLabels}
+                    graphTitle={languageValues.dashboard.botBarTitle}
+                    borderColor={getRandomColor()}
+                  />
+                </div>
                 <div className={styles.graphRightContainer}></div>
               </div>
             </div>

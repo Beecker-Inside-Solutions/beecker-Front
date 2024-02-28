@@ -56,6 +56,6 @@
     "welcome": "Welcome",
     "logout": "Log Out",
     "bottomTitle": "Transactions Charts",
-    "transactionsTitle": "Transactions"
+    "botCharts": "Charts of active bots"
   }
 }
