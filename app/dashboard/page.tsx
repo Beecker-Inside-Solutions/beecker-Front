@@ -12,7 +12,7 @@ import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
 import useBarChartData from "../hooks/useBarChartData";
-
+import usePieChartData from "../hooks/usePieChartData";
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -60,6 +60,19 @@ export default function Home() {
       }),
     }
   );
+
+  const { PieChartData, PieChartLines } = usePieChartData(
+    `${apiURL}/pieChartClient/`,
+    {
+      ...lineChartOptions,
+      body: JSON.stringify({
+        id: 14,
+      }),
+    }
+  );
+
+  console.log("PieChartData", PieChartData);
+  console.log("PieChartLines", PieChartLines);
 
   return (
     <>
@@ -131,8 +144,8 @@ export default function Home() {
               </div>
               <div className={styles.graphCenterContainer}>
                 <ChartComponent
-                  data={chartDataLine}
-                  labels={chartLinesLabels}
+                  data={PieChartData}
+                  labels={PieChartLines}
                   chartType="pie"
                   graphTitle="Line Chart"
                   isFilled={false}

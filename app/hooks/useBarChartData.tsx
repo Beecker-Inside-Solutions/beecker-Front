@@ -22,8 +22,6 @@ const useBarChartData = (
             const arrayOfData = [dataSuccess, dataFailed];
             setChartDataLine(arrayOfData);
             setChartLinesLabels(labels);
-            console.log("labels", labels);
-            console.log("arrayOfData", arrayOfData);
           } else {
             console.error("Labels or data not found in API response");
             // Handle the case when labels or data are missing
