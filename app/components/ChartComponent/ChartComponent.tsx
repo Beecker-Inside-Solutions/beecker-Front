@@ -1,7 +1,6 @@
-// Chart.tsx
-
 import React, { useEffect, useRef } from "react";
 import Chart, { ChartTypeRegistry } from "chart.js/auto";
+import styles from "./ChartComponent.module.css";
 
 // Define valid chart types
 const validChartTypes: Array<keyof ChartTypeRegistry> = [
@@ -20,7 +19,9 @@ interface ChartProps {
   labels: string[];
   graphTitle?: string;
   isFilled?: boolean;
-  chartType: keyof ChartTypeRegistry; // Use the correct type
+  chartType: keyof ChartTypeRegistry;
+  borderColor?: string | string[];
+  cName?: string; // Add cName prop for the classname
 }
 
 const ChartComponent: React.FC<ChartProps> = ({
@@ -29,6 +30,8 @@ const ChartComponent: React.FC<ChartProps> = ({
   graphTitle,
   isFilled,
   chartType,
+  borderColor = "rgba(75,192,192,1)", // Use default color if not provided
+  cName, // Receive cName prop
 }) => {
   if (!validChartTypes.includes(chartType)) {
     throw new Error(`Invalid chart type: ${chartType}`);
@@ -54,7 +57,7 @@ const ChartComponent: React.FC<ChartProps> = ({
                 label: graphTitle,
                 data,
                 fill: isFilled ? true : false,
-                borderColor: "rgba(75,192,192,1)",
+                borderColor: borderColor,
                 borderWidth: 2,
                 pointRadius: 5,
                 pointHoverRadius: 8,
@@ -71,10 +74,10 @@ const ChartComponent: React.FC<ChartProps> = ({
         chartInstance.current.destroy();
       }
     };
-  }, [data, labels, graphTitle, chartType, isFilled]);
+  }, [data, labels, graphTitle, chartType, isFilled, borderColor]);
 
   return (
-    <div>
+    <div className={`${styles.chartContainer} ${cName}`}>
       <canvas ref={chartRef}></canvas>
     </div>
   );

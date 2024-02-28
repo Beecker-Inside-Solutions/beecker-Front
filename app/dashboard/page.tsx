@@ -39,9 +39,6 @@ export default function Home() {
     }
   );
 
-  const data = [12, 19, 3, 5, 2, 3];
-  const labels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
-
   const [userName, setUserName] = useState("");
   const [getProfileImg, setProfileImg] = useState("");
   useEffect(() => {
@@ -84,25 +81,104 @@ export default function Home() {
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
-              {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+              <div className={styles.graphLeftContainer}>
+                {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={chartDataLine}
+                    labels={chartLinesLabels}
+                    chartType="line"
+                    graphTitle="Line Chart"
+                    isFilled={false}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
+              </div>
+              <div className={styles.graphCenterContainer}>
                 <ChartComponent
                   data={chartDataLine}
-                  labels={chartLinesLabels}
-                  chartType="line"
-                  graphTitle="My Line Graph"
+                  labels={[
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                  ]}
+                  chartType="pie"
+                  graphTitle="Pie Chart"
+                  isFilled={false}
+                  borderColor={["#6200d1"]}
+                  cName={styles.pieChartContainer}
                 />
-              ) : (
-                <p className={styles.loadingText}>Loading...</p>
-              )}
+              </div>
+              <div className={styles.graphRightContainer}>
+                <ChartComponent
+                  data={chartDataLine}
+                  labels={[
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                  ]}
+                  chartType="bar"
+                  graphTitle="Bar Chart"
+                  isFilled={true}
+                  borderColor={["#6200d1"]}
+                />
+              </div>
             </div>
             <div className={styles.bottomGraphsContainer}>
-              <ChartComponent
-                data={data}
-                labels={labels}
-                graphTitle="Sample Chart"
-                isFilled={true}
-                chartType="line"
-              />s
+              {" "}
+              <div className={styles.graphLeftContainer}>
+                {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={chartDataLine}
+                    labels={chartLinesLabels}
+                    chartType="line"
+                    graphTitle="Line Chart"
+                    isFilled={false}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
+              </div>
+              <div className={styles.graphCenterContainer}>
+                <ChartComponent
+                  data={chartDataLine}
+                  labels={[
+                    "January",
+                    "February",
+
+                  ]}
+                  chartType="pie"
+                  graphTitle="Pie Chart"
+                  isFilled={false}
+                  borderColor={["#6200d1"]}
+                  cName={styles.pieChartContainer}
+                />
+              </div>
+              <div className={styles.graphRightContainer}>
+                <ChartComponent
+                  data={chartDataLine}
+                  labels={[
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                  ]}
+                  chartType="bar"
+                  graphTitle="Bar Chart"
+                  isFilled={true}
+                  borderColor={["#6200d1"]}
+                />
+              </div>
             </div>
           </div>
         </div>
