@@ -24,8 +24,6 @@ const useLineChartData = (
           const arrayOfLabels = jsonData.labelsSuccess.concat(
             jsonData.labelsFailed
           );
-          // console.log(arrayOFData);
-          //console.log(arrayOfLabels);
           setChartDataLine(arrayOFData);
           setChartLinesLabels(arrayOfLabels);
         } else {

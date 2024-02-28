@@ -14,8 +14,20 @@ const useBarChartData = (
         const response = await fetch(apiEndpoint, options);
         const data = await response.json();
         if (data.message === "SUCCESS") {
-          setChartDataLine(data.dataSuccess);
-          setChartLinesLabels(data.labels);
+          // Ensure that labels, dataSuccess, and dataFailed are defined
+          if (data.labels && data.dataSuccess && data.dataFailed) {
+            const labels = data.labels;
+            const dataSuccess = data.dataSuccess;
+            const dataFailed = data.dataFailed;
+            const arrayOfData = [dataSuccess, dataFailed];
+            setChartDataLine(arrayOfData);
+            setChartLinesLabels(labels);
+            console.log("labels", labels);
+            console.log("arrayOfData", arrayOfData);
+          } else {
+            console.error("Labels or data not found in API response");
+            // Handle the case when labels or data are missing
+          }
         } else {
           alert("No data found");
         }
@@ -25,7 +37,7 @@ const useBarChartData = (
     };
 
     fetchData();
-  }, [apiEndpoint, JSON.stringify(options)]); // Include options in the dependency array
+  }, [apiEndpoint, JSON.stringify(options)]);
 
   return { barChartDataLine, barChartLinesLabels };
 };

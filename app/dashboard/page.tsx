@@ -16,6 +16,8 @@ import ChartComponent from "../components/ChartComponent/ChartComponent";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
 import useBarChartData from "../hooks/useBarChartData";
+
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -35,6 +37,22 @@ export default function Home() {
         id: 73,
         timezone: "America/Mexico_City",
         intervaltime: "yearly",
+      }),
+    }
+  );
+
+  const { barChartDataLine, barChartLinesLabels } = useBarChartData(
+    `${apiURL}/barChartClient/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "token c8611ccb12550346b6c35a7b206fba75a43c20de",
+      },
+      body: JSON.stringify({
+        id: 14,
+        timezone: "America/Mexico_City",
+        days: 90,
       }),
     }
   );
@@ -96,39 +114,33 @@ export default function Home() {
                 )}
               </div>
               <div className={styles.graphCenterContainer}>
-                <ChartComponent
-                  data={chartDataLine}
-                  labels={[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                  ]}
-                  chartType="pie"
-                  graphTitle="Pie Chart"
-                  isFilled={false}
-                  borderColor={["#6200d1"]}
-                  cName={styles.pieChartContainer}
-                />
+                {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={chartDataLine}
+                    labels={chartLinesLabels}
+                    chartType="line"
+                    graphTitle="Line Chart"
+                    isFilled={false}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
               </div>
               <div className={styles.graphRightContainer}>
-                <ChartComponent
-                  data={chartDataLine}
-                  labels={[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                  ]}
-                  chartType="bar"
-                  graphTitle="Bar Chart"
-                  isFilled={true}
-                  borderColor={["#6200d1"]}
-                />
+                {barChartDataLine.length > 0 &&
+                barChartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={barChartDataLine}
+                    labels={barChartLinesLabels}
+                    chartType="bar"
+                    graphTitle="Bar Chart"
+                    isFilled={true}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
               </div>
             </div>
             <div className={styles.bottomGraphsContainer}>
@@ -148,36 +160,33 @@ export default function Home() {
                 )}
               </div>
               <div className={styles.graphCenterContainer}>
-                <ChartComponent
-                  data={chartDataLine}
-                  labels={[
-                    "January",
-                    "February",
-
-                  ]}
-                  chartType="pie"
-                  graphTitle="Pie Chart"
-                  isFilled={false}
-                  borderColor={["#6200d1"]}
-                  cName={styles.pieChartContainer}
-                />
+                {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={chartDataLine}
+                    labels={chartLinesLabels}
+                    chartType="line"
+                    graphTitle="Line Chart"
+                    isFilled={false}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
               </div>
               <div className={styles.graphRightContainer}>
-                <ChartComponent
-                  data={chartDataLine}
-                  labels={[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                  ]}
-                  chartType="bar"
-                  graphTitle="Bar Chart"
-                  isFilled={true}
-                  borderColor={["#6200d1"]}
-                />
+                {barChartDataLine.length > 0 &&
+                barChartLinesLabels.length > 0 ? (
+                  <ChartComponent
+                    data={barChartDataLine}
+                    labels={barChartLinesLabels}
+                    chartType="bar"
+                    graphTitle="Bar Chart"
+                    isFilled={true}
+                    borderColor={["#6200d1"]}
+                  />
+                ) : (
+                  <p className={styles.loadingText}>Loading...</p>
+                )}
               </div>
             </div>
           </div>
@@ -187,3 +196,53 @@ export default function Home() {
     </>
   );
 }
+
+const renderChartComponent = (data: any, labels: any, chartType: any) => {
+  const isLoading = data.length === 0 || labels.length === 0;
+  return (
+    <>
+      <div className={styles.graphLeftContainer}>
+        {isLoading ? (
+          <p className={styles.loadingText}>Loading...</p>
+        ) : (
+          <ChartComponent
+            data={data}
+            labels={labels}
+            chartType={chartType}
+            graphTitle={chartType === "line" ? "Line Chart" : "Bar Chart"}
+            isFilled={chartType === "bar"}
+            borderColor={["#6200d1"]}
+          />
+        )}
+      </div>
+      <div className={styles.graphCenterContainer}>
+        {isLoading ? (
+          <p className={styles.loadingText}>Loading...</p>
+        ) : (
+          <ChartComponent
+            data={data}
+            labels={labels}
+            chartType={chartType}
+            graphTitle={chartType === "line" ? "Line Chart" : "Bar Chart"}
+            isFilled={chartType === "bar"}
+            borderColor={["#6200d1"]}
+          />
+        )}
+      </div>
+      <div className={styles.graphRightContainer}>
+        {isLoading ? (
+          <p className={styles.loadingText}>Loading...</p>
+        ) : (
+          <ChartComponent
+            data={data}
+            labels={labels}
+            chartType={chartType}
+            graphTitle={chartType === "line" ? "Line Chart" : "Bar Chart"}
+            isFilled={chartType === "bar"}
+            borderColor={["#6200d1"]}
+          />
+        )}
+      </div>
+    </>
+  );
+};
