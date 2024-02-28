@@ -11,12 +11,16 @@ import ChartComponent from "../components/ChartComponent/ChartComponent";
 import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
+import downArrow from "@/app/images/icons/closeArrow.png";
+import upArrow from "@/app/images/icons/openArrow.png";
 
 import useFetchTransactionsData from "../hooks/useFetchTransactionsData";
 import useBotBarChartData from "../hooks/useBotBarChartData";
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
+  const [BotCharts, setBotCharts] = useState(true);
+
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
     require("@/esValues.json"),
@@ -44,6 +48,10 @@ export default function Home() {
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * graphColors.length);
     return graphColors[randomIndex].hexCode;
+  };
+
+  const toggleDropdownBotCharts = () => {
+    setBotCharts((prevState) => !prevState);
   };
 
   return (
@@ -79,32 +87,41 @@ export default function Home() {
               <div className={styles.graphRightContainer}></div>
             </div>
             <div className={styles.bottomGraphsContainer}>
-              <div className={styles.titleContainer}>
+              <div className={styles.titleContainer} onClick={toggleDropdownBotCharts}>
                 <p className={styles.bottomTitle}>
                   {languageValues.dashboard.botCharts}
                 </p>
+                {BotCharts ? (
+                  <img src={downArrow.src} alt="arrow-up" />
+                ) : (
+                  <img src={upArrow.src} alt="arrow-down" />
+                )}
               </div>
-              <div className={styles.botGraphsContainer}>
-                <div className={styles.graphLeftContainer}>
-                  <ChartComponent
-                    chartType="line"
-                    data={transactions}
-                    labels={transactionsLabels}
-                    graphTitle={languageValues.dashboard.transactionsTitle}
-                    borderColor={getRandomColor()}
-                  />
+              {BotCharts && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.botGraphsContainer}>
+                    <div className={styles.graphLeftContainer}>
+                      <ChartComponent
+                        chartType="line"
+                        data={transactions}
+                        labels={transactionsLabels}
+                        graphTitle={languageValues.dashboard.transactionsTitle}
+                        borderColor={getRandomColor()}
+                      />
+                    </div>
+                    <div className={styles.graphCenterContainer}>
+                      <ChartComponent
+                        chartType="bar"
+                        data={botBarData}
+                        labels={botBarLabels}
+                        graphTitle={languageValues.dashboard.botBarTitle}
+                        borderColor={getRandomColor()}
+                      />
+                    </div>
+                    <div className={styles.graphRightContainer}></div>
+                  </div>
                 </div>
-                <div className={styles.graphCenterContainer}>
-                  <ChartComponent
-                    chartType="bar"
-                    data={botBarData}
-                    labels={botBarLabels}
-                    graphTitle={languageValues.dashboard.botBarTitle}
-                    borderColor={getRandomColor()}
-                  />
-                </div>
-                <div className={styles.graphRightContainer}></div>
-              </div>
+              )}
             </div>
           </div>
         </div>
