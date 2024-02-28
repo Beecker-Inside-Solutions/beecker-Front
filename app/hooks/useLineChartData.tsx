@@ -1,35 +1,43 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { LineChartData } from "../interfaces/ILineChartData";
+
 const useLineChartData = (
   apiEndpoint: string,
   options: RequestInit = {}
 ): LineChartData => {
-  const [chartDataLine, setChartDataLine] = useState<any[]>([]);
-  const [chartLinesLabels, setChartLinesLabels] = useState<any[]>([]);
+  const [chartDataLine, setChartDataLine] = useState<number[]>([]);
+  const [chartLinesLabels, setChartLinesLabels] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(apiEndpoint, options);
-        const data = await response.json();
-        if (data.line_chart_client && data.line_chart_client.length > 0) {
-          const lineChartData =
-            data.line_chart_client[0].this_month.dataSuccess;
-          const lineChartLabels =
-            data.line_chart_client[0].this_month.labelsSuccess;
-          setChartDataLine(lineChartData);
-          setChartLinesLabels(lineChartLabels);
-          console.log("Data fetched", data);
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const jsonData = await response.json();
+
+        if (jsonData.message === "SUCCESS") {
+          const successData = jsonData.dataSuccess;
+          const failedData = jsonData.dataFailed;
+          const arrayOFData = successData.concat(failedData);
+          const arrayOfLabels = jsonData.labelsSuccess.concat(
+            jsonData.labelsFailed
+          );
+          console.log(arrayOFData);
+          console.log(arrayOfLabels);
+          setChartDataLine(arrayOFData);
+          setChartLinesLabels(arrayOfLabels);
         } else {
-          alert("No data found");
+          console.error("Failed to fetch data: ", jsonData.message);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching line chart data:", error);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []);
 
   return { chartDataLine, chartLinesLabels };
 };

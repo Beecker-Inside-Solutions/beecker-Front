@@ -16,7 +16,6 @@ const useBarChartData = (
         if (data.message === "SUCCESS") {
           setChartDataLine(data.dataSuccess);
           setChartLinesLabels(data.labels);
-          console.log("Data fetched", data);
         } else {
           alert("No data found");
         }

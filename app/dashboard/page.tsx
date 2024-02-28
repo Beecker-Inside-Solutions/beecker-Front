@@ -24,16 +24,17 @@ export default function Home() {
   );
 
   const { chartDataLine, chartLinesLabels } = useLineChartData(
-    `${apiURL}/lineChartClient/`,
+    `${apiURL}/lineChartProjects/`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "token " + localStorage.getItem("token"),
+        Authorization: "token c8611ccb12550346b6c35a7b206fba75a43c20de",
       },
       body: JSON.stringify({
-        id: 14,
+        id: 73,
         timezone: "America/Mexico_City",
+        intervaltime: "yearly",
       }),
     }
   );
@@ -96,17 +97,15 @@ export default function Home() {
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
-
-            </div>
-            <div className={styles.bottomGraphsContainer}>
               <ChartComponent
-                data={barChartDataLine}
-                labels={barChartLinesLabels}
-                chartType="bar"
-                graphTitle="My Bar Graph"
-                colors={["#803fe0"]}
+                data={chartDataLine}
+                labels={chartLinesLabels}
+                chartType="line" // Change chartType to "line"
+                graphTitle="My Line Graph" // Optional title for the graph
+                colors={["#803fe0"]} // Optional colors for the graph
               />
             </div>
+            <div className={styles.bottomGraphsContainer}></div>
           </div>
         </div>
       </main>
