@@ -58,6 +58,8 @@
     "welcome": "Bienvenido",
     "logout": "Log Out",
     "bottomTitle": "Transacciones",
+    "transactionsTitle": "Transacciones",
+    "botBarTitle": "Bots",
     "botCharts": "Gráficas de bots activos"
   }
 }

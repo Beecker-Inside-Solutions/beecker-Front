@@ -19,6 +19,10 @@ import useBotBarChartData from "../hooks/useBotBarChartData";
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
+
+  /*
+    Charts displays:
+  */
   const [BotCharts, setBotCharts] = useState(true);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -50,6 +54,9 @@ export default function Home() {
     return graphColors[randomIndex].hexCode;
   };
 
+  /*
+    Dropdowns:
+  */
   const toggleDropdownBotCharts = () => {
     setBotCharts((prevState) => !prevState);
   };
@@ -87,7 +94,10 @@ export default function Home() {
               <div className={styles.graphRightContainer}></div>
             </div>
             <div className={styles.bottomGraphsContainer}>
-              <div className={styles.titleContainer} onClick={toggleDropdownBotCharts}>
+              <div
+                className={styles.titleContainer}
+                onClick={toggleDropdownBotCharts}
+              >
                 <p className={styles.bottomTitle}>
                   {languageValues.dashboard.botCharts}
                 </p>
@@ -109,7 +119,8 @@ export default function Home() {
                         borderColor={getRandomColor()}
                       />
                     </div>
-                    <div className={styles.graphCenterContainer}>
+                    <div className={styles.graphCenterContainer}></div>
+                    <div className={styles.graphRightContainer}>
                       <ChartComponent
                         chartType="bar"
                         data={botBarData}
@@ -118,7 +129,6 @@ export default function Home() {
                         borderColor={getRandomColor()}
                       />
                     </div>
-                    <div className={styles.graphRightContainer}></div>
                   </div>
                 </div>
               )}
