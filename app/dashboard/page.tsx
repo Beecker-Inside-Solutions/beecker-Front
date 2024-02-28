@@ -13,6 +13,7 @@ import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
 import useBarChartData from "../hooks/useBarChartData";
 import usePieChartData from "../hooks/usePieChartData";
+import useDoughnotChartData from "../hooks/useDoughnotChartData";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -71,6 +72,17 @@ export default function Home() {
       }),
     }
   );
+
+  const { doughnotChartDataLine, doughnotChartLinesLabels } =
+    useDoughnotChartData(`${apiURL}/doughnutChartClient/`, {
+      ...lineChartOptions,
+      body: JSON.stringify({
+        id: 14,
+      }),
+    });
+
+  console.log(doughnotChartDataLine, doughnotChartLinesLabels);
+
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * graphColors.length);
     return graphColors[randomIndex].hexCode;
@@ -114,11 +126,12 @@ export default function Home() {
               </div>
               <div className={styles.graphCenterContainer}>
                 <ChartComponent
-                  data={chartDataLine}
-                  labels={chartLinesLabels}
-                  chartType="line"
+                  data={PieChartData}
+                  labels={PieChartLines}
+                  chartType="pie"
                   graphTitle="Line Chart"
                   isFilled={false}
+                  cName={styles.pieChart}
                   borderColor={getRandomColor()}
                 />
               </div>
@@ -146,12 +159,11 @@ export default function Home() {
               </div>
               <div className={styles.graphCenterContainer}>
                 <ChartComponent
-                  data={PieChartData}
-                  labels={PieChartLines}
-                  chartType="pie"
+                  data={doughnotChartDataLine}
+                  labels={doughnotChartLinesLabels}
+                  chartType="doughnut"
                   graphTitle="Pie Chart"
                   isFilled={true}
-                  
                   cName={styles.pieChart}
                   borderColor={getRandomColor()}
                 />
