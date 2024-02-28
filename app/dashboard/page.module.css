@@ -123,6 +123,8 @@
   height: 10%;
   padding: 1em;
   border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+
 }
 
 .botGraphsContainer {
@@ -135,11 +137,10 @@
   padding: 1em;
 }
 
-.titleContainer h1{
+.titleContainer h1 {
   font-size: 2.5rem;
   font-weight: 100;
   margin-bottom: 1rem;
-
 }
 
 @media (max-width: 767px) {
