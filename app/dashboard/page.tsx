@@ -24,6 +24,7 @@ export default function Home() {
   */
   const [BotCharts, setBotCharts] = useState(true);
   const [EnvironmentCharts, setEnvironmentCharts] = useState(true);
+  const [ClientCharts, setClientCharts] = useState(true);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -65,6 +66,10 @@ export default function Home() {
     setEnvironmentCharts((prevState) => !prevState);
   };
 
+  const toggleDropdownClientCharts = () => {
+    setClientCharts((prevState) => !prevState);
+  };
+
   return (
     <>
       <LateralNavbar
@@ -92,7 +97,34 @@ export default function Home() {
             >{`${languageValues.dashboard.welcome}, ${userName}`}</h1>
           </div>
           <div className={styles.bottomContainer}>
+            {/* TopCharts */}
+
             <div className={styles.topGraphsContainer}>
+              <div
+                className={styles.titleContainer}
+                onClick={toggleDropdownClientCharts}
+              >
+                <p className={styles.bottomTitle}>
+                  {languageValues.dashboard.clientCharts}
+                </p>
+                {ClientCharts ? (
+                  <img src={downArrow.src} alt="arrow-up" />
+                ) : (
+                  <img src={upArrow.src} alt="arrow-down" />
+                )}
+              </div>
+              {ClientCharts && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.botGraphsContainer}>
+                    <div className={styles.graphLeftContainer}></div>
+                    <div className={styles.graphCenterContainer}></div>
+                    <div className={styles.graphRightContainer}></div>
+                  </div>
+                </div>
+              )}
+            </div>
+            {/* MediumCharts */}
+            <div className={styles.bottomGraphsContainer}>
               <div
                 className={styles.titleContainer}
                 onClick={toggleDropdownEnvironmentCharts}
@@ -109,30 +141,14 @@ export default function Home() {
               {EnvironmentCharts && (
                 <div className={styles.dropdownMenu}>
                   <div className={styles.botGraphsContainer}>
-                    <div className={styles.graphLeftContainer}>
-                      <ChartComponent
-                        chartType="line"
-                        data={transactions}
-                        labels={transactionsLabels}
-                        graphTitle={languageValues.dashboard.transactionsTitle}
-                        borderColor={getRandomColor()}
-                      />
-                    </div>
+                    <div className={styles.graphLeftContainer}></div>
                     <div className={styles.graphCenterContainer}></div>
-                    <div className={styles.graphRightContainer}>
-                      <ChartComponent
-                        chartType="bar"
-                        data={botBarData}
-                        labels={botBarLabels}
-                        graphTitle={languageValues.dashboard.botBarTitle}
-                        borderColor={getRandomColor()}
-                      />
-                    </div>
+                    <div className={styles.graphRightContainer}></div>
                   </div>
                 </div>
               )}
             </div>
-
+            {/* BottomCharts */}
             <div className={styles.bottomGraphsContainer}>
               <div
                 className={styles.titleContainer}

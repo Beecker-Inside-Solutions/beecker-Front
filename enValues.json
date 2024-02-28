@@ -59,6 +59,7 @@
     "environmentTitleCharts": "Environment",
     "transactionsTitle": "Transactions",
     "botBarTitle": "Bots",
+    "clientCharts": "Client Charts",
     "environmentCharts": "Environment Charts",
     "botCharts": "Charts of active bots"
   }
