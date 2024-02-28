@@ -39,21 +39,8 @@ export default function Home() {
     }
   );
 
-  const { barChartDataLine, barChartLinesLabels } = useBarChartData(
-    `${apiURL}/barChartClient/`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "token " + localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        id: 14,
-        timezone: "America/Mexico_City",
-        days: 90,
-      }),
-    }
-  );
+  const data = [12, 19, 3, 5, 2, 3];
+  const labels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
 
   const [userName, setUserName] = useState("");
   const [getProfileImg, setProfileImg] = useState("");
@@ -97,15 +84,26 @@ export default function Home() {
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
-              <ChartComponent
-                data={chartDataLine}
-                labels={chartLinesLabels}
-                chartType="line" // Change chartType to "line"
-                graphTitle="My Line Graph" // Optional title for the graph
-                colors={["#803fe0"]} // Optional colors for the graph
-              />
+              {chartDataLine.length > 0 && chartLinesLabels.length > 0 ? (
+                <ChartComponent
+                  data={chartDataLine}
+                  labels={chartLinesLabels}
+                  chartType="line"
+                  graphTitle="My Line Graph"
+                />
+              ) : (
+                <p className={styles.loadingText}>Loading...</p>
+              )}
             </div>
-            <div className={styles.bottomGraphsContainer}></div>
+            <div className={styles.bottomGraphsContainer}>
+              <ChartComponent
+                data={data}
+                labels={labels}
+                graphTitle="Sample Chart"
+                isFilled={true}
+                chartType="line"
+              />s
+            </div>
           </div>
         </div>
       </main>

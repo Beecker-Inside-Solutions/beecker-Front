@@ -11,6 +11,12 @@
   margin: 0 auto;
 }
 
+.loadingText {
+  font-size: 2rem;
+  font-weight: 100;
+  margin-bottom: 1rem;
+  color: #000;
+}
 .container {
   display: flex;
   flex-direction: column;
