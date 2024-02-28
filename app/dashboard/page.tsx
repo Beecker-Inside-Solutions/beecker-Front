@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import useMultilingualValues from "../hooks/useMultilingualValues";
-import { apiURL, routes } from "@/Constants";
+import { apiURL, graphColors } from "@/Constants";
 import logo from "../../app/images/logos/logo.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import RightBar from "../components/RightBar/RightBar";
@@ -13,6 +13,7 @@ import AuthRoute from "../components/AuthComponent/AuthComponent";
 import useLineChartData from "../hooks/useLineChartData";
 import useBarChartData from "../hooks/useBarChartData";
 import usePieChartData from "../hooks/usePieChartData";
+
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -70,9 +71,10 @@ export default function Home() {
       }),
     }
   );
-
-  console.log("PieChartData", PieChartData);
-  console.log("PieChartLines", PieChartLines);
+  const getRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * graphColors.length);
+    return graphColors[randomIndex].hexCode;
+  };
 
   return (
     <>
@@ -107,7 +109,7 @@ export default function Home() {
                   chartType="line"
                   graphTitle="Line Chart"
                   isFilled={false}
-                  borderColor={["#6200d1"]}
+                  borderColor={getRandomColor()}
                 />
               </div>
               <div className={styles.graphCenterContainer}>
@@ -117,7 +119,7 @@ export default function Home() {
                   chartType="line"
                   graphTitle="Line Chart"
                   isFilled={false}
-                  borderColor={["#6200d1"]}
+                  borderColor={getRandomColor()}
                 />
               </div>
               <div className={styles.graphRightContainer}>
@@ -139,7 +141,7 @@ export default function Home() {
                   chartType="line"
                   graphTitle="Line Chart"
                   isFilled={false}
-                  borderColor={["#6200d1"]}
+                  borderColor={getRandomColor()}
                 />
               </div>
               <div className={styles.graphCenterContainer}>
@@ -160,7 +162,7 @@ export default function Home() {
                   chartType="bar"
                   graphTitle="Bar Chart"
                   isFilled={true}
-                  borderColor={["#6200d1"]}
+                  borderColor={getRandomColor()}
                 />
               </div>
             </div>

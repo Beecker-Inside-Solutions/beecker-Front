@@ -7,6 +7,8 @@ import settingsImage from "@/app/images/icons/settings.png";
 import mexicoIcon from "@/app/images/icons/mexico.png";
 import ukIcon from "@/app/images/icons/uk.png";
 import profileIcon from "@/app/images/icons/profile.png";
+import { IDefaultColors } from "./app/interfaces/IDefaultColors";
+
 export const apiURL = "https://dev.api.dashboard.beecker.ai/api";
 
 export const languages: ILanguage[] = [
@@ -54,3 +56,17 @@ export const regex: IRegex = {
     `^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})`
   ),
 };
+
+
+export const graphColors : IDefaultColors[] = [
+  { colorName: "rojo", hexCode: "#e74949" },
+  { colorName: "azul", hexCode: "#803fe0" },
+  { colorName: "morado", hexCode: "#6200d1" },
+  { colorName: "verde", hexCode: "#00ff00" },
+  { colorName: "amarillo", hexCode: "#ffff00" },
+  { colorName: "naranja", hexCode: "#ff6600" },
+  { colorName: "rosa", hexCode: "#ff00ff" },
+  { colorName: "cafe", hexCode: "#663300" },
+  { colorName: "verde-oscuro", hexCode: "#006600" },
+  { colorName: "azul-oscuro", hexCode: "#0000ff" },
+];
