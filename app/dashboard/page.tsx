@@ -149,10 +149,11 @@ export default function Home() {
                   data={PieChartData}
                   labels={PieChartLines}
                   chartType="pie"
-                  graphTitle="Line Chart"
-                  isFilled={false}
+                  graphTitle="Pie Chart"
+                  isFilled={true}
+                  
                   cName={styles.pieChart}
-                  borderColor={["#6200d1"]}
+                  borderColor={getRandomColor()}
                 />
               </div>
               <div className={styles.graphRightContainer}>

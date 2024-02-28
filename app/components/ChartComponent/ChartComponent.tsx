@@ -21,6 +21,7 @@ interface ChartProps {
   isFilled?: boolean;
   chartType: keyof ChartTypeRegistry;
   borderColor?: string | string[];
+  fillColor?: string; // Added fill color prop
   cName?: string; // Add cName prop for the classname
 }
 
@@ -30,8 +31,9 @@ const ChartComponent: React.FC<ChartProps> = ({
   graphTitle,
   isFilled,
   chartType,
-  borderColor = "rgba(75,192,192,1)", // Use default color if not provided
-  cName, // Receive cName prop
+  borderColor = "rgba(75,192,192,1)",
+  fillColor, // Receive fill color prop
+  cName,
 }) => {
   if (!validChartTypes.includes(chartType)) {
     throw new Error(`Invalid chart type: ${chartType}`);
@@ -58,6 +60,7 @@ const ChartComponent: React.FC<ChartProps> = ({
                 data,
                 fill: isFilled ? true : false,
                 borderColor: borderColor,
+                backgroundColor: fillColor, // Set fill color
                 borderWidth: 2,
                 pointRadius: 5,
                 pointHoverRadius: 8,
@@ -74,7 +77,7 @@ const ChartComponent: React.FC<ChartProps> = ({
         chartInstance.current.destroy();
       }
     };
-  }, [data, labels, graphTitle, chartType, isFilled, borderColor]);
+  }, [data, labels, graphTitle, chartType, isFilled, borderColor, fillColor]);
 
   return (
     <div className={`${styles.chartContainer} ${cName}`}>
