@@ -14,6 +14,7 @@ import useLineChartData from "../hooks/useLineChartData";
 import useBarChartData from "../hooks/useBarChartData";
 import usePieChartData from "../hooks/usePieChartData";
 import useDoughnotChartData from "../hooks/useDoughnotChartData";
+import useFetchTransactionsData from "../hooks/useFetchTransactionsData";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -31,62 +32,12 @@ export default function Home() {
     if (storedProfileImg) setProfileImg(storedProfileImg);
   }, []);
 
-  const lineChartOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "token c8611ccb12550346b6c35a7b206fba75a43c20de",
-    },
-  };
-
-  const { chartDataLine, chartLinesLabels } = useLineChartData(
-    `${apiURL}/lineChartProjects/`,
-    {
-      ...lineChartOptions,
-      body: JSON.stringify({
-        id: 73,
-        timezone: "America/Mexico_City",
-        intervaltime: "yearly",
-      }),
-    }
-  );
-
-  const { barChartDataLine, barChartLinesLabels } = useBarChartData(
-    `${apiURL}/barChartClient/`,
-    {
-      ...lineChartOptions,
-      body: JSON.stringify({
-        id: 14,
-        timezone: "America/Mexico_City",
-        days: 90,
-      }),
-    }
-  );
-
-  const { PieChartData, PieChartLines } = usePieChartData(
-    `${apiURL}/pieChartClient/`,
-    {
-      ...lineChartOptions,
-      body: JSON.stringify({
-        id: 14,
-      }),
-    }
-  );
-
-  const { doughnotChartDataLine, doughnotChartLinesLabels } =
-    useDoughnotChartData(`${apiURL}/doughnutChartClient/`, {
-      ...lineChartOptions,
-      body: JSON.stringify({
-        id: 14,
-      }),
-    });
-
-  console.log(doughnotChartDataLine, doughnotChartLinesLabels);
-
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * graphColors.length);
     return graphColors[randomIndex].hexCode;
   };
+
+  const { transactions, transactionsLabels } = useFetchTransactionsData();
 
   return (
     <>
@@ -110,73 +61,36 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>
-            <h1>{`${languageValues.dashboard.welcome}, ${userName}`}</h1>
+            <h1
+            className={styles.title}
+            >{`${languageValues.dashboard.welcome}, ${userName}`}</h1>
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
               <div className={styles.graphLeftContainer}>
-                <ChartComponent
-                  data={chartDataLine}
-                  labels={chartLinesLabels}
-                  chartType="line"
-                  graphTitle="Line Chart"
-                  isFilled={false}
-                  borderColor={getRandomColor()}
-                />
+
               </div>
-              <div className={styles.graphCenterContainer}>
-                <ChartComponent
-                  data={PieChartData}
-                  labels={PieChartLines}
-                  chartType="pie"
-                  graphTitle="Line Chart"
-                  isFilled={false}
-                  cName={styles.pieChart}
-                  borderColor={getRandomColor()}
-                />
-              </div>
-              <div className={styles.graphRightContainer}>
-                <ChartComponent
-                  data={barChartDataLine}
-                  labels={barChartLinesLabels}
-                  chartType="bar"
-                  graphTitle="Bar Chart"
-                  isFilled={true}
-                  borderColor={["#6200d1"]}
-                />
-              </div>
+              <div className={styles.graphCenterContainer}></div>
+              <div className={styles.graphRightContainer}></div>
             </div>
             <div className={styles.bottomGraphsContainer}>
-              <div className={styles.graphLeftContainer}>
+              <div className={styles.titleContainer}>
+                <p
+                className={styles.bottomTitle}
+                >{languageValues.dashboard.bottomTitle}</p>
+              </div>
+              <div className={styles.botGraphsContainer}>
+                <div className={styles.graphLeftContainer}>
                 <ChartComponent
-                  data={chartDataLine}
-                  labels={chartLinesLabels}
                   chartType="line"
-                  graphTitle="Line Chart"
-                  isFilled={false}
+                  data={transactions}
+                  labels={transactionsLabels}
+                  graphTitle={languageValues.dashboard.transactionsTitle}
                   borderColor={getRandomColor()}
                 />
-              </div>
-              <div className={styles.graphCenterContainer}>
-                <ChartComponent
-                  data={doughnotChartDataLine}
-                  labels={doughnotChartLinesLabels}
-                  chartType="doughnut"
-                  graphTitle="Pie Chart"
-                  isFilled={true}
-                  cName={styles.pieChart}
-                  borderColor={getRandomColor()}
-                />
-              </div>
-              <div className={styles.graphRightContainer}>
-                <ChartComponent
-                  data={barChartDataLine}
-                  labels={barChartLinesLabels}
-                  chartType="bar"
-                  graphTitle="Bar Chart"
-                  isFilled={true}
-                  borderColor={getRandomColor()}
-                />
+                </div>
+                <div className={styles.graphCenterContainer}></div>
+                <div className={styles.graphRightContainer}></div>
               </div>
             </div>
           </div>
@@ -186,3 +100,7 @@ export default function Home() {
     </>
   );
 }
+
+/*
+
+*/

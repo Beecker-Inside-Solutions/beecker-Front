@@ -56,6 +56,8 @@
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Bienvenido",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "bottomTitle": "Transacciones",
+    "transactionsTitle": "Transacciones"
   }
 }

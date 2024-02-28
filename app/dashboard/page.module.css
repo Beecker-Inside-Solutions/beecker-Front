@@ -26,7 +26,6 @@
   width: 95%;
   max-width: 100%;
   margin-left: 180px;
-  
 }
 
 .topContainer,
@@ -50,7 +49,7 @@
   border-radius: 20px;
 }
 
-.topGraphsContainer{
+.topGraphsContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,19 +57,18 @@
   width: 100%;
   height: 25%;
   border-bottom: 1px solid #e0e0e0;
-  
 }
 
-.bottomGraphsContainer{
+.bottomGraphsContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 25%;
 }
 
-.graphLeftContainer{
+.graphLeftContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,20 +76,18 @@
   width: 25%;
   height: 100%;
   padding: 2em;
-
 }
 
-.graphCenterContainer{
+.graphCenterContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 50%;
   height: 100%;
-
 }
 
-.graphRightContainer{
+.graphRightContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,10 +95,9 @@
   width: 25%;
   height: 100%;
   padding: 2em;
-
 }
 
-.pieChart{
+.pieChart {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,6 +112,34 @@
   font-size: 2.5rem;
   font-weight: 100;
   margin-bottom: 1rem;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 10%;
+  padding: 1em;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.botGraphsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 90%;
+  padding: 1em;
+}
+
+.titleContainer h1{
+  font-size: 2.5rem;
+  font-weight: 100;
+  margin-bottom: 1rem;
+
 }
 
 @media (max-width: 767px) {
