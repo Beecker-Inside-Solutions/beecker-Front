@@ -12,9 +12,9 @@ import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import downArrow from "@/app/images/icons/closeArrow.png";
 import upArrow from "@/app/images/icons/openArrow.png";
-
-import useFetchTransactionsData from "../hooks/useFetchTransactionsData";
-import useBotBarChartData from "../hooks/useBotBarChartData";
+import useClientLineChart from "../hooks/ClientCharts/useClientLineChart";
+import useFetchTransactionsData from "../hooks/Transactions/useFetchTransactionsData";
+import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -46,7 +46,8 @@ export default function Home() {
   // Bot Hooks
   const { transactions, transactionsLabels } = useFetchTransactionsData();
   const { botBarData, botBarLabels } = useBotBarChartData();
-
+  const { clientLineData, clientLineLabels } = useClientLineChart(14, "monthly");
+    
   /*
     Functions:
   */
@@ -98,7 +99,6 @@ export default function Home() {
           </div>
           <div className={styles.bottomContainer}>
             {/* TopCharts */}
-
             <div className={styles.topGraphsContainer}>
               <div
                 className={styles.titleContainer}
