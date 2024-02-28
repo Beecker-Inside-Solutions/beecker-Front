@@ -10,7 +10,6 @@ import SearchPages from "../components/SearchPages/SearchPages";
 import ChartComponent from "../components/ChartComponent/ChartComponent";
 import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
-import useLineChartData from "../hooks/useLineChartData";
 import downArrow from "@/app/images/icons/closeArrow.png";
 import upArrow from "@/app/images/icons/openArrow.png";
 
@@ -24,6 +23,7 @@ export default function Home() {
     Charts displays:
   */
   const [BotCharts, setBotCharts] = useState(true);
+  const [EnvironmentCharts, setEnvironmentCharts] = useState(true);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -61,6 +61,10 @@ export default function Home() {
     setBotCharts((prevState) => !prevState);
   };
 
+  const toggleDropdownEnvironmentCharts = () => {
+    setEnvironmentCharts((prevState) => !prevState);
+  };
+
   return (
     <>
       <LateralNavbar
@@ -89,10 +93,46 @@ export default function Home() {
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
-              <div className={styles.graphLeftContainer}></div>
-              <div className={styles.graphCenterContainer}></div>
-              <div className={styles.graphRightContainer}></div>
+              <div
+                className={styles.titleContainer}
+                onClick={toggleDropdownEnvironmentCharts}
+              >
+                <p className={styles.bottomTitle}>
+                  {languageValues.dashboard.environmentCharts}
+                </p>
+                {EnvironmentCharts ? (
+                  <img src={downArrow.src} alt="arrow-up" />
+                ) : (
+                  <img src={upArrow.src} alt="arrow-down" />
+                )}
+              </div>
+              {EnvironmentCharts && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.botGraphsContainer}>
+                    <div className={styles.graphLeftContainer}>
+                      <ChartComponent
+                        chartType="line"
+                        data={transactions}
+                        labels={transactionsLabels}
+                        graphTitle={languageValues.dashboard.transactionsTitle}
+                        borderColor={getRandomColor()}
+                      />
+                    </div>
+                    <div className={styles.graphCenterContainer}></div>
+                    <div className={styles.graphRightContainer}>
+                      <ChartComponent
+                        chartType="bar"
+                        data={botBarData}
+                        labels={botBarLabels}
+                        graphTitle={languageValues.dashboard.botBarTitle}
+                        borderColor={getRandomColor()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+
             <div className={styles.bottomGraphsContainer}>
               <div
                 className={styles.titleContainer}
@@ -140,7 +180,3 @@ export default function Home() {
     </>
   );
 }
-
-/*
-
-*/

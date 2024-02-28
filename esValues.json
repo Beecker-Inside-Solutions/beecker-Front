@@ -59,7 +59,9 @@
     "logout": "Log Out",
     "bottomTitle": "Transacciones",
     "transactionsTitle": "Transacciones",
+    "environmentTitleCharts": "Gráficas de entornos",
     "botBarTitle": "Bots",
+    "environmentCharts": "Gráficas de entornos",
     "botCharts": "Gráficas de bots activos"
   }
 }

@@ -56,8 +56,10 @@
     "welcome": "Welcome",
     "logout": "Log Out",
     "bottomTitle": "Transactions Charts",
+    "environmentTitleCharts": "Environment",
     "transactionsTitle": "Transactions",
     "botBarTitle": "Bots",
+    "environmentCharts": "Environment Charts",
     "botCharts": "Charts of active bots"
   }
 }
