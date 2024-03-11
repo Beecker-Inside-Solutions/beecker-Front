@@ -46,8 +46,11 @@ export default function Home() {
   // Bot Hooks
   const { transactions, transactionsLabels } = useFetchTransactionsData();
   const { botBarData, botBarLabels } = useBotBarChartData();
-  const { clientLineData, clientLineLabels } = useClientLineChart(14, "monthly");
-    
+  const { clientLineData, clientLineLabels } = useClientLineChart(
+    14,
+    "monthly"
+  );
+
   /*
     Functions:
   */
@@ -93,9 +96,9 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>
-            <h1
-              className={styles.title}
-            >{`${languageValues.dashboard.welcome}, ${userName}`}</h1>
+            <h1 className={styles.title}>
+              <p>{languageValues.dashboard.welcome} </p>, {userName}
+            </h1>
           </div>
           <div className={styles.bottomContainer}>
             {/* TopCharts */}
@@ -124,7 +127,7 @@ export default function Home() {
               )}
             </div>
             {/* MediumCharts */}
-            <div className={styles.bottomGraphsContainer}>
+            <div className={styles.mediumGraphsContainer}>
               <div
                 className={styles.titleContainer}
                 onClick={toggleDropdownEnvironmentCharts}

@@ -45,28 +45,21 @@
   height: 80%;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 20px;
 }
 
-.topGraphsContainer {
+
+.topGraphsContainer, .bottomGraphsContainer, .topGraphsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 25%;
-  border-bottom: 1px solid #e0e0e0;
-
-}
-
-.bottomGraphsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 25%;
+  margin: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  border: 1px solid var(--morado-beecker);
 }
 
 .graphLeftContainer {
@@ -115,6 +108,11 @@
   margin-bottom: 1rem;
 }
 
+.bottomTitle{
+  font-size: 1.5rem;
+  font-weight: 50;
+}
+
 .titleContainer {
   display: flex;
   flex-direction: row;
@@ -127,6 +125,18 @@
   cursor: pointer;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  color: var(--morado-beecker);
+}
+
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title p{
+  font-weight: 100;
+  color: var(--rojo-beecker);
 }
 
 .botGraphsContainer {

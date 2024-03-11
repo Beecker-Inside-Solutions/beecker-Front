@@ -58,7 +58,9 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
 
             return (
               <li key={section}>
-                <strong>{section}</strong>
+                <p
+                className={styles.sectionTitle}
+                >{section}</p>
                 <ul className={styles.sectionValue}>
                   {sectionItems.map((item) => {
                     const { link, image } = lateralNavbar[section][item];
