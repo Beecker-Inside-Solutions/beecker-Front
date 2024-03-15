@@ -53,6 +53,18 @@
     "backToLogin": "Volver al inicio de sesión"
   },
 
+
+  "registerPage": {
+    "registerHeader": "Registro",
+    "registerButton": "Registrarse",
+    "nameLabel": "Nombre",
+    "lastNameLabel": "Apellido",
+    "emailLabel": "Correo electrónico",
+    "dateOfBirthLabel": "Fecha de nacimiento",
+    "passwordLabel": "Contraseña",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "backToLogin": "Volver al inicio de sesión"
+  },
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Bienvenido",

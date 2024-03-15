@@ -51,6 +51,17 @@
     "emailSent": "Recover email sent.",
     "backToLogin": "Back to Login"
   },
+  "registerPage": {
+    "registerHeader": "Register",
+    "registerButton": "Register",
+    "nameLabel": "Name",
+    "lastNameLabel": "Last Name",
+    "emailLabel": "Email",
+    "dateOfBirthLabel": "Date of Birth",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "backToLogin": "Back to Login"
+  },
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Welcome",
