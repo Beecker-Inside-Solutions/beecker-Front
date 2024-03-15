@@ -30,9 +30,7 @@ const useClientLineChart = (id: number, intervalTime: string) => {
         }
 
         const jsonData: { labelsSuccess: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
-        console.log("jsonData", jsonData);
         const labels = jsonData.labelsSuccess; // Adjusted to use labelsSuccess
-        console.log("labels", labels);
         const data = jsonData.dataSuccess.concat(jsonData.dataFailed);
         setClientLineLabels(labels);
         setClientLineData(data);
