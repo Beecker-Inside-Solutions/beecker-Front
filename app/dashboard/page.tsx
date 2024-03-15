@@ -12,7 +12,8 @@ import Footer from "../components/Footer/Footer";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import downArrow from "@/app/images/icons/closeArrow.png";
 import upArrow from "@/app/images/icons/openArrow.png";
-import useClientLineChart from "../hooks/ClientCharts/useClientLineChart";
+import useClientLineChart from "../hooks/ClientHooks/ClientLineCharts/useClientLineChart";
+import clientBarChart from "../hooks/ClientHooks/ClientBarChart/useClientBarChart";
 import useFetchTransactionsData from "../hooks/Transactions/useFetchTransactionsData";
 import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 export default function Home() {
@@ -50,7 +51,10 @@ export default function Home() {
     14,
     "monthly"
   );
-
+  const {clientBarData, clientBarLabels} = clientBarChart(14, 90);
+  
+  console.log("clientBarData", clientBarData);
+  console.log("clientBarLabels", clientBarLabels);
   /*
     Functions:
   */
@@ -119,67 +123,7 @@ export default function Home() {
               {ClientCharts && (
                 <div className={styles.dropdownMenu}>
                   <div className={styles.botGraphsContainer}>
-                    <div className={styles.graphLeftContainer}></div>
-                    <div className={styles.graphCenterContainer}></div>
-                    <div className={styles.graphRightContainer}></div>
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* MediumCharts */}
-            <div className={styles.mediumGraphsContainer}>
-              <div
-                className={styles.titleContainer}
-                onClick={toggleDropdownEnvironmentCharts}
-              >
-                <p className={styles.bottomTitle}>
-                  {languageValues.dashboard.environmentCharts}
-                </p>
-                {EnvironmentCharts ? (
-                  <img src={downArrow.src} alt="arrow-up" />
-                ) : (
-                  <img src={upArrow.src} alt="arrow-down" />
-                )}
-              </div>
-              {EnvironmentCharts && (
-                <div className={styles.dropdownMenu}>
-                  <div className={styles.botGraphsContainer}>
-                    <div className={styles.graphLeftContainer}></div>
-                    <div className={styles.graphCenterContainer}></div>
-                    <div className={styles.graphRightContainer}></div>
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* BottomCharts */}
-            <div className={styles.bottomGraphsContainer}>
-              <div
-                className={styles.titleContainer}
-                onClick={toggleDropdownBotCharts}
-              >
-                <p className={styles.bottomTitle}>
-                  {languageValues.dashboard.botCharts}
-                </p>
-                {BotCharts ? (
-                  <img src={downArrow.src} alt="arrow-up" />
-                ) : (
-                  <img src={upArrow.src} alt="arrow-down" />
-                )}
-              </div>
-              {BotCharts && (
-                <div className={styles.dropdownMenu}>
-                  <div className={styles.botGraphsContainer}>
                     <div className={styles.graphLeftContainer}>
-                      <ChartComponent
-                        chartType="line"
-                        data={transactions}
-                        labels={transactionsLabels}
-                        graphTitle={languageValues.dashboard.transactionsTitle}
-                        borderColor={getRandomColor()}
-                      />
-                    </div>
-                    <div className={styles.graphCenterContainer}></div>
-                    <div className={styles.graphRightContainer}>
                       <ChartComponent
                         chartType="bar"
                         data={botBarData}
@@ -188,10 +132,21 @@ export default function Home() {
                         borderColor={getRandomColor()}
                       />
                     </div>
+                    <div className={styles.graphCenterContainer}>
+                      <ChartComponent
+                        chartType="line"
+                        data={clientLineData}
+                        labels={clientLineLabels}
+                        graphTitle={languageValues.dashboard.botBarTitle}
+                        borderColor={getRandomColor()}
+                      />
+                    </div>
+                    <div className={styles.graphRightContainer}></div>
                   </div>
                 </div>
               )}
             </div>
+            {/* MediumCharts */}
           </div>
         </div>
       </main>
