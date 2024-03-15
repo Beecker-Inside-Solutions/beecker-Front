@@ -52,9 +52,7 @@ export default function Home() {
     "monthly"
   );
   const {clientBarData, clientBarLabels} = clientBarChart(14, 90);
-  
-  console.log("clientBarData", clientBarData);
-  console.log("clientBarLabels", clientBarLabels);
+
   /*
     Functions:
   */
@@ -126,8 +124,8 @@ export default function Home() {
                     <div className={styles.graphLeftContainer}>
                       <ChartComponent
                         chartType="bar"
-                        data={botBarData}
-                        labels={botBarLabels}
+                        data={clientBarData}
+                        labels={clientBarLabels}
                         graphTitle={languageValues.dashboard.botBarTitle}
                         borderColor={getRandomColor()}
                       />

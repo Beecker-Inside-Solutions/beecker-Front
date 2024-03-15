@@ -7,7 +7,7 @@ const clientBarChart = (id: number, intervalTime: number) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `${apiURL}/lineChartClient/`;
+      const url = `${apiURL}/barChartClient/`;
       const requestData = {
         id: id,
         timezone: "America/Mexico_City",
@@ -28,7 +28,8 @@ const clientBarChart = (id: number, intervalTime: number) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
+        
+        console.log("response", response);
         const jsonData: { labels: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
         console.log("jsonData", jsonData);
         const labels = jsonData.labels;

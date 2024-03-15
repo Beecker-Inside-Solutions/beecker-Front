@@ -69,7 +69,6 @@ export default function Home() {
         body: JSON.stringify(loginData),
       };
 
-      console.log("Request Data:", requestData);
 
       fetch(`${apiURL}/login/`, requestData)
         .then((response) => {
