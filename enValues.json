@@ -60,7 +60,8 @@
     "dateOfBirthLabel": "Date of Birth",
     "passwordLabel": "Password",
     "confirmPasswordLabel": "Confirm Password",
-    "backToLogin": "Back to Login"
+    "backToLogin": "Back to Login",
+    "representationText": "We are experts in intelligent process automation using RPA, artificial intelligence, and machine learning tools"
   },
   "dashboard": {
     "header": "Dashboard",

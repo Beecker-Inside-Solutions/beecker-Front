@@ -63,7 +63,8 @@
     "dateOfBirthLabel": "Fecha de nacimiento",
     "passwordLabel": "Contraseña",
     "confirmPasswordLabel": "Confirmar contraseña",
-    "backToLogin": "Volver al inicio de sesión"
+    "backToLogin": "Volver al inicio de sesión",
+    "representationText": "Somos expertos en automatización de procesos inteligentes utilizando herramientas de RPA, inteligencia artificial y aprendizaje automático."
   },
   "dashboard": {
     "header": "Dashboard",

@@ -5,6 +5,8 @@ import Footer from "../components/Footer/Footer";
 import useMultilingualValues from "../hooks/useMultilingualValues";
 import esValues from "@/esValues.json";
 import enValues from "@/enValues.json";
+import logo from "../images/logos/logo.png";
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -15,7 +17,7 @@ export default function Home() {
     <>
       <main className={styles.main}>
         <div className={styles.leftContainer}>
-          <h1>{languageValues.registerPage.registerHeader}</h1>
+          <img src={logo.src} alt="logo" className={styles.logo} />
           <form className={styles.form}>
             <div className={styles.leftFormContainer}>
               <div className={styles.formGroup}>
@@ -124,7 +126,13 @@ export default function Home() {
             {languageValues.registerPage.registerButton}
           </button>
         </div>
-        <div className={styles.rightContainer}></div>
+        <div className={styles.rightContainer}>
+          <div className={styles.textWrapper}>
+            <p className={styles.representationText}>
+              {languageValues.registerPage.representationText}
+            </p>
+          </div>
+        </div>
       </main>
       <Footer updateLanguage={setLanguage} />
     </>
