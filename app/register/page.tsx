@@ -38,16 +38,16 @@ export default function Home() {
               </div>
               <div className={styles.formGroup}>
                 <div className={styles.labelContainer}>
-                  <label htmlFor="email">
-                    {languageValues.registerPage.emailLabel}
+                  <label htmlFor="lastName">
+                    {languageValues.registerPage.lastNameLabel}
                   </label>
                 </div>
                 <div className={styles.inputGroup}>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder={languageValues.registerPage.emailLabel}
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder={languageValues.registerPage.lastNameLabel}
                     className={styles.input}
                   />
                 </div>
@@ -72,16 +72,16 @@ export default function Home() {
             <div className={styles.rightFormContainer}>
               <div className={styles.formGroup}>
                 <div className={styles.labelContainer}>
-                  <label htmlFor="lastName">
-                    {languageValues.registerPage.lastNameLabel}
+                  <label htmlFor="email">
+                    {languageValues.registerPage.emailLabel}
                   </label>
                 </div>
                 <div className={styles.inputGroup}>
                   <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    placeholder={languageValues.registerPage.lastNameLabel}
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder={languageValues.registerPage.emailLabel}
                     className={styles.input}
                   />
                 </div>
