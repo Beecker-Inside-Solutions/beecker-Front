@@ -23,8 +23,6 @@ export default function Home() {
   /*
     Charts displays:
   */
-  const [BotCharts, setBotCharts] = useState(true);
-  const [EnvironmentCharts, setEnvironmentCharts] = useState(true);
   const [ClientCharts, setClientCharts] = useState(true);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -49,7 +47,7 @@ export default function Home() {
     14,
     "monthly"
   );
-  const {clientBarData, clientBarLabels} = clientBarChart(14, 90);
+  const { clientBarData, clientBarLabels } = clientBarChart(14, 90);
 
   /*
     Functions:
@@ -62,13 +60,6 @@ export default function Home() {
   /*
     Dropdowns:
   */
-  const toggleDropdownBotCharts = () => {
-    setBotCharts((prevState) => !prevState);
-  };
-
-  const toggleDropdownEnvironmentCharts = () => {
-    setEnvironmentCharts((prevState) => !prevState);
-  };
 
   const toggleDropdownClientCharts = () => {
     setClientCharts((prevState) => !prevState);
@@ -118,7 +109,7 @@ export default function Home() {
               </div>
               {ClientCharts && (
                 <div className={styles.dropdownMenu}>
-                  <div className={styles.botGraphsContainer}>
+                  <div className={styles.graphsContainer}>
                     <div className={styles.graphLeftContainer}>
                       <ChartComponent
                         chartType="bar"
@@ -135,15 +126,14 @@ export default function Home() {
                         labels={clientLineLabels}
                         graphTitle={languageValues.dashboard.botBarTitle}
                         borderColor={getRandomColor()}
-                      />
+                      />  
                     </div>
                     <div className={styles.graphRightContainer}></div>
                   </div>
                 </div>
               )}
             </div>
-            {/* MediumCharts */}
-          </div>
+            </div>
         </div>
       </main>
       <Footer updateLanguage={setLanguage} />

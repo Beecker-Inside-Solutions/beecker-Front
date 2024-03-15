@@ -67,6 +67,10 @@ const ChartComponent: React.FC<ChartProps> = ({
               },
             ],
           },
+          options: {
+            responsive: true, // Make the chart responsive
+            maintainAspectRatio: false, // Don't maintain aspect ratio
+          },
         });
       }
     }

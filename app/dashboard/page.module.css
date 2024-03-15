@@ -139,7 +139,7 @@
   color: var(--rojo-beecker);
 }
 
-.botGraphsContainer {
+.graphsContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -165,4 +165,9 @@
   .topContainer h1 {
     font-size: 1.5rem;
   }
+
+  .graphsContainer {
+    flex-direction: column;
+  }
+
 }
