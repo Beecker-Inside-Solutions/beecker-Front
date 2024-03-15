@@ -62,10 +62,5 @@ export const graphColors : IDefaultColors[] = [
   { colorName: "rojo", hexCode: "#e74949" },
   { colorName: "azul", hexCode: "#803fe0" },
   { colorName: "morado", hexCode: "#6200d1" },
-  { colorName: "verde", hexCode: "#00ff00" },
-  { colorName: "naranja", hexCode: "#ff6600" },
-  { colorName: "rosa", hexCode: "#ff00ff" },
-  { colorName: "cafe", hexCode: "#663300" },
-  { colorName: "verde-oscuro", hexCode: "#006600" },
   { colorName: "azul-oscuro", hexCode: "#0000ff" },
 ];
