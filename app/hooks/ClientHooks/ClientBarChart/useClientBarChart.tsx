@@ -29,13 +29,9 @@ const clientBarChart = (id: number, intervalTime: number) => {
           throw new Error("Network response was not ok");
         }
         
-        console.log("response", response);
         const jsonData: { labels: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
-        console.log("jsonData", jsonData);
         const labels = jsonData.labels;
         const data = jsonData.dataSuccess.concat(jsonData.dataFailed);
-        console.log("labels", labels);
-        console.log("data", data);
         setclientBarLabels(labels);
         setclientBarData(data);
       } catch (error) {

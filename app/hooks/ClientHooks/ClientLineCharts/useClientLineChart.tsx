@@ -29,11 +29,14 @@ const useClientLineChart = (id: number, intervalTime: string) => {
           throw new Error("Network response was not ok");
         }
 
-        const jsonData: { labels: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
-        const labels = jsonData.labels;
+        const jsonData: { labelsSuccess: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
+        console.log("jsonData", jsonData);
+        const labels = jsonData.labelsSuccess; // Adjusted to use labelsSuccess
+        console.log("labels", labels);
         const data = jsonData.dataSuccess.concat(jsonData.dataFailed);
         setClientLineLabels(labels);
         setClientLineData(data);
+        
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }

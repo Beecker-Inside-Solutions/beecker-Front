@@ -44,9 +44,7 @@ export default function Home() {
     Graph Hooks:
   */
 
-  // Bot Hooks
-  const { transactions, transactionsLabels } = useFetchTransactionsData();
-  const { botBarData, botBarLabels } = useBotBarChartData();
+  // ClientCharts Hooks
   const { clientLineData, clientLineLabels } = useClientLineChart(
     14,
     "monthly"
