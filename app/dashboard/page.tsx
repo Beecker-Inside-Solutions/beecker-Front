@@ -16,6 +16,8 @@ import useClientLineChart from "../hooks/ClientHooks/ClientLineCharts/useClientL
 import clientBarChart from "../hooks/ClientHooks/ClientBarChart/useClientBarChart";
 import useFetchTransactionsData from "../hooks/Transactions/useFetchTransactionsData";
 import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
+import IndicatorComponent from "../components/IndicatorComponent/IndicatorComponent";
+
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -92,7 +94,6 @@ export default function Home() {
             </h1>
           </div>
           <div className={styles.bottomContainer}>
-            {/* TopCharts */}
             <div className={styles.topGraphsContainer}>
               <div
                 className={styles.titleContainer}
@@ -126,14 +127,60 @@ export default function Home() {
                         labels={clientLineLabels}
                         graphTitle={languageValues.dashboard.botBarTitle}
                         borderColor={getRandomColor()}
-                      />  
+                      />
                     </div>
                     <div className={styles.graphRightContainer}></div>
                   </div>
                 </div>
               )}
             </div>
+            <div className={styles.bottomGraphsContainer}>
+              <div className={styles.indicatorContainer}>
+                <IndicatorComponent
+                  title="ROI"
+                  value={263858}
+                  status={false}
+                  profitActivator={true}
+                  profit={100}
+                  languageValues={languageValues}
+                  type="money"
+                />
+              </div>
+              <div className={styles.indicatorContainer}>
+                <IndicatorComponent
+                  title="Hours Saved"
+                  value={1456}
+                  status={true}
+                  profitActivator={false}
+                  profit={-10}
+                  languageValues={languageValues}
+                  type=""
+                />
+              </div>
+              <div className={styles.indicatorContainer}>
+                <IndicatorComponent
+                  title="Dollar Saved"
+                  value={-1000}
+                  status={true}
+                  profitActivator={true}
+                  profit={-2}
+                  languageValues={languageValues}
+                  type="money"
+                />
+              </div>
+              <div className={styles.indicatorContainer}>
+                <IndicatorComponent
+                  title="Success Rate"
+                  value={0.5}
+                  status={true}
+                  profitActivator={false}
+                  profit={0}
+                  languageValues={languageValues}
+                  type="percentage"
+                />
+              </div>
             </div>
+          </div>
         </div>
       </main>
       <Footer updateLanguage={setLanguage} />

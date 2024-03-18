@@ -63,6 +63,11 @@
     "backToLogin": "Back to Login",
     "representationText": "We are experts in intelligent process automation using RPA, artificial intelligence, and machine learning tools"
   },
+  "indicators": {
+    "lastCut": " Since Last Cut",
+    "lastMonth": " Last Month",
+    "lastYear": " Last Year"
+  },
   "dashboard": {
     "header": "Dashboard",
     "welcome": "Welcome",

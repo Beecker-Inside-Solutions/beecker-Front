@@ -6,6 +6,7 @@ export interface Values {
   searchBar: LanguageValues;
   alerts: LanguageValues;
   loginPage: LanguageValues;
+  indicators: LanguageValues;
   registerPage: LanguageValues;
   recoveryPage: LanguageValues;
   dashboard: LanguageValues;

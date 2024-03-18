@@ -52,7 +52,11 @@
     "emailSent": "Correo enviado. Regresando al inicio de sesión.",
     "backToLogin": "Volver al inicio de sesión"
   },
-
+  "indicators": {
+    "lastCut": " Desde el último corte",
+    "lastMonth": " Desde último mes",
+    "lastYear": " Desde último año"
+  },
 
   "registerPage": {
     "registerHeader": "Registro",
