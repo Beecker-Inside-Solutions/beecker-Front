@@ -55,7 +55,11 @@
   "indicators": {
     "lastCut": " Desde el último corte",
     "lastMonth": " Desde último mes",
-    "lastYear": " Desde último año"
+    "lastYear": " Desde último año",
+    "roi": "ROI",
+    "hoursSaved": "Horas Ahorradas",
+    "dollarsSaved": "Dólares Ahorrados",
+    "successRate": "Tasa de Éxito"
   },
 
   "registerPage": {

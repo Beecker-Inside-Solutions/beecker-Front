@@ -137,9 +137,9 @@ export default function Home() {
             <div className={styles.bottomGraphsContainer}>
               <div className={styles.indicatorContainer}>
                 <IndicatorComponent
-                  title="ROI"
+                  title={languageValues.indicators.roi}
                   value={263858}
-                  status={false}
+                  status={true}
                   profitActivator={true}
                   profit={100}
                   languageValues={languageValues}
@@ -148,7 +148,7 @@ export default function Home() {
               </div>
               <div className={styles.indicatorContainer}>
                 <IndicatorComponent
-                  title="Hours Saved"
+                  title={languageValues.indicators.hoursSaved}
                   value={1456}
                   status={true}
                   profitActivator={false}
@@ -159,7 +159,7 @@ export default function Home() {
               </div>
               <div className={styles.indicatorContainer}>
                 <IndicatorComponent
-                  title="Dollar Saved"
+                  title={languageValues.indicators.dollarsSaved}
                   value={-1000}
                   status={true}
                   profitActivator={true}
@@ -170,7 +170,7 @@ export default function Home() {
               </div>
               <div className={styles.indicatorContainer}>
                 <IndicatorComponent
-                  title="Success Rate"
+                  title={languageValues.indicators.successRate}
                   value={0.5}
                   status={true}
                   profitActivator={false}
