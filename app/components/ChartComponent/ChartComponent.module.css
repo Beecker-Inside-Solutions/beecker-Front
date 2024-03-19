@@ -9,3 +9,12 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
+
+@media (max-width: 767px) {
+  .chartContainer {
+    width: 15em;
+    margin: 2em;
+    padding: 0;
+  }
+
+}
