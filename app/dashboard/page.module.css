@@ -190,4 +190,12 @@
   .graphsContainer {
     flex-direction: column;
   }
+
+  .bottomGraphsContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+  .indicatorContainer {
+    width: 100%;
+  }
 }
