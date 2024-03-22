@@ -78,6 +78,8 @@
     "header": "Dashboard",
     "welcome": "Bienvenido",
     "logout": "Log Out",
+    "downloadPDF": "Exportar a PDF",
+    "downloadXLSX": "Exportar a Excel",
     "bottomTitle": "Transacciones",
     "transactionsTitle": "Transacciones",
     "environmentTitleCharts": "Gráficas de entornos",

@@ -77,6 +77,8 @@
     "welcome": "Welcome",
     "logout": "Log Out",
     "bottomTitle": "Transactions Charts",
+    "downloadPDF": "Export to PDF",
+    "downloadXLSX": "Export to XLSX",
     "environmentTitleCharts": "Environment",
     "transactionsTitle": "Transactions",
     "botBarTitle": "Bots",

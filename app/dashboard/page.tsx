@@ -17,6 +17,8 @@ import clientBarChart from "../hooks/ClientHooks/ClientBarChart/useClientBarChar
 import useFetchTransactionsData from "../hooks/Transactions/useFetchTransactionsData";
 import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../components/IndicatorComponent/IndicatorComponent";
+import addImg from "../images/icons/addImage.png";
+import pdfImg from "../images/icons/pdf.png";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -90,8 +92,29 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.topContainer}>
             <h1 className={styles.title}>
-              <p>{languageValues.dashboard.welcome} </p>, {userName}
+              <div className={styles.welcomeContainer}>
+                <p>{languageValues.dashboard.welcome} </p>, {userName}
+              </div>
             </h1>
+            <div className={styles.buttonsContainer}>
+              <div className={styles.leftButtonContainer}>
+                <button className={styles.leftButton}>
+                  <img src={addImg.src} alt="plus" />
+                </button>
+              </div>
+              <div className={styles.rightButtonContainer}>
+                <button className={styles.rightButton}>
+                  <p className={styles.downloadText}>
+                    {languageValues.dashboard.downloadPDF}
+                  </p>
+                  <img
+                    src={pdfImg.src}
+                    alt="pdf"
+                    className={styles.downloadIcon}
+                  />
+                </button>
+              </div>
+            </div>
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.topGraphsContainer}>
