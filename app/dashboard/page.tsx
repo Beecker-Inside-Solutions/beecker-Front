@@ -19,14 +19,15 @@ import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../components/IndicatorComponent/IndicatorComponent";
 import addImg from "../images/icons/addImage.png";
 import pdfImg from "../images/icons/pdf.png";
+import PrintDashboard from "../components/PrintDashboard/PrintDashboard";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
 
   /*
-    Charts displays:
-  */
+        Charts displays:
+      */
   const [ClientCharts, setClientCharts] = useState(true);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -43,8 +44,8 @@ export default function Home() {
   }, []);
 
   /*
-    Graph Hooks:
-  */
+        Graph Hooks:
+      */
 
   // ClientCharts Hooks
   const { clientLineData, clientLineLabels } = useClientLineChart(
@@ -54,19 +55,22 @@ export default function Home() {
   const { clientBarData, clientBarLabels } = clientBarChart(14, 90);
 
   /*
-    Functions:
-  */
+        Functions:
+      */
   const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * graphColors.length);
     return graphColors[randomIndex].hexCode;
   };
 
   /*
-    Dropdowns:
-  */
+        Dropdowns:
+      */
 
   const toggleDropdownClientCharts = () => {
     setClientCharts((prevState) => !prevState);
+  };
+  const printToPDF = () => {
+   window.location.href = "/dashboardPDF";
   };
 
   return (
@@ -103,7 +107,7 @@ export default function Home() {
                 </button>
               </div>
               <div className={styles.rightButtonContainer}>
-                <button className={styles.rightButton}>
+                <button className={styles.rightButton} onClick={printToPDF}>
                   <p className={styles.downloadText}>
                     {languageValues.dashboard.downloadPDF}
                   </p>
