@@ -7,7 +7,7 @@ import settingsImage from "./app/images/icons/settings.png";
 import mexicoIcon from "./app/images/icons/mexico.png";
 import ukIcon from "./app/images/icons/uk.png";
 import profileIcon from "./app/images/icons/profile.png";
-import serviceDesk from "./app/images/icons/serviceDesk.png"
+import serviceDesk from "./app/images/icons/serviceDesk.png";
 import { IDefaultColors } from "./app/interfaces/IDefaultColors";
 
 export const apiURL = "https://dev.api.dashboard.beecker.ai/api";
@@ -25,6 +25,7 @@ export const routes: IRoutes = {
   profile: "/profile",
   settings: "/settings",
   serviceDesk: "/serviceDesk",
+  userList: "/userList",
 };
 
 export const lateralNavbarItems: ILateralNavbar = {
@@ -47,8 +48,16 @@ export const lateralNavbarItems: ILateralNavbar = {
   Planning: {
     SDesk: {
       link: routes.serviceDesk,
-      image: profileIcon.src,
+      image: serviceDesk.src,
       adminRequired: false,
+    },
+  },
+
+  Administration: {
+    ["User List"]: {
+      link: routes.userList,
+      image: profileIcon.src,
+      adminRequired: true ,
     },
   },
 };
