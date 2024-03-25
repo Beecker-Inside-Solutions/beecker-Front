@@ -2,11 +2,12 @@ import { ILanguage } from "./app/interfaces/ILanguages";
 import { IRoutes } from "./app/interfaces/IRoutes";
 import { ILateralNavbar } from "./app/interfaces/ILateralNavbar";
 import { IRegex } from "./app/interfaces/IRegex";
-import dashboardImage from "@/app/images/icons/dashboard.png";
-import settingsImage from "@/app/images/icons/settings.png";
-import mexicoIcon from "@/app/images/icons/mexico.png";
-import ukIcon from "@/app/images/icons/uk.png";
-import profileIcon from "@/app/images/icons/profile.png";
+import dashboardImage from "./app/images/icons/dashboard.png";
+import settingsImage from "./app/images/icons/settings.png";
+import mexicoIcon from "./app/images/icons/mexico.png";
+import ukIcon from "./app/images/icons/uk.png";
+import profileIcon from "./app/images/icons/profile.png";
+import serviceDesk from "./app/images/icons/serviceDesk.png"
 import { IDefaultColors } from "./app/interfaces/IDefaultColors";
 
 export const apiURL = "https://dev.api.dashboard.beecker.ai/api";
@@ -23,6 +24,7 @@ export const routes: IRoutes = {
   dashboard: "/dashboard",
   profile: "/profile",
   settings: "/settings",
+  serviceDesk: "/serviceDesk",
 };
 
 export const lateralNavbarItems: ILateralNavbar = {
@@ -34,18 +36,18 @@ export const lateralNavbarItems: ILateralNavbar = {
     },
   },
 
-  Profile: {
-    Profile: {
-      link: routes.profile,
-      image: profileIcon.src,
-      adminRequired: false,
-    },
-  },
-
   Preferences: {
     Settings: {
       link: routes.settings,
       image: settingsImage.src,
+      adminRequired: false,
+    },
+  },
+
+  Planning: {
+    SDesk: {
+      link: routes.serviceDesk,
+      image: profileIcon.src,
       adminRequired: false,
     },
   },
@@ -57,8 +59,7 @@ export const regex: IRegex = {
   ),
 };
 
-
-export const graphColors : IDefaultColors[] = [
+export const graphColors: IDefaultColors[] = [
   { colorName: "rojo", hexCode: "#e74949" },
   { colorName: "azul", hexCode: "#803fe0" },
   { colorName: "morado", hexCode: "#6200d1" },

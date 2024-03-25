@@ -15,7 +15,7 @@ const RightBar: React.FC<IRightBar> = ({
   logoutHeader,
   logoutText,
   logoutButton,
-  profileButton
+  profileButton,
 }: IRightBar) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [getLogout, setLogout] = useState("");
