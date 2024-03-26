@@ -15,7 +15,12 @@ export default function Home() {
   );
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
-
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("first_name");
+    const storedProfileImg = localStorage.getItem("profile_img");
+    if (storedUserName) setUserName(storedUserName);
+    if (storedProfileImg) setProfileImg(storedProfileImg);
+  }, []);
   return (
     <>
       <LateralNavbar
