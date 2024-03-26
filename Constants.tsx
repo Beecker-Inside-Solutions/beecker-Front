@@ -24,7 +24,7 @@ export const routes: IRoutes = {
   dashboard: "/dashboard",
   profile: "/profile",
   settings: "/settings",
-  serviceDesk: "/serviceDesk",
+  serviceDesk: "/dashboard/serviceDesk",
   userList: "/userList",
 };
 
