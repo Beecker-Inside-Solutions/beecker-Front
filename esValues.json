@@ -87,5 +87,15 @@
     "clientCharts": "Gráficas de clientes",
     "environmentCharts": "Gráficas de entornos",
     "botCharts": "Gráficas de bots activos"
+  },
+  "incidents": {
+    "actions": "Acciones",
+    "incidentId": "ID de Incidente",
+    "incident": "Incidente",
+    "status": "Estado",
+    "startDate": "Fecha de Inicio",
+    "endDate": "Fecha de Fin",
+    "progress": "Progreso",
+    "responsible": "Responsable"
   }
 }
