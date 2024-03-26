@@ -1,7 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
-import logo from "../../../app/images/logos/logo.png";
+import logo from "../../images/logos/logo.png";
+import configImg from "../../images/icons/config.png";
+import deleteImg from "../../images/icons/delete.png";
 import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
@@ -26,9 +28,12 @@ export default function Home() {
 
     // Fetch your incidents data and set it to incidentsData state
     // Example fetch:
+    /*
     fetchIncidentsData().then((data) => {
       setIncidentsData(data);
-    });
+    });*/
+    const testData = generateTestData();
+    setIncidentsData(testData);
   }, []);
 
   // Function to fetch incidents data, replace it with your actual fetching logic
@@ -38,7 +43,31 @@ export default function Home() {
     const data = await response.json();
     return data;
   };
+  const generateTestData = (): IIncidences[] => {
+    const testData: IIncidences[] = [];
 
+    for (let i = 1; i <= 10; i++) {
+      testData.push({
+        incidentId: `INC-${i}`,
+        incident: `Incident ${i}`,
+        status: Math.random() > 0.5 ? "Resolved" : "Pending",
+        startDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        endDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        progress: `${Math.floor(Math.random() * 101)}%`,
+        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
+      });
+    }
+
+    return testData;
+  };
   return (
     <>
       <LateralNavbar
@@ -72,8 +101,12 @@ export default function Home() {
             {incidentsData.map((incident, index) => (
               <tr key={index}>
                 <td>
-                  <button>{languageValues.incidents.configure}</button>
-                  <button>{languageValues.incidents.delete}</button>
+                  <button className={styles.actionButton}>
+                    <img src={configImg.src} alt="Config" />
+                  </button>
+                  <button className={styles.actionButton}>
+                    <img src={deleteImg.src} alt="Delete" />
+                  </button>
                 </td>
                 <td>{incident.incidentId}</td>
                 <td>{incident.incident}</td>

@@ -10,3 +10,44 @@
   font-family: "Montserrat", sans-serif;
   margin: 0 auto;
 }
+
+.incidentTableContainer {
+  width: 100%;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  max-height: calc(
+    100vh - 320px
+  ); /* Set max height to enable vertical scrolling */
+}
+
+.incidentTable {
+  width: fit-content; /* Adjust table width to its content */
+  border-collapse: collapse;
+  margin-top: 2rem;
+  text-align: center; /* Center align table content */
+}
+
+.incidentTable thead {
+  background-color: #803fe0;
+  color: #fff;
+}
+
+.incidentTable thead th {
+  padding: 1rem;
+  font-weight: 100;
+}
+
+.incidentTable tbody tr {
+  border-bottom: 1px solid #803fe0;
+}
+
+.incidentTable tbody tr:last-child {
+  border-bottom: none; /* Remove bottom border from last row */
+}
+
+.actionButton {
+  background-color: none;
+  border: none;
+    justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}
