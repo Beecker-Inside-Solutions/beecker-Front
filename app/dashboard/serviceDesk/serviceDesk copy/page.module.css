@@ -1,0 +1,101 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+  margin: 0 auto;
+}
+
+.incidentTable {
+  width: fit-content;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  max-height: calc(100vh - 320px);
+  width: 100%;
+  overflow-x: auto;
+}
+
+.incidentTable thead {
+  background-color: #803fe0;
+  color: #fff;
+}
+
+.incidentTable thead th {
+  padding: 1rem;
+  font-weight: 100;
+}
+
+.incidentTable tbody tr {
+  border-bottom: 1px solid #803fe0;
+}
+
+.incidentTable tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.incidentTable tbody tr:last-child {
+  border-bottom: none; /* Remove bottom border from last row */
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.actionButton {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+}
+
+.actionButton:hover {
+  scale: 1.1;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 1rem;
+}
+
+.pagination button {
+  background-color: #803fe0;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:hover {
+  background-color: #6a2dbb;
+}
+
+.pagination button.active {
+  background-color: #e6d432;
+}
+
+@media (max-width: 767px) {
+  .incidentHeader,
+  .startDateHeader,
+  .endDateHeader,
+  .responsibleHeader,
+  .incident,
+  .startDate,
+  .endDate,
+  .responsible {
+    display: none;
+  }
+}

@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import useMultilingualValues from "../../hooks/useMultilingualValues";
+import useMultilingualValues from "../../../hooks/useMultilingualValues";
 import logo from "../../images/logos/logo.png";
 import configImg from "../../images/icons/config.png";
 import deleteImg from "../../images/icons/delete.png";
-import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
-import RightBar from "../../components/RightBar/RightBar";
+import LateralNavbar from "../../../components/LateralNavbar/LateralNavbar";
+import RightBar from "../../../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 
