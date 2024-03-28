@@ -20,6 +20,7 @@ import IndicatorComponent from "../components/IndicatorComponent/IndicatorCompon
 import addImg from "../images/icons/addImage.png";
 import pdfImg from "../images/icons/pdf.png";
 import PrintDashboard from "../components/PrintDashboard/PrintDashboard";
+import Link from "next/link";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -69,9 +70,6 @@ export default function Home() {
   const toggleDropdownClientCharts = () => {
     setClientCharts((prevState) => !prevState);
   };
-  const printToPDF = () => {
-   window.location.href = "/dashboardPDF";
-  };
 
   return (
     <>
@@ -107,16 +105,18 @@ export default function Home() {
                 </button>
               </div>
               <div className={styles.rightButtonContainer}>
-                <button className={styles.rightButton} onClick={printToPDF}>
-                  <p className={styles.downloadText}>
-                    {languageValues.dashboard.downloadPDF}
-                  </p>
-                  <img
-                    src={pdfImg.src}
-                    alt="pdf"
-                    className={styles.downloadIcon}
-                  />
-                </button>
+                <Link href="/dashboardPDF">
+                  <button className={styles.rightButton}>
+                    <p className={styles.downloadText}>
+                      {languageValues.dashboard.downloadPDF}
+                    </p>
+                    <img
+                      src={pdfImg.src}
+                      alt="pdf"
+                      className={styles.downloadIcon}
+                    />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
