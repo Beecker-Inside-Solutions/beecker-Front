@@ -84,5 +84,18 @@
 }
 
 .pagination button.active {
-  background-color: #6a2dbb;
+  background-color: #e6d432;
+}
+
+@media (max-width: 767px) {
+  .incidentHeader,
+  .startDateHeader,
+  .endDateHeader,
+  .responsibleHeader,
+  .incident,
+  .startDate,
+  .endDate,
+  .responsible {
+    display: none;
+  }
 }

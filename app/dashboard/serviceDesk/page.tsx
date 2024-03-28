@@ -88,14 +88,30 @@ export default function Home() {
         <table className={styles.incidentTable}>
           <thead>
             <tr>
-              <th>{languageValues.incidents.actions}</th>
-              <th>{languageValues.incidents.incidentId}</th>
-              <th>{languageValues.incidents.incident}</th>
-              <th>{languageValues.incidents.status}</th>
-              <th>{languageValues.incidents.startDate}</th>
-              <th>{languageValues.incidents.endDate}</th>
-              <th>{languageValues.incidents.progress}</th>
-              <th>{languageValues.incidents.responsible}</th>
+              <th className={styles.actionsHeader}>
+                {languageValues.incidents.actions}
+              </th>
+              <th className={styles.incidentIdHeader}>
+                {languageValues.incidents.incidentId}
+              </th>
+              <th className={styles.incidentHeader}>
+                {languageValues.incidents.incident}
+              </th>
+              <th className={styles.statusHeader}>
+                {languageValues.incidents.status}
+              </th>
+              <th className={styles.startDateHeader}>
+                {languageValues.incidents.startDate}
+              </th>
+              <th className={styles.endDateHeader}>
+                {languageValues.incidents.endDate}
+              </th>
+              <th className={styles.progressHeader}>
+                {languageValues.incidents.progress}
+              </th>
+              <th className={styles.responsibleHeader}>
+                {languageValues.incidents.responsible}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -109,13 +125,13 @@ export default function Home() {
                     <img src={deleteImg.src} alt="Delete" />
                   </button>
                 </td>
-                <td>{incident.incidentId}</td>
-                <td>{incident.incident}</td>
-                <td>{incident.status}</td>
-                <td>{incident.startDate}</td>
-                <td>{incident.endDate}</td>
-                <td>{incident.progress}</td>
-                <td>{incident.responsible}</td>
+                <td className={styles.incidentId}>{incident.incidentId}</td>
+                <td className={styles.incident}>{incident.incident}</td>
+                <td className={styles.status}>{incident.status}</td>
+                <td className={styles.startDate}>{incident.startDate}</td>
+                <td className={styles.endDate}>{incident.endDate}</td>
+                <td className={styles.progress}>{incident.progress}</td>
+                <td className={styles.responsible}>{incident.responsible}</td>
               </tr>
             ))}
           </tbody>
