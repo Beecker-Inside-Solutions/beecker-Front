@@ -11,19 +11,15 @@
   margin: 0 auto;
 }
 
-.incidentTableContainer {
-  width: 100%;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  max-height: calc(
-    100vh - 320px
-  ); /* Set max height to enable vertical scrolling */
-}
-
 .incidentTable {
-  width: fit-content; /* Adjust table width to its content */
+  width: fit-content;
   border-collapse: collapse;
   margin-top: 2rem;
-  text-align: center; /* Center align table content */
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  max-height: calc(100vh - 320px);
+  width: 100%;
+  overflow-x: auto;
 }
 
 .incidentTable thead {
@@ -40,14 +36,53 @@
   border-bottom: 1px solid #803fe0;
 }
 
+.incidentTable tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
 .incidentTable tbody tr:last-child {
   border-bottom: none; /* Remove bottom border from last row */
 }
 
-.actionButton {
-  background-color: none;
-  border: none;
-    justify-content: center;
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+.actionButton {
+  background-color: transparent;
+  border: none;
   padding: 0.5rem;
+}
+
+.actionButton:hover {
+  scale: 1.1;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 1rem;
+}
+
+.pagination button {
+  background-color: #803fe0;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:hover {
+  background-color: #6a2dbb;
+}
+
+.pagination button.active {
+  background-color: #6a2dbb;
 }

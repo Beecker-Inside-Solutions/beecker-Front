@@ -19,6 +19,8 @@ export default function Home() {
   const [profileImg, setProfileImg] = useState(logo.src);
 
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const incidentsPerPage = 8;
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("first_name");
@@ -26,23 +28,10 @@ export default function Home() {
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
 
-    // Fetch your incidents data and set it to incidentsData state
-    // Example fetch:
-    /*
-    fetchIncidentsData().then((data) => {
-      setIncidentsData(data);
-    });*/
     const testData = generateTestData();
     setIncidentsData(testData);
   }, []);
 
-  // Function to fetch incidents data, replace it with your actual fetching logic
-  const fetchIncidentsData = async () => {
-    // Example fetch
-    const response = await fetch("url_to_fetch_incidences_data");
-    const data = await response.json();
-    return data;
-  };
   const generateTestData = (): IIncidences[] => {
     const testData: IIncidences[] = [];
 
@@ -68,6 +57,18 @@ export default function Home() {
 
     return testData;
   };
+
+  // Pagination logic
+  const indexOfLastIncident = currentPage * incidentsPerPage;
+  const indexOfFirstIncident = indexOfLastIncident - incidentsPerPage;
+  const currentIncidents = incidentsData.slice(
+    indexOfFirstIncident,
+    indexOfLastIncident
+  );
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <>
       <LateralNavbar
@@ -98,9 +99,9 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {incidentsData.map((incident, index) => (
+            {currentIncidents.map((incident, index) => (
               <tr key={index}>
-                <td>
+                <td className={styles.buttonsContainer}>
                   <button className={styles.actionButton}>
                     <img src={configImg.src} alt="Config" />
                   </button>
@@ -119,6 +120,17 @@ export default function Home() {
             ))}
           </tbody>
         </table>
+        {/* Pagination */}
+        <div className={styles.pagination}>
+          {Array.from(
+            { length: Math.ceil(incidentsData.length / incidentsPerPage) },
+            (_, i) => (
+              <button key={i} onClick={() => paginate(i + 1)}>
+                {i + 1}
+              </button>
+            )
+          )}
+        </div>
       </main>
     </>
   );
