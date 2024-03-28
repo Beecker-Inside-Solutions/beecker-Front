@@ -19,7 +19,6 @@ import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../components/IndicatorComponent/IndicatorComponent";
 import addImg from "../images/icons/addImage.png";
 import pdfImg from "../images/icons/pdf.png";
-import PrintDashboard from "../components/PrintDashboard/PrintDashboard";
 import Link from "next/link";
 
 export default function Home() {

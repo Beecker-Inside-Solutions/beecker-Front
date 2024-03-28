@@ -87,6 +87,7 @@
     "botCharts": "Charts of active bots"
   },
   "incidents":{
+    "addButton": "Add Incident",
     "actions": "Actions",
     "incidentId": "Incident ID",
     "incident": "Incident",
