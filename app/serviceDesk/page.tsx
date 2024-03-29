@@ -4,6 +4,7 @@ import useMultilingualValues from "../hooks/useMultilingualValues";
 import logo from ".././images/logos/logo.png";
 import configImg from ".././images/icons/config.png";
 import deleteImg from ".././images/icons/delete.png";
+import excelIcon from ".././images/icons/excelIcon.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import RightBar from "../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
@@ -30,35 +31,9 @@ export default function Home() {
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    const testData = generateTestData();
-    setIncidentsData(testData);
+    //const testData = generateTestData();
+    // setIncidentsData(testData);
   }, []);
-
-  const generateTestData = (): IIncidences[] => {
-    const testData: IIncidences[] = [];
-
-    for (let i = 1; i <= 10; i++) {
-      testData.push({
-        incidentId: `INC-${i}`,
-        incident: `Incident ${i}`,
-        status: Math.random() > 0.5 ? "Resolved" : "Pending",
-        startDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        endDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        progress: `${Math.floor(Math.random() * 101)}%`,
-        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
-      });
-    }
-
-    return testData;
-  };
 
   // Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
@@ -80,6 +55,19 @@ export default function Home() {
     setFilteredIncidents(filtered);
   };
 
+  const exportToExcel = () => {
+    const csvContent = [
+      Object.keys(incidentsData[0]).join(","),
+      ...incidentsData.map((incident) => Object.values(incident).join(",")),
+    ].join("\n");
+
+    const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "incidents.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
   return (
     <>
       <LateralNavbar
@@ -98,11 +86,16 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.topContainer}>
           <div className={styles.leftContainer}>
-            <SearchComponent onSearch={handleSearch}
-            placeholder={languageValues.incidents.searchInput}
+            <SearchComponent
+              onSearch={handleSearch}
+              placeholder={languageValues.incidents.searchInput}
             />
           </div>
           <div className={styles.rightContainer}>
+            <button className={styles.exportButton} onClick={exportToExcel}>
+              <p>{languageValues.incidents.exportButton}</p>
+              <img src={excelIcon.src} alt="Excel" />
+            </button>
             <button className={styles.addButton}>
               {languageValues.incidents.addButton} +
             </button>
@@ -110,7 +103,6 @@ export default function Home() {
         </div>
         <div className={styles.bottomContainer}>
           <table className={styles.incidentTable}>
-            {/* Table header */}
             <thead>
               <tr>
                 <th className={styles.actionsHeader}>

@@ -98,6 +98,7 @@
     "endDate": "Fecha de Fin",
     "progress": "Progreso",
     "responsible": "Responsable",
-    "searchInput": "Buscar Incidente"
+    "searchInput": "Buscar Incidente",
+    "exportButton": "Exportar a Excel"
   }
 }
