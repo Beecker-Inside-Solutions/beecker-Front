@@ -95,7 +95,8 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "progress": "Progress",
-    "responsible": "Responsible"
+    "responsible": "Responsible",
+    "searchInput": "Search Incident"
   }
   
 }

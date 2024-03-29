@@ -9,6 +9,8 @@ import RightBar from "../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import Footer from "../components/Footer/Footer";
+import SearchComponent from "../components/SearchComponent/SearchComponent";
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -19,6 +21,7 @@ export default function Home() {
   const [profileImg, setProfileImg] = useState(logo.src);
 
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
+  const [filteredIncidents, setFilteredIncidents] = useState<IIncidences[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const incidentsPerPage = 8;
 
@@ -30,6 +33,7 @@ export default function Home() {
     const testData = generateTestData();
     setIncidentsData(testData);
   }, []);
+
   const generateTestData = (): IIncidences[] => {
     const testData: IIncidences[] = [];
 
@@ -55,16 +59,26 @@ export default function Home() {
 
     return testData;
   };
+
   // Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
   const indexOfFirstIncident = indexOfLastIncident - incidentsPerPage;
-  const currentIncidents = incidentsData.slice(
-    indexOfFirstIncident,
-    indexOfLastIncident
-  );
+  const currentIncidents = filteredIncidents.length
+    ? filteredIncidents.slice(indexOfFirstIncident, indexOfLastIncident)
+    : incidentsData.slice(indexOfFirstIncident, indexOfLastIncident);
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const handleSearch = (searchTerm: string) => {
+    const filtered = incidentsData.filter(
+      (incident) =>
+        incident.incidentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        incident.incident.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        incident.responsible.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredIncidents(filtered);
+  };
 
   return (
     <>
@@ -83,12 +97,18 @@ export default function Home() {
       />
       <main className={styles.main}>
         <div className={styles.topContainer}>
-          <button className={styles.addButton}>
-            + {languageValues.incidents.addButton}
-          </button>
+          <div className={styles.leftContainer}>
+            <SearchComponent onSearch={handleSearch} />
+          </div>
+          <div className={styles.rightContainer}>
+            <button className={styles.addButton}>
+              {languageValues.incidents.addButton} +
+            </button>
+          </div>
         </div>
         <div className={styles.bottomContainer}>
           <table className={styles.incidentTable}>
+            {/* Table header */}
             <thead>
               <tr>
                 <th className={styles.actionsHeader}>
@@ -117,6 +137,7 @@ export default function Home() {
                 </th>
               </tr>
             </thead>
+            {/* Table body */}
             <tbody>
               {currentIncidents.map((incident, index) => (
                 <tr key={index}>
@@ -139,7 +160,6 @@ export default function Home() {
               ))}
             </tbody>
           </table>
-          {/* Pagination */}
           <div className={styles.pagination}>
             {Array.from(
               { length: Math.ceil(incidentsData.length / incidentsPerPage) },

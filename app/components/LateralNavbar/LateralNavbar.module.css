@@ -12,6 +12,8 @@
   font-family: "Montserrat", sans-serif;
   transition: transform 0.3s ease; /* Move transition property here */
   transform: translateX(-100%);
+  background-color: white;
+  z-index: 998;
 }
 
 .toggleButton {
