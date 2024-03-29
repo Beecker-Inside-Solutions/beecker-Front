@@ -183,4 +183,30 @@
   .responsible {
     display: none;
   }
+
+  .main {
+    padding: 3rem;
+  }
+
+  .topContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+  }
+
+  .leftContainer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .rightContainer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .incidentTable {
+    width: 110%;
+  }
 }

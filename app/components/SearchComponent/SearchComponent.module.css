@@ -28,14 +28,49 @@
   margin-left: 2em;
 }
 
-.clearButton{
-    background-color: var(--rojo-beecker);
-    color: #fff;
-    border: none;
-    padding: 0.5em;
-    width: 8em;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 1.2rem;
-    margin-left: 2em;
+.searchButton:hover {
+  background-color: #6a2cb8;
+  scale: 1.1;
+  transition: 0.3s;
+}
+
+.clearButton {
+  background-color: var(--rojo-beecker);
+  color: #fff;
+  border: none;
+  padding: 0.5em;
+  width: 8em;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  margin-left: 2em;
+}
+
+.clearButton:hover {
+  background-color: #ff0000;
+  scale: 1.1;
+  transition: 0.3s;
+}
+
+@media (max-width: 767px) {
+  .searchForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .searchInput {
+    width: 50%;
+  }
+
+  .searchButton {
+    margin-left: 0;
+    width: 5em;
+  }
+
+  .clearButton {
+    margin-left: 0;
+    width: 5em;
+  }
+
 }

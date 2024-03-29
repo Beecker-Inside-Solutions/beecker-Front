@@ -31,10 +31,10 @@ export default function Home() {
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    //const testData = generateTestData();
-    // setIncidentsData(testData);
+    const testData = generateTestData();
+    setIncidentsData(testData);
   }, []);
-  /*
+
   const generateTestData = (): IIncidences[] => {
     const testData: IIncidences[] = [];
 
@@ -59,7 +59,7 @@ export default function Home() {
     }
 
     return testData;
-  };*/
+  };
 
   // Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
