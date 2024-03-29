@@ -34,6 +34,32 @@ export default function Home() {
     //const testData = generateTestData();
     // setIncidentsData(testData);
   }, []);
+  /*
+  const generateTestData = (): IIncidences[] => {
+    const testData: IIncidences[] = [];
+
+    for (let i = 1; i <= 10; i++) {
+      testData.push({
+        incidentId: `INC-${i}`,
+        incident: `Incident ${i}`,
+        status: Math.random() > 0.5 ? "Resolved" : "Pending",
+        startDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        endDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        progress: `${Math.floor(Math.random() * 101)}%`,
+        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
+      });
+    }
+
+    return testData;
+  };*/
 
   // Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
@@ -67,6 +93,11 @@ export default function Home() {
     link.setAttribute("download", "incidents.csv");
     document.body.appendChild(link);
     link.click();
+  };
+
+  const parseDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB"); // en-GB locale uses Day-Month-Year format
   };
   return (
     <>
@@ -146,8 +177,12 @@ export default function Home() {
                   <td className={styles.incidentId}>{incident.incidentId}</td>
                   <td className={styles.incident}>{incident.incident}</td>
                   <td className={styles.status}>{incident.status}</td>
-                  <td className={styles.startDate}>{incident.startDate}</td>
-                  <td className={styles.endDate}>{incident.endDate}</td>
+                  <td className={styles.startDate}>
+                    {parseDate(incident.startDate)}
+                  </td>
+                  <td className={styles.endDate}>
+                    {parseDate(incident.endDate)}
+                  </td>
                   <td className={styles.progress}>{incident.progress}</td>
                   <td className={styles.responsible}>{incident.responsible}</td>
                 </tr>
