@@ -1,7 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
-const SearchComponent: React.FC<{ onSearch: (searchTerm: string) => void }> = ({
+interface SearchComponentProps {
+  onSearch: (searchTerm: string) => void;
+  placeholder: string;
+}
+
+const SearchComponent: React.FC<SearchComponentProps> = ({
   onSearch,
+  placeholder,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -18,7 +24,7 @@ const SearchComponent: React.FC<{ onSearch: (searchTerm: string) => void }> = ({
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder={placeholder}
         value={searchTerm}
         onChange={handleChange}
       />

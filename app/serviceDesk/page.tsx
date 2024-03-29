@@ -98,7 +98,9 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.topContainer}>
           <div className={styles.leftContainer}>
-            <SearchComponent onSearch={handleSearch} />
+            <SearchComponent onSearch={handleSearch}
+            placeholder={languageValues.incidents.searchInput}
+            />
           </div>
           <div className={styles.rightContainer}>
             <button className={styles.addButton}>
