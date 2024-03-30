@@ -8,6 +8,7 @@ import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import Footer from "../../components/Footer/Footer";
 import { statusOptions } from "@/Constants";
+import Link from "next/link";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -43,73 +44,79 @@ export default function Home() {
                 {languageValues.addIncident.addIncidentHeader}
               </h1>
             </div>
-            <div className={styles.leftContainer}>
-              <div className={styles.inputContainer}>
-                <label htmlFor="incidentName">
-                  {languageValues.addIncident.incidentName}
-                </label>
-                <input
-                  type="text"
-                  name="incidentName"
-                  id="incidentName"
-                  className={styles.input}
-                />
+            <div className={styles.flexContainer}>
+              <div className={styles.inputsContainer}>
+                <div className={styles.leftContainer}>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="incidentName">
+                      {languageValues.addIncident.incidentName}
+                    </label>
+                    <input
+                      type="text"
+                      name="incidentName"
+                      id="incidentName"
+                      className={styles.input}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="responsible">
+                      {languageValues.incidents.responsible}
+                    </label>
+                    <input
+                      name="responsible"
+                      id="responsible"
+                      className={styles.textarea}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="startDate">
+                      {languageValues.incidents.startDate}
+                    </label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      id="startDate"
+                      className={styles.input}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="endDate">
+                      {languageValues.incidents.endDate}
+                    </label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      id="endDate"
+                      className={styles.input}
+                    />
+                  </div>
+                  <div className={styles.inputContainer}>
+                    <label htmlFor="status">
+                      {languageValues.incidents.status}
+                    </label>
+                    <select name="status" id="status" className={styles.input}>
+                      {statusOptions.map((status) => (
+                        <option key={status.value} value={status.value}>
+                          {status.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div className={styles.inputContainer}>
-                <label htmlFor="responsible">
-                  {languageValues.incidents.responsible}
-                </label>
-                <input
-                  name="responsible"
-                  id="responsible"
-                  className={styles.textarea}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <label htmlFor="startDate">
-                  {languageValues.incidents.startDate}
-                </label>
-                <input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <label htmlFor="endDate">
-                  {languageValues.incidents.endDate}
-                </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  id="endDate"
-                  className={styles.input}
-                />
-              </div>
-              <div className={styles.inputContainer}>
-                <label htmlFor="status">
-                  {languageValues.incidents.status}
-                </label>
-                <select name="status" id="status" className={styles.input}>
-                  {statusOptions.map((status) => (
-                    <option key={status.value} value={status.value}>
-                      {status.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className={styles.rightContainer}>
-              {/* File upload */}
-              <div className={styles.inputContainer}>
-                <label htmlFor="file">{languageValues.addIncident.file}</label>
-                <input
-                  type="file"
-                  name="file"
-                  id="file"
-                  className={styles.input}
-                />
+              <div className={styles.rightContainer}>
+                {/* File upload */}
+                <div className={styles.inputContainer}>
+                  <label htmlFor="file">
+                    {languageValues.addIncident.file}
+                  </label>
+                  <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    className={styles.input}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -124,9 +131,16 @@ export default function Home() {
                 className={styles.textarea}
               ></textarea>
             </div>
+          </div>
+          <div className={styles.buttonContainer}>
             <button type="submit" className={styles.submitButton}>
               {languageValues.addIncident.submitButton}
             </button>
+            <Link href="/serviceDesk">
+              <button className={styles.cancelButton}>
+                {languageValues.addIncident.cancelButton}
+              </button>
+            </Link>
           </div>
         </form>
       </main>

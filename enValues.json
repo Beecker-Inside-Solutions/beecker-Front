@@ -105,6 +105,7 @@
     "incidentName": "Incident Name",
     "file": "Add File",
     "description": "Description",
-    "submitButton":"Add Incident"
+    "submitButton":"Add Incident",
+    "cancelButton":"Cancel"
   }
 }

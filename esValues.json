@@ -106,6 +106,7 @@
     "incidentName": "Nombre del Incidente",
     "file": "Adjuntar Archivo",
     "description": "Descripción",
-    "submitButton": "Agregar Incidente"
+    "submitButton": "Agregar Incidente",
+    "cancelButton":"Cancelar"
   }
 }
