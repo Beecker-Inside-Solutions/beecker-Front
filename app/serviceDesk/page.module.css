@@ -221,4 +221,28 @@
   .incidentTable {
     width: 110%;
   }
+
+  .incidentTable thead tr th {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .exportButton {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttonText {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .addButton {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttonsContainer {
+    flex-direction: column;
+  }
 }

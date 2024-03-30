@@ -126,22 +126,22 @@ export default function Home() {
           </div>
           <div className={styles.rightContainer}>
             <button className={styles.exportButton} onClick={exportToExcel}>
-              <p
-              className={styles.buttonText}
-              >{languageValues.incidents.exportButton}</p>
+              <p className={styles.buttonText}>
+                {languageValues.incidents.exportButton}
+              </p>
               <div className={styles.exportIcon}>
                 <img src={excelIcon.src} alt="Excel" />
               </div>
             </button>
             <Link href="/serviceDesk/addIncident">
-            <button className={styles.addButton}>
-              <p
-              className={styles.buttonText}
-              >{languageValues.incidents.addButton}</p>
-              <div className={styles.exportIcon}>
-                <img src={addIcon.src} alt="Config" />
-              </div>
-            </button>
+              <button className={styles.addButton}>
+                <p className={styles.buttonText}>
+                  {languageValues.incidents.addButton}
+                </p>
+                <div className={styles.exportIcon}>
+                  <img src={addIcon.src} alt="Config" />
+                </div>
+              </button>
             </Link>
           </div>
         </div>
