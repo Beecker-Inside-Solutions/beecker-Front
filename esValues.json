@@ -100,5 +100,12 @@
     "responsible": "Responsable",
     "searchInput": "Buscar Incidente",
     "exportButton": "Exportar a Excel"
+  },
+  "addIncident": {
+    "addIncidentHeader": "Información del Incidente",
+    "incidentName": "Nombre del Incidente",
+    "file": "Adjuntar Archivo",
+    "description": "Descripción",
+    "submitButton": "Agregar Incidente"
   }
 }

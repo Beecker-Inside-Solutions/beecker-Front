@@ -57,7 +57,7 @@ export const lateralNavbarItems: ILateralNavbar = {
     ["User List"]: {
       link: routes.userList,
       image: profileIcon.src,
-      adminRequired: true ,
+      adminRequired: true,
     },
   },
 };
@@ -73,4 +73,10 @@ export const graphColors: IDefaultColors[] = [
   { colorName: "azul", hexCode: "#803fe0" },
   { colorName: "morado", hexCode: "#6200d1" },
   { colorName: "azul-oscuro", hexCode: "#0000ff" },
+];
+
+export const statusOptions = [
+  { value: "Pending", label: "Pending" },
+  { value: "In Progress", label: "In Progress" },
+  { value: "Closed", label: "Closed" },
 ];

@@ -5,12 +5,14 @@ import logo from ".././images/logos/logo.png";
 import configImg from ".././images/icons/config.png";
 import deleteImg from ".././images/icons/delete.png";
 import excelIcon from ".././images/icons/excelIcon.png";
+import addIcon from ".././images/icons/add.png";
 import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import RightBar from "../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import Footer from "../components/Footer/Footer";
 import SearchComponent from "../components/SearchComponent/SearchComponent";
+import Link from "next/link";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -124,12 +126,23 @@ export default function Home() {
           </div>
           <div className={styles.rightContainer}>
             <button className={styles.exportButton} onClick={exportToExcel}>
-              <p>{languageValues.incidents.exportButton}</p>
-              <img src={excelIcon.src} alt="Excel" />
+              <p
+              className={styles.buttonText}
+              >{languageValues.incidents.exportButton}</p>
+              <div className={styles.exportIcon}>
+                <img src={excelIcon.src} alt="Excel" />
+              </div>
             </button>
+            <Link href="/serviceDesk/addIncident">
             <button className={styles.addButton}>
-              {languageValues.incidents.addButton} +
+              <p
+              className={styles.buttonText}
+              >{languageValues.incidents.addButton}</p>
+              <div className={styles.exportIcon}>
+                <img src={addIcon.src} alt="Config" />
+              </div>
             </button>
+            </Link>
           </div>
         </div>
         <div className={styles.bottomContainer}>

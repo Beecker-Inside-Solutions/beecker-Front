@@ -11,4 +11,5 @@ export interface Values {
   recoveryPage: LanguageValues;
   dashboard: LanguageValues;
   incidents: LanguageValues;
+  addIncident: LanguageValues;
 }

@@ -98,5 +98,13 @@
     "responsible": "Responsible",
     "searchInput": "Search Incident",
     "exportButton": "Export to XLSX"
+  },
+
+  "addIncident": {
+    "addIncidentHeader": "Incident Information",
+    "incidentName": "Incident Name",
+    "file": "Add File",
+    "description": "Description",
+    "submitButton":"Add Incident"
   }
 }

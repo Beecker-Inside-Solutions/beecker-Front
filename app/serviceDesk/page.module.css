@@ -45,6 +45,10 @@
   cursor: pointer;
   border-radius: 4px;
   font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
 }
 
 .addButton:hover {
@@ -78,6 +82,14 @@
   border-radius: 4px;
   font-size: 1rem;
   margin-right: 1em;
+}
+
+.buttonText {
+  width: 80%;
+}
+
+.incidents {
+  width: 20%;
 }
 
 .exportButton:hover {
