@@ -69,7 +69,6 @@ export default function Home() {
         body: JSON.stringify(loginData),
       };
 
-
       fetch(`${apiURL}/login/`, requestData)
         .then((response) => {
           if (!response.ok) {

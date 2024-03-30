@@ -88,7 +88,6 @@
   background-color: var(--azul-beecker);
 }
 
-
 .forgotPassword {
   font-size: 1rem;
   color: var(--rojo-beecker);
@@ -110,10 +109,17 @@
   color: var(--azul-beecker);
 }
 
-
 @media (max-width: 767px) {
+  .main {
+    padding: 2rem;
+  }
   .form {
-    width: 50em;
+    width: 100%;
+  }
+
+  .logo {
+    width: 15em;
+    height: 75px;
   }
 
   .button {

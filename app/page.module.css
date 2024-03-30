@@ -52,7 +52,7 @@
 .inputContainer label {
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: var(--gris-oscuro-beecker)
+  color: var(--gris-oscuro-beecker);
 }
 
 .inputContainer input {
@@ -99,8 +99,16 @@
 }
 
 @media (max-width: 767px) {
-  .form{
-    width: 50em;
+  .main {
+    padding: 2rem;
+  }
+  .form {
+    width: 100%;
+  }
+
+  .logo {
+    width: 15em;
+    height: 75px;
   }
 
   .button {
