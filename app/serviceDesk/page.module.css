@@ -240,6 +240,7 @@
   .addButton {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    width: 90%;
   }
 
   .buttonsContainer {
