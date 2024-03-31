@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
-import logo from "../../images/logos/logo.png";
+import logo from "../../images/logos/logo.png"
 import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
