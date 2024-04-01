@@ -97,7 +97,11 @@
     "progress": "Progress",
     "responsible": "Responsible",
     "searchInput": "Search Incident",
-    "exportButton": "Export to XLSX"
+    "exportButton": "Export to XLSX",
+    "description": "Description",
+    "return": "← Return",
+    "save": "Save",
+    "cancel": "Cancel"
   },
 
   "addIncident": {
@@ -105,7 +109,7 @@
     "incidentName": "Incident Name",
     "file": "Add File",
     "description": "Description",
-    "submitButton":"Add Incident",
-    "cancelButton":"Cancel"
+    "submitButton": "Add Incident",
+    "cancelButton": "Cancel"
   }
 }

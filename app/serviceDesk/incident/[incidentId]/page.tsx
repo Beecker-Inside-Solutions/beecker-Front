@@ -8,6 +8,8 @@ import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import Footer from "../../../components/Footer/Footer";
 import { statusOptions } from "@/Constants";
+import taskIcon from "../../../images/icons/taskIcon.png";
+import editIcon from "../../../images/icons/edit.png";
 import Link from "next/link";
 
 export default function Home() {
@@ -19,7 +21,28 @@ export default function Home() {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
 
-  const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
+  const [isEdit, setIsEdit] = useState(false);
+
+  // Incidents data
+  const [incident, setIncident] = useState<IIncidences>({
+    incidentId: "PIPO-52",
+    incident: "Incidente1",
+    status: "Pending",
+    startDate: "20-12-2024",
+    endDate: "21-12-2024",
+    progress: "75%",
+    responsible: "Antonio Niguerron",
+    description: "Description",
+  });
+
+  // OnClick Edit
+  const onClickEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const cancelEdit = () => {
+    setIsEdit(false);
+  };
 
   return (
     <>
@@ -37,7 +60,187 @@ export default function Home() {
         profileButton={languageValues.rightBar.profileButton}
       />
       <main className={styles.main}>
-      
+        <div className={styles.header}>
+          <Link href="/serviceDesk">
+            <h1 className={styles.returnDesk}>
+              {languageValues.incidents.return}
+            </h1>
+          </Link>
+        </div>
+        <div className={styles.topContainer}>
+          <div className={styles.topLeftContainer}>
+            <div className={styles.imgContainer}>
+              <img src={taskIcon.src} alt="taskIcon" />
+            </div>
+          </div>
+          <div className={styles.topMediumContainer}>
+            {isEdit ? (
+              <input
+                type="text"
+                className={styles.input}
+                value={incident.incident}
+                onChange={(e) =>
+                  setIncident({ ...incident, incident: e.target.value })
+                }
+              />
+            ) : (
+              <h1 className={styles.incidentTitle}>{incident.incident}</h1>
+            )}
+          </div>
+          <div className={styles.topRightContainer}>
+            {isEdit ? null : (
+              <div className={styles.imgEditContainer} onClick={onClickEdit}>
+                <img src={editIcon.src} alt="editIcon" />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className={styles.mediumContainer}>
+          <div className={styles.titleContainer}>
+            <h1 className={styles.incidentTitle}>
+              {languageValues.addIncident.addIncidentHeader}
+            </h1>
+          </div>
+          <div className={styles.mediumContent}>
+            <div className={styles.leftContainer}>
+              <div className={styles.elementContainer}>
+                <div className={styles.labelContainer}>
+                  <label className={styles.label}>
+                    {languageValues.incidents.status}: &nbsp;
+                  </label>
+                </div>
+                <div className={styles.valueContainer}>
+                  {isEdit ? (
+                    <select
+                      className={styles.select}
+                      value={incident.status}
+                      onChange={(e) =>
+                        setIncident({ ...incident, status: e.target.value })
+                      }
+                    >
+                      {statusOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <p className={styles.elementText}>{incident.status}</p>
+                  )}
+                </div>
+              </div>
+              <div className={styles.elementContainer}>
+                <div className={styles.labelContainer}>
+                  <label className={styles.label}>
+                    {languageValues.incidents.responsible}: &nbsp;
+                  </label>
+                </div>
+                <div className={styles.valueContainer}>
+                  {isEdit ? (
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={incident.responsible}
+                      onChange={(e) =>
+                        setIncident({
+                          ...incident,
+                          responsible: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    <p className={styles.elementText}>{incident.responsible}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className={styles.rightContainer}>
+              <div className={styles.elementContainer}>
+                <div className={styles.labelContainer}>
+                  <label className={styles.label}>
+                    {languageValues.incidents.startDate}: &nbsp;
+                  </label>
+                </div>
+                <div className={styles.valueContainer}>
+                  {isEdit ? (
+                    <input
+                      type="date"
+                      className={styles.input}
+                      value={incident.startDate}
+                      onChange={(e) =>
+                        setIncident({ ...incident, startDate: e.target.value })
+                      }
+                    />
+                  ) : (
+                    <p className={styles.elementText}>{incident.startDate}</p>
+                  )}
+                </div>
+              </div>
+              <div className={styles.elementContainer}>
+                <div className={styles.labelContainer}>
+                  <label className={styles.label}>
+                    {languageValues.incidents.endDate}: &nbsp;
+                  </label>
+                </div>
+                <div className={styles.valueContainer}>
+                  {isEdit ? (
+                    <input
+                      type="date"
+                      className={styles.input}
+                      value={incident.endDate}
+                      onChange={(e) =>
+                        setIncident({ ...incident, endDate: e.target.value })
+                      }
+                    />
+                  ) : (
+                    <p className={styles.elementText}>{incident.endDate}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.bottomContainer}>
+          <div className={styles.titleContainer}>
+            <h1 className={styles.incidentTitle}>
+              {languageValues.addIncident.description}
+            </h1>
+          </div>
+          <div className={styles.mediumContent}>
+            <div className={styles.elementContainer}>
+              <div className={styles.labelContainer}>
+                <label className={styles.label}>
+                  {languageValues.incidents.description}: &nbsp;
+                </label>
+              </div>
+              <div className={styles.valueContainer}>
+                {isEdit ? (
+                  <textarea
+                    className={styles.textarea}
+                    value={incident.description}
+                    onChange={(e) =>
+                      setIncident({ ...incident, description: e.target.value })
+                    }
+                  />
+                ) : (
+                  <p className={styles.elementText}>{incident.description}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        {isEdit ? (
+          <div className={styles.buttonsContainer}>
+            <button className={styles.buttonSave}>
+              {languageValues.incidents.save}
+            </button>
+            <button className={styles.buttonCancel}
+            onClick={cancelEdit}
+            >
+              {languageValues.incidents.cancel}
+            </button>
+          </div>
+        ) : null}
       </main>
       <Footer updateLanguage={setLanguage} />
     </>

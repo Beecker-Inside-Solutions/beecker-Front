@@ -99,7 +99,11 @@
     "progress": "Progreso",
     "responsible": "Responsable",
     "searchInput": "Buscar Incidente",
-    "exportButton": "Exportar a Excel"
+    "exportButton": "Exportar a Excel",
+    "description": "Descripción",
+    "return": "← Regresar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
   },
   "addIncident": {
     "addIncidentHeader": "Información del Incidente",
@@ -107,6 +111,6 @@
     "file": "Adjuntar Archivo",
     "description": "Descripción",
     "submitButton": "Agregar Incidente",
-    "cancelButton":"Cancelar"
+    "cancelButton": "Cancelar"
   }
 }

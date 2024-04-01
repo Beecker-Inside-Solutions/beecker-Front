@@ -6,4 +6,5 @@
     endDate: string;
     progress: string;
     responsible: string;
+    description: string;
   }
