@@ -56,10 +56,7 @@
     "lastCut": " Desde el último corte",
     "lastMonth": " Desde último mes",
     "lastYear": " Desde último año",
-    "roi": "ROI",
-    "hoursSaved": "Horas Ahorradas",
-    "dollarsSaved": "Dólares Ahorrados",
-    "successRate": "Tasa de Éxito"
+    "roi": "ROI"
   },
 
   "registerPage": {
@@ -86,7 +83,10 @@
     "botBarTitle": "Bots",
     "clientCharts": "Gráficas de clientes",
     "environmentCharts": "Gráficas de entornos",
-    "botCharts": "Gráficas de bots activos"
+    "botCharts": "Gráficas de bots activos",
+    "hoursSaved": "Horas Ahorradas",
+    "dollarsSaved": "Dólares Ahorrados",
+    "successRate": "Tasa de Éxito"
   },
   "incidents": {
     "addButton": "Añadir Incidente",

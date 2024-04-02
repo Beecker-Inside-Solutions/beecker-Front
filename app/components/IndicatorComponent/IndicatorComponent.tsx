@@ -79,7 +79,7 @@ const IndicatorComponent: React.FC<IIndicators> = ({
               <p className={profit > 0 ? styles.profit : styles.profitLoss}>
                 {renderProfitLoss()}%{" "}
               </p>{" "}
-              {languageValues.indicators.lastCut}
+              {languageValues.dashboard.lastCut}
             </div>
           </div>
         </div>

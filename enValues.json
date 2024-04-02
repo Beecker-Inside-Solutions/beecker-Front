@@ -64,9 +64,6 @@
     "representationText": "We are experts in intelligent process automation using RPA, artificial intelligence, and machine learning tools"
   },
   "indicators": {
-    "lastCut": " Since Last Cut",
-    "lastMonth": " Last Month",
-    "lastYear": " Last Year",
     "roi": "ROI",
     "hoursSaved": "Hours Saved",
     "dollarsSaved": "Dollars Saved",
@@ -84,7 +81,10 @@
     "botBarTitle": "Bots",
     "clientCharts": "Client Charts",
     "environmentCharts": "Environment Charts",
-    "botCharts": "Charts of active bots"
+    "botCharts": "Charts of active bots",
+    "lastCut": " Since Last Cut",
+    "lastMonth": " Last Month",
+    "lastYear": " Last Year"
   },
   "incidents": {
     "addButton": "Add Incident",

@@ -20,6 +20,15 @@ import IndicatorComponent from "../components/IndicatorComponent/IndicatorCompon
 import addImg from "../images/icons/addImage.png";
 import pdfImg from "../images/icons/pdf.png";
 import Link from "next/link";
+import Modal from "../components/ModalComponent/ModalComponent";
+import IndicatorCheckboxGroup from "../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
+
+interface IndicatorsState {
+  roi: boolean;
+  hoursSaved: boolean;
+  dollarsSaved: boolean;
+  successRate: boolean;
+}
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -42,6 +51,7 @@ export default function Home() {
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
   }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   /*
         Graph Hooks:
@@ -70,6 +80,23 @@ export default function Home() {
     setClientCharts((prevState) => !prevState);
   };
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const [activeIndicators, setActiveIndicators] = useState<IndicatorsState>({
+    roi: false,
+    hoursSaved: false,
+    dollarsSaved: false,
+    successRate: false,
+  });
+
+  const toggleCheckbox = (indicator: keyof IndicatorsState) => {
+    setActiveIndicators((prevState) => ({
+      ...prevState,
+      [indicator]: !prevState[indicator],
+    }));
+  };
   return (
     <>
       <LateralNavbar
@@ -99,7 +126,7 @@ export default function Home() {
             </h1>
             <div className={styles.buttonsContainer}>
               <div className={styles.leftButtonContainer}>
-                <button className={styles.leftButton}>
+                <button className={styles.leftButton} onClick={toggleModal}>
                   <img src={addImg.src} alt="plus" />
                 </button>
               </div>
@@ -209,6 +236,10 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Modal isOpen={isModalOpen} onClose={toggleModal}>
+        <IndicatorCheckboxGroup languageValues={languageValues} />
+      </Modal>
+
       <Footer updateLanguage={setLanguage} />
     </>
   );
