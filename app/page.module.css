@@ -100,7 +100,7 @@
 
 @media (max-width: 767px) {
   .main {
-    padding: 2rem;
+    padding: 1rem;
   }
   .form {
     width: 100%;
@@ -116,4 +116,26 @@
     font-size: 1rem;
     width: 100%;
   }
+
+  .inputContainer input {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .inputContainer label {
+    font-size: 0.8rem;
+  }
+
+  .form h1 {
+    font-size: 1.5rem;
+  }
+
+
+  .forgotPassword:hover {
+    scale: 1.1;
+    transition: 0.3s;
+    color: var(--azul-beecker);
+  }
+
+  
 }
