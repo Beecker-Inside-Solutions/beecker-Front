@@ -165,11 +165,12 @@
 
 @media (max-width: 767px) {
   .main {
-    padding: 4rem;
+    padding: 2rem;
   }
   .form {
     height: 100%;
     width: 100%;
+    margin-top: 4em;
   }
 
   .topContainer {
@@ -177,10 +178,26 @@
     width: 100%;
   }
 
+  .inputsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .leftContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+
   .inputContainer {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+    width: 100%;
   }
 
   .inputContainer label {
@@ -192,28 +209,31 @@
 
   .inputContainer input {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #c2c2c2;
-    background-color: #fff;
+    height: 100%;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: 1px solid #e0dfdf;
+    background-color: transparent;
     color: #000;
   }
 
   .inputContainer select {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #c2c2c2;
-    background-color: #fff;
+    height: 100%;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: 1px solid #e0dfdf;
+    background-color: transparent;
     color: #000;
   }
 
   .inputContainer textarea {
     width: 100%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #c2c2c2;
-    background-color: #fff;
+    height: 20em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: 1px solid #e0dfdf;
+    background-color: transparent;
     color: #000;
   }
 
@@ -236,6 +256,4 @@
     margin: 0 auto;
     margin-top: 2em;
   }
-
-
 }
