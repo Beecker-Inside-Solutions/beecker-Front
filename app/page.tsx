@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleSubmitLogin = (e: any) => {
     e.preventDefault();
-    if (emailLogin === "" || passwordLogin === "") {
+    if (emailLogin === " " || passwordLogin === " ") {
       showErrorAlert(
         languageValues.alerts.errorAlertTitle,
         languageValues.alerts.loginFailed
