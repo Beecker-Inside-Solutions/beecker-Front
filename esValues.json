@@ -53,10 +53,10 @@
     "backToLogin": "Volver al inicio de sesión"
   },
   "indicators": {
-    "lastCut": " Desde el último corte",
-    "lastMonth": " Desde último mes",
-    "lastYear": " Desde último año",
-    "roi": "ROI"
+    "roi": "ROI",
+    "hoursSaved": "Horas Ahorradas",
+    "dollarsSaved": "Dólares Ahorrados",
+    "successRate": "Tasa de Éxito"
   },
 
   "registerPage": {
@@ -83,10 +83,9 @@
     "botBarTitle": "Bots",
     "clientCharts": "Gráficas de clientes",
     "environmentCharts": "Gráficas de entornos",
-    "botCharts": "Gráficas de bots activos",
-    "hoursSaved": "Horas Ahorradas",
-    "dollarsSaved": "Dólares Ahorrados",
-    "successRate": "Tasa de Éxito"
+    "lastCut": " Último corte",
+    "lastMonth": " Último Mes",	
+    "lastYear": " Último Año"
   },
   "incidents": {
     "addButton": "Añadir Incidente",
