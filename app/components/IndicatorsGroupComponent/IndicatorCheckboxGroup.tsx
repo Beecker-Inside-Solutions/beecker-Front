@@ -10,25 +10,15 @@ interface IndicatorsState {
 
 interface IndicatorCheckboxGroupProps {
   languageValues: { indicators: { [key: string]: string } };
+  checkedIndicators: IndicatorsState;
+  onToggleCheckbox: (indicator: keyof IndicatorsState) => void;
 }
 
 const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
   languageValues,
+  checkedIndicators,
+  onToggleCheckbox,
 }) => {
-  const [activeIndicators, setActiveIndicators] = useState<IndicatorsState>({
-    roi: false,
-    hoursSaved: false,
-    dollarsSaved: false,
-    successRate: false,
-  });
-
-  const toggleCheckbox = (indicator: keyof IndicatorsState) => {
-    setActiveIndicators((prevState) => ({
-      ...prevState,
-      [indicator]: !prevState[indicator],
-    }));
-  };
-
   return (
     <div className={styles.modalContent}>
       {Object.entries(languageValues.indicators).map(([key, value]) => (
@@ -39,8 +29,8 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
           <div className={styles.checkboxContainer}>
             <input
               type="checkbox"
-              checked={activeIndicators[key as keyof IndicatorsState]}
-              onChange={() => toggleCheckbox(key as keyof IndicatorsState)}
+              checked={checkedIndicators[key as keyof IndicatorsState]}
+              onChange={() => onToggleCheckbox(key as keyof IndicatorsState)}
             />
           </div>
         </div>

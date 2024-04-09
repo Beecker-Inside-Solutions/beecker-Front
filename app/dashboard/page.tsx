@@ -91,8 +91,14 @@ export default function Home() {
     successRate: false,
   });
 
-  const toggleCheckbox = (indicator: keyof IndicatorsState) => {
-    setActiveIndicators((prevState) => ({
+  const [checkedIndicators, setCheckedIndicators] = useState<IndicatorsState>({
+    roi: true,
+    hoursSaved: true,
+    dollarsSaved: true,
+    successRate: true,
+  });
+  const handleToggleCheckbox = (indicator: keyof IndicatorsState) => {
+    setCheckedIndicators((prevState) => ({
       ...prevState,
       [indicator]: !prevState[indicator],
     }));
@@ -188,56 +194,84 @@ export default function Home() {
               )}
             </div>
             <div className={styles.bottomGraphsContainer}>
-              <div className={styles.indicatorContainer}>
-                <IndicatorComponent
-                  title={languageValues.indicators.roi}
-                  value={263858}
-                  status={true}
-                  profitActivator={true}
-                  profit={100}
-                  languageValues={languageValues}
-                  type="money"
-                />
-              </div>
-              <div className={styles.indicatorContainer}>
-                <IndicatorComponent
-                  title={languageValues.indicators.hoursSaved}
-                  value={1456}
-                  status={true}
-                  profitActivator={false}
-                  profit={-10}
-                  languageValues={languageValues}
-                  type=""
-                />
-              </div>
-              <div className={styles.indicatorContainer}>
-                <IndicatorComponent
-                  title={languageValues.indicators.dollarsSaved}
-                  value={-1000}
-                  status={true}
-                  profitActivator={true}
-                  profit={-2}
-                  languageValues={languageValues}
-                  type="money"
-                />
-              </div>
-              <div className={styles.indicatorContainer}>
-                <IndicatorComponent
-                  title={languageValues.indicators.successRate}
-                  value={0.5}
-                  status={true}
-                  profitActivator={false}
-                  profit={0}
-                  languageValues={languageValues}
-                  type="percentage"
-                />
-              </div>
+              {checkedIndicators.roi ? (
+                <div className={styles.indicatorContainer}>
+                  <IndicatorComponent
+                    title={languageValues.indicators.roi}
+                    value={263858}
+                    status={true}
+                    profitActivator={true}
+                    profit={100}
+                    languageValues={languageValues}
+                    type="money"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+
+              {checkedIndicators.hoursSaved ? (
+                <div className={styles.indicatorContainer}>
+                  <IndicatorComponent
+                    title={languageValues.indicators.hoursSaved}
+                    value={1456}
+                    status={true}
+                    profitActivator={false}
+                    profit={-10}
+                    languageValues={languageValues}
+                    type=""
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+              {checkedIndicators.dollarsSaved ? (
+                <div className={styles.indicatorContainer}>
+                  <IndicatorComponent
+                    title={languageValues.indicators.dollarsSaved}
+                    value={-1000}
+                    status={true}
+                    profitActivator={true}
+                    profit={-2}
+                    languageValues={languageValues}
+                    type="money"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+              {checkedIndicators.successRate ? (
+                <div className={styles.indicatorContainer}>
+                  <IndicatorComponent
+                    title={languageValues.indicators.successRate}
+                    value={0.5}
+                    status={true}
+                    profitActivator={false}
+                    profit={0}
+                    languageValues={languageValues}
+                    type="percentage"
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
       </main>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
-        <IndicatorCheckboxGroup languageValues={languageValues} />
+        <IndicatorCheckboxGroup
+          languageValues={{
+            indicators: {
+              roi: "Return on Investment",
+              hoursSaved: "Hours Saved",
+              dollarsSaved: "Dollars Saved",
+              successRate: "Success Rate",
+            },
+          }}
+          checkedIndicators={checkedIndicators}
+          onToggleCheckbox={handleToggleCheckbox}
+        />{" "}
       </Modal>
 
       <Footer updateLanguage={setLanguage} />
