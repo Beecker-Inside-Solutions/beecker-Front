@@ -103,6 +103,10 @@ export default function Home() {
       [indicator]: !prevState[indicator],
     }));
   };
+
+  const printToPDF = () => {
+    window.print();
+  };
   return (
     <>
       <LateralNavbar
@@ -137,18 +141,16 @@ export default function Home() {
                 </button>
               </div>
               <div className={styles.rightButtonContainer}>
-                <Link href="/dashboardPDF">
-                  <button className={styles.rightButton}>
-                    <p className={styles.downloadText}>
-                      {languageValues.dashboard.downloadPDF}
-                    </p>
-                    <img
-                      src={pdfImg.src}
-                      alt="pdf"
-                      className={styles.downloadIcon}
-                    />
-                  </button>
-                </Link>
+                <button className={styles.rightButton} onClick={printToPDF}>
+                  <p className={styles.downloadText}>
+                    {languageValues.dashboard.downloadPDF}
+                  </p>
+                  <img
+                    src={pdfImg.src}
+                    alt="pdf"
+                    className={styles.downloadIcon}
+                  />
+                </button>
               </div>
             </div>
           </div>

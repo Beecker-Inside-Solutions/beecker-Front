@@ -353,3 +353,18 @@
     height: 30%;
   }
 }
+
+@media print {
+  .leftButton,
+  .rightButton {
+    display: none;
+  }
+
+  .graphLeftContainer,
+  .graphCenterContainer,
+  .graphRightContainer {
+    width: 100%;
+    height: 30%;
+  }
+
+}

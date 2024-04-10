@@ -8,7 +8,6 @@ import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClie
 import clientBarChart from "../../hooks/ClientHooks/ClientBarChart/useClientBarChart";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import { title } from "process";
 
 const styles = StyleSheet.create({
   page: {
@@ -148,8 +147,7 @@ export default function PrintDashboard() {
       <div>
         <button onClick={printToPDF}>Print to PDF</button>
       </div>
-
-      <Document>
+      <Document style={styles.page}>
         <Page size="A4" style={styles.page}>
           <View style={styles.headerSection}>
             <div style={styles.leftSection}>

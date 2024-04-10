@@ -76,3 +76,9 @@
     width: 80%;
   }
 }
+
+@media print {
+  .searchPages {
+    display: none;
+  }
+}
