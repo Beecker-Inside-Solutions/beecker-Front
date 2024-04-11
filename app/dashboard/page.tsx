@@ -19,6 +19,8 @@ import useBotBarChartData from "../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../components/IndicatorComponent/IndicatorComponent";
 import addImg from "../images/icons/addImage.png";
 import pdfImg from "../images/icons/pdf.png";
+import whiteArrowUp from "../images/icons/whiteArrowUp.png";
+import whiteArrowDown from "../images/icons/whiteArrowDown.png";
 import Link from "next/link";
 import Modal from "../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
@@ -164,9 +166,9 @@ export default function Home() {
                   {languageValues.dashboard.clientCharts}
                 </p>
                 {ClientCharts ? (
-                  <img src={downArrow.src} alt="arrow-up" />
+                  <img src={whiteArrowDown.src} alt="arrow-up" />
                 ) : (
-                  <img src={upArrow.src} alt="arrow-down" />
+                  <img src={whiteArrowUp.src} alt="arrow-down" />
                 )}
               </div>
               {ClientCharts && (

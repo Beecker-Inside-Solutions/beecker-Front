@@ -59,7 +59,6 @@
   margin: 2em;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  border: 1px solid var(--morado-beecker);
 }
 
 .bottomGraphsContainer {
@@ -132,11 +131,10 @@
   width: 100%;
   height: 10%;
   padding: 1em;
-  border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  color: var(--morado-beecker);
+  border-radius: 20px;
+  background-color: var(--morado-beecker);
+  color: #fff;
 }
 
 .title {
@@ -360,11 +358,25 @@
     display: none;
   }
 
+  .titleContainer {
+    color: var(--morado-beecker);
+    border: 1px solid var(--morado-beecker);
+  }
+
+  .dropdownMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    height: 90%;
+    padding: 1em;
+  }
   .graphLeftContainer,
   .graphCenterContainer,
   .graphRightContainer {
     width: 100%;
     height: 30%;
   }
-
 }
