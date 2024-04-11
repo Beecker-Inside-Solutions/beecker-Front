@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleSubmitLogin = (e: any) => {
     e.preventDefault();
-    if (emailLogin === " " || passwordLogin === " ") {
+    if (emailLogin.trim() === "" || passwordLogin.trim() === "") {
       showErrorAlert(
         languageValues.alerts.errorAlertTitle,
         languageValues.alerts.loginFailed
@@ -84,13 +84,26 @@ export default function Home() {
             );
             window.location.href = routes.dashboard;
             Object.entries(data).forEach(([key, value]) => {
+              const localStorageKeys: { [key: string]: string } = {
+                token: "token",
+                first_name: "first_name",
+                last_name: "last_name",
+                email: "email",
+                phone: "phone",
+                profileImg: "profile_img",
+              };
               if (localStorageKeys.hasOwnProperty(key)) {
-                localStorage.setItem(localStorageKeys[key], value as string);
+                localStorage.setItem(localStorageKeys[key], String(value));
                 console.log(
                   `Key: ${key}, Value: ${value}, Local Storage Key: ${localStorageKeys[key]}`
                 );
               }
             });
+          } else if (data.message === "invalid password") {
+            showWarningAlert(
+              languageValues.alerts.warningAlertTitle,
+              languageValues.alerts.invalidPassword
+            );
           } else {
             showWarningAlert(
               languageValues.alerts.warningAlertTitle,
@@ -100,6 +113,10 @@ export default function Home() {
         })
         .catch((error) => {
           console.error("Error:", error);
+          showErrorAlert(
+            languageValues.alerts.errorAlertTitle,
+            languageValues.alerts.loginFailed
+          );
         });
     }
   };
