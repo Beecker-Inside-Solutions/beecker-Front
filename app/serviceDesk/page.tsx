@@ -33,10 +33,10 @@ export default function Home() {
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    // const testData = generateTestData();
-    //setIncidentsData(testData);
+    const testData = generateTestData();
+    setIncidentsData(testData);
   }, []);
-  /*
+  
   const generateTestData = (): IIncidences[] => {
     const testData: IIncidences[] = [];
 
@@ -57,13 +57,14 @@ export default function Home() {
         ).toISOString(), // Random date within January 2024
         progress: `${Math.floor(Math.random() * 101)}%`,
         responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
+        description: ""
       });
     }
 
     return testData;
   };
-*/
-  // Pagination logic
+
+  //Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
   const indexOfFirstIncident = indexOfLastIncident - incidentsPerPage;
   const currentIncidents = filteredIncidents.length
