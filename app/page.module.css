@@ -91,6 +91,22 @@
   margin-bottom: 1rem;
 }
 
+.forgotPasswordContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.register {
+  font-size: 1rem;
+  color: var(--azul-beecker);
+  text-decoration: none;
+  margin: 1em;
+}
+
+
 .forgotPassword:hover {
   text-decoration: underline;
   scale: 1.1;
@@ -130,12 +146,9 @@
     font-size: 1.5rem;
   }
 
-
   .forgotPassword:hover {
     scale: 1.1;
     transition: 0.3s;
     color: var(--azul-beecker);
   }
-
-  
 }

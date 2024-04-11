@@ -136,7 +136,10 @@ export default function Home() {
             <button type="submit" className={styles.button}>
               {languageValues.loginPage.loginButton}
             </button>
-            <div className={styles.forgotPassword}>
+            <div className={styles.forgotPasswordContainer}>
+              <Link className={styles.register} href={routes.register}>
+                {languageValues.loginPage.register}
+              </Link>
               <Link
                 className={styles.forgotPassword}
                 href={routes.forgotPassword}

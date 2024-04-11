@@ -12,4 +12,5 @@ export interface Values {
   dashboard: LanguageValues;
   incidents: LanguageValues;
   addIncident: LanguageValues;
+  userList: LanguageValues;
 }

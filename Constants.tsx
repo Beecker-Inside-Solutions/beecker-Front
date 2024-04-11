@@ -37,14 +37,6 @@ export const lateralNavbarItems: ILateralNavbar = {
     },
   },
 
-  Preferences: {
-    Settings: {
-      link: routes.settings,
-      image: settingsImage.src,
-      adminRequired: false,
-    },
-  },
-
   Planning: {
     SDesk: {
       link: routes.serviceDesk,
@@ -57,7 +49,15 @@ export const lateralNavbarItems: ILateralNavbar = {
     ["User List"]: {
       link: routes.userList,
       image: profileIcon.src,
-      adminRequired: true,
+      adminRequired: false,
+    },
+  },
+
+  Preferences: {
+    Settings: {
+      link: routes.settings,
+      image: settingsImage.src,
+      adminRequired: false,
     },
   },
 };

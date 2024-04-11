@@ -42,7 +42,8 @@
     "loginButton": "Log In",
     "emailLabel": "Username",
     "passwordLabel": "Password",
-    "forgotPassword": "Forgot your Password?"
+    "forgotPassword": "Forgot your Password?",
+    "register": "Don't have an account? Register here."
   },
   "recoveryPage": {
     "recoveryHeader": "Recover Password",
@@ -60,7 +61,7 @@
     "dateOfBirthLabel": "Date of Birth",
     "passwordLabel": "Password",
     "confirmPasswordLabel": "Confirm Password",
-    "backToLogin": "Back to Login",
+    "backToLogin": "← Back to Login",
     "representationText": "We are experts in intelligent process automation using RPA, artificial intelligence, and machine learning tools"
   },
   "indicators": {
@@ -110,6 +111,16 @@
     "file": "Add File",
     "description": "Description",
     "submitButton": "Add Incident",
+    "cancelButton": "Cancel"
+  },
+  "userList": {
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "actions": "Actions",
+    "searchInput": "Search User",
+    "editUser": "Edit User",
+    "saveButton": "Save",
     "cancelButton": "Cancel"
   }
 }

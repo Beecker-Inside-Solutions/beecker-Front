@@ -5,7 +5,11 @@ import Footer from "../components/Footer/Footer";
 import useMultilingualValues from "../hooks/useMultilingualValues";
 import esValues from "@/esValues.json";
 import enValues from "@/enValues.json";
+import Link from "next/link";
 import logo from "../images/logos/logo.png";
+import { apiURL, routes, regex } from "@/Constants";
+
+
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -125,6 +129,11 @@ export default function Home() {
           <button className={styles.button}>
             {languageValues.registerPage.registerButton}
           </button>
+          <div className={styles.returnLogin}>
+            <Link className={styles.register} href={routes.login}>
+              {languageValues.registerPage.backToLogin}
+            </Link>
+          </div>
         </div>
         <div className={styles.rightContainer}>
           <div className={styles.textWrapper}>

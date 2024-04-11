@@ -42,7 +42,8 @@
     "loginButton": "Iniciar sesión",
     "emailLabel": "Usuario",
     "passwordLabel": "Contraseña",
-    "forgotPassword": "¿Olvidaste tu contraseña?"
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "register": "No tienes cuenta? Regístrate aquí."
   },
 
   "recoveryPage": {
@@ -50,7 +51,7 @@
     "recoveryButton": "Enviar",
     "emailLabel": "Correo electrónico",
     "emailSent": "Correo enviado. Regresando al inicio de sesión.",
-    "backToLogin": "Volver al inicio de sesión"
+    "backToLogin": "← Volver al inicio de sesión"
   },
   "indicators": {
     "roi": "ROI",
@@ -84,7 +85,7 @@
     "clientCharts": "Gráficas de clientes",
     "environmentCharts": "Gráficas de entornos",
     "lastCut": " Último corte",
-    "lastMonth": " Último Mes",	
+    "lastMonth": " Último Mes",
     "lastYear": " Último Año"
   },
   "incidents": {
@@ -110,6 +111,17 @@
     "file": "Adjuntar Archivo",
     "description": "Descripción",
     "submitButton": "Agregar Incidente",
+    "cancelButton": "Cancelar"
+  },
+
+  "userList": {
+    "name": "Nombre",
+    "email": "Correo",
+    "role": "Rol",
+    "actions": "Acciones",
+    "searchInput": "Buscar Usuario",
+    "editUser": "Editar Usuario",
+    "saveButton": "Guardar",
     "cancelButton": "Cancelar"
   }
 }
