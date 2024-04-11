@@ -72,7 +72,7 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
             value={
               userListData.length > 0
                 ? userListData[0].email
-                : "random@gmailcom 0"
+                : "random0@gmailcom"
             }
             onChange={(e) =>
               setUserListData([{ ...userListData[0], email: e.target.value }])

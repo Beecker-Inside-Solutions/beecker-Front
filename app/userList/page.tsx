@@ -48,7 +48,7 @@ export default function Home() {
       testData.push({
         id: i,
         name: `Name ${i}`,
-        email: `random@gmailcom ${i}`,
+        email: `random${i}@gmailcom`,
         //Admin or User
         role: i % 2 === 0 ? "Admin" : "User",
       });
