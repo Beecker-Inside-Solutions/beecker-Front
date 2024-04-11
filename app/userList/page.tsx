@@ -44,13 +44,14 @@ export default function Home() {
 
   const generateTestData = () => {
     const testData: IUserList[] = [];
+    const roles = ["Admin", "User", "Internal Client", "External Client"];
     for (let i = 0; i < 100; i++) {
       testData.push({
         id: i,
         name: `Name ${i}`,
         email: `random${i}@gmailcom`,
         //Admin or User
-        role: i % 2 === 0 ? "Admin" : "User",
+        role: roles[i % roles.length],
       });
     }
     return testData;

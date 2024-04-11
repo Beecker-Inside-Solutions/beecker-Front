@@ -89,6 +89,8 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
           >
             <option value="admin">Admin</option>
             <option value="user">User</option>
+            <option value="internal">Internal Client</option>
+            <option value="external">External Client</option>
           </select>
         </div>
       </div>
