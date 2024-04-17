@@ -7,6 +7,7 @@ import upArrow from "@/app/images/icons/openArrow.png";
 import Link from "next/link";
 import profile from "@/app/images/icons/profile.png";
 import logout from "@/app/images/icons/logout.png";
+import notification from "@/app/images/icons/notification.png";
 import { routes, apiURL } from "@/Constants";
 import { showSuccessAlert } from "../../lib/AlertUtils";
 const RightBar: React.FC<IRightBar> = ({
@@ -45,6 +46,9 @@ const RightBar: React.FC<IRightBar> = ({
   return (
     <div className={styles.profileContainer}>
       <div className={styles.topContainer}>
+        <div className={styles.notification}>
+          <img src={notification.src} alt="notification" />
+        </div>
         <div className={styles.profileImage}>
           <img src={profileImageUrl} alt={profileName} width={50} height={50} />
         </div>
