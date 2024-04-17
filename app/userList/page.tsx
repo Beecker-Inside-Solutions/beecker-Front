@@ -84,6 +84,7 @@ export default function Home() {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
   return (
     <>
       <LateralNavbar

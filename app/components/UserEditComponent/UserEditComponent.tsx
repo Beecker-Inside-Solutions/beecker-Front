@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { IUserList } from "../../interfaces/IIUserList";
 import styles from "./UserEdit.module.css";
 import { apiURL } from "@/Constants";
+import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
 
 interface UserListProps {
   languageValues: { userList: { [key: string]: string } };
@@ -46,8 +47,13 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
         throw new Error("Failed to update user");
       }
       fetchUserList();
+      showSuccessToast("User updated successfully");
     } catch (error) {
       console.error("Error updating user:", error);
+      showErrorToast("Failed to update user", {
+        autoClose: 1000,
+        position: "bottom-right",
+      });
     }
   };
 
