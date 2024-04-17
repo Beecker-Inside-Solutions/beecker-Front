@@ -19,6 +19,7 @@ const RightBar: React.FC<IRightBar> = ({
   profileButton,
 }: IRightBar) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showAlertDropdown, setShowAlertDropdown] = useState(false);
   const [getLogout, setLogout] = useState("");
 
   const fetchLogout = async () => {
@@ -38,6 +39,10 @@ const RightBar: React.FC<IRightBar> = ({
     setShowDropdown((prevState) => !prevState);
   };
 
+  const toggleAlertDropdown = () => {
+    setShowAlertDropdown((prevState) => !prevState);
+  };
+
   const handleLogout = () => {
     fetchLogout();
     localStorage.clear();
@@ -46,7 +51,7 @@ const RightBar: React.FC<IRightBar> = ({
   return (
     <div className={styles.profileContainer}>
       <div className={styles.topContainer}>
-        <div className={styles.notification}>
+        <div className={styles.notification} onClick={toggleAlertDropdown}>
           <img src={notification.src} alt="notification" />
         </div>
         <div className={styles.profileImage}>
@@ -63,6 +68,15 @@ const RightBar: React.FC<IRightBar> = ({
           )}
         </div>
       </div>
+      {showAlertDropdown && (
+        <div className={styles.dropdownMenuAlerts}>
+          <ul>
+            <li>
+              <p>Notifications</p>
+            </li>
+          </ul>
+        </div>
+      )}
       {showDropdown && (
         <div className={styles.dropdownMenu}>
           <ul>
