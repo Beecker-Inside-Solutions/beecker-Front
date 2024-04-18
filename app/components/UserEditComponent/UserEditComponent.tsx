@@ -40,9 +40,7 @@ const UserList: React.FC<UserListProps> = ({
 
   const handleUpdateUser = async (user: IUserList) => {
     try {
-      const { email, Roles_idRole: userTypeId } = user;
-      console.log("userTypeId", userTypeId);
-      console.log("Selected user", user);
+      const { email, name, Roles_idRole: userTypeId } = user;
       const response = await fetch(
         `${apiURL}/users/updatePermissions/${user.Roles_idRole}`,
         {
@@ -51,7 +49,7 @@ const UserList: React.FC<UserListProps> = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ email, userTypeId }),
+          body: JSON.stringify({ email, name, userTypeId }),
         }
       );
       console.log("body", JSON.stringify({ email, userTypeId }));
