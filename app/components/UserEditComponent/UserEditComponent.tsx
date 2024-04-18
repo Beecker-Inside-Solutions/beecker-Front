@@ -39,12 +39,26 @@ const UserList: React.FC<UserListProps> = ({
     fetchUserList();
   }, [fetchUserList]);
 
+  const getRoleName = (roleId: number): string => {
+    switch (roleId) {
+      case 1:
+        return "Administrator";
+      case 2:
+        return "Internal Client";
+      case 3:
+        return "External Client";
+      default:
+        return "Unknown Role";
+    }
+  };
+
   const handleUpdateUser = async (user: IUserList) => {
     try {
       const response = await fetch(`${apiURL}/users/${user.idUsers}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(user),
       });
@@ -104,9 +118,9 @@ const UserList: React.FC<UserListProps> = ({
               ])
             }
           >
-            <option value="admin">Admin</option>
-            <option value="internal">Internal Client</option>
-            <option value="external">External Client</option>
+            <option value={1}>Administrator</option>
+            <option value={2}>Internal Client</option>
+            <option value={3}>External Client</option>
           </select>
         </div>
       </div>

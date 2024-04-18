@@ -93,7 +93,6 @@ export default function Home() {
   };
 
   const handleEditIconClick = (userId: number) => {
-    console.log("Selected userId:", userId);
     setSelectedUser(userId);
     toggleModal();
   };
