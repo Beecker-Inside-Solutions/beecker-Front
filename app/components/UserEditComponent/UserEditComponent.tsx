@@ -3,7 +3,7 @@ import { IUserList } from "../../interfaces/IIUserList";
 import styles from "./UserEdit.module.css";
 import { apiURL } from "@/Constants";
 import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
-
+import Swal from "sweetalert2";
 interface UserListProps {
   languageValues: { userList: { [key: string]: string } };
   Roles_idRole: number;
@@ -68,6 +68,35 @@ const UserList: React.FC<UserListProps> = ({
     } catch (error) {
       console.error("Error updating user:", error);
       showErrorToast("Failed to update user", {
+        autoClose: 1000,
+        position: "bottom-right",
+      });
+    }
+  };
+
+  const handleUseDelete = async (id: number) => {
+    try {
+      const response = await fetch(`${apiURL}/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+      fetchUserList();
+      const responseData = await response.json();
+      if (responseData.message === `User deleted`) {
+        showSuccessToast("User deleted successfully", {
+          autoClose: 1000,
+          position: "bottom-right",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      showErrorToast("Failed to delete user", {
         autoClose: 1000,
         position: "bottom-right",
       });
