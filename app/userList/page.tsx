@@ -97,6 +97,15 @@ export default function Home() {
     toggleModal();
   };
 
+  const handleSearch = (searchTerm: string) => {
+    const filtered = userListData.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setfilteredUserList(filtered);
+  };
+
   const getRoleName = (roleId: number): string => {
     switch (roleId) {
       case 1:
@@ -129,7 +138,7 @@ export default function Home() {
         <div className={styles.topContainer}>
           <div className={styles.leftContainer}>
             <SearchComponent
-              onSearch={console.log}
+              onSearch={handleSearch}
               placeholder={languageValues.userList.searchInput}
             />
           </div>
