@@ -28,7 +28,6 @@ const UserList: React.FC<UserListProps> = ({
         throw new Error("Failed to fetch user list");
       }
       const data: IUserList[] = await response.json();
-      console.log("Fetched user list data:", data);
       setUserListData(data);
     } catch (error) {
       console.error("Error fetching user list:", error);
@@ -39,35 +38,35 @@ const UserList: React.FC<UserListProps> = ({
     fetchUserList();
   }, [fetchUserList]);
 
-  const getRoleName = (roleId: number): string => {
-    switch (roleId) {
-      case 1:
-        return "Administrator";
-      case 2:
-        return "Internal Client";
-      case 3:
-        return "External Client";
-      default:
-        return "Unknown Role";
-    }
-  };
-
   const handleUpdateUser = async (user: IUserList) => {
     try {
-      const response = await fetch(`${apiURL}/users/${user.idUsers}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(user),
-      });
+      const { email, Roles_idRole: userTypeId } = user;
+      console.log("userTypeId", userTypeId);
+      console.log("Selected user", user);
+      const response = await fetch(
+        `${apiURL}/users/updatePermissions/${user.Roles_idRole}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ email, userTypeId }),
+        }
+      );
+      console.log("body", JSON.stringify({ email, userTypeId }));
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
 
       fetchUserList();
-      showSuccessToast("User updated successfully");
+      const responseData = await response.json();
+      if (responseData.message === `User permissions updated`) {
+        showSuccessToast("User updated successfully", {
+          autoClose: 1000,
+          position: "bottom-right",
+        });
+      }
     } catch (error) {
       console.error("Error updating user:", error);
       showErrorToast("Failed to update user", {
@@ -75,6 +74,30 @@ const UserList: React.FC<UserListProps> = ({
         position: "bottom-right",
       });
     }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserListData([
+      { ...userListData[0], name: e.target.value },
+      ...userListData.slice(1),
+    ]);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserListData([
+      { ...userListData[0], email: e.target.value },
+      ...userListData.slice(1),
+    ]);
+  };
+
+  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setUserListData([
+      {
+        ...userListData[0],
+        Roles_idRole: parseInt(e.target.value, 10),
+      },
+      ...userListData.slice(1),
+    ]);
   };
 
   return (
@@ -86,9 +109,7 @@ const UserList: React.FC<UserListProps> = ({
           <input
             type="text"
             value={userListData.length > 0 ? userListData[0].name : "Name 0"}
-            onChange={(e) =>
-              setUserListData([{ ...userListData[0], name: e.target.value }])
-            }
+            onChange={handleNameChange}
           />
         </div>
         <div className={styles.elementContainer}>
@@ -100,23 +121,14 @@ const UserList: React.FC<UserListProps> = ({
                 ? userListData[0].email
                 : "random0@gmailcom"
             }
-            onChange={(e) =>
-              setUserListData([{ ...userListData[0], email: e.target.value }])
-            }
+            onChange={handleEmailChange}
           />
         </div>
         <div className={styles.elementContainer}>
           <label htmlFor="role">{languageValues.userList.role}</label>
           <select
             value={userListData.length > 0 ? userListData[0].Roles_idRole : ""}
-            onChange={(e) =>
-              setUserListData([
-                {
-                  ...userListData[0],
-                  Roles_idRole: parseInt(e.target.value, 10),
-                },
-              ])
-            }
+            onChange={handleRoleChange}
           >
             <option value={1}>Administrator</option>
             <option value={2}>Internal Client</option>
