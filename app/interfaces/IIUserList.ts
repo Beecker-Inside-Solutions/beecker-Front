@@ -1,6 +1,6 @@
 export interface IUserList {
-  id: number;
+  idUsers: number;
   name: string;
   email: string;
-  role: string;
+  Roles_idRole: number;
 }

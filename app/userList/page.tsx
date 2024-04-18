@@ -14,6 +14,7 @@ import Footer from "../components/Footer/Footer";
 import SearchComponent from "../components/SearchComponent/SearchComponent";
 import Modal from "../components/ModalComponent/ModalComponent";
 import UserList from "../components/UserEditComponent/UserEditComponent";
+import { apiURL } from "@/Constants";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -28,34 +29,28 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const incidentsPerPage = 8;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(0);
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("first_name");
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    const testData = generateTestData();
-    setuserListData(testData);
+
+    const fetchData = async () => {
+      try {
+        const data = await fetchUserList();
+        setuserListData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error); // Log fetch error
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
     setfilteredUserList(userListData);
   }, [userListData]);
-
-  const generateTestData = () => {
-    const testData: IUserList[] = [];
-    const roles = ["Admin", "User", "Internal Client", "External Client"];
-    for (let i = 0; i < 100; i++) {
-      testData.push({
-        id: i,
-        name: `Name ${i}`,
-        email: `random${i}@gmailcom`,
-        //Admin or User
-        role: roles[i % roles.length],
-      });
-    }
-    return testData;
-  };
 
   // Pagination logic
   const indexOfLastUser = currentPage * incidentsPerPage;
@@ -66,6 +61,18 @@ export default function Home() {
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const fetchUserList = async (): Promise<IUserList[]> => {
+    const response = await fetch(`${apiURL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  };
 
   const exportToExcel = () => {
     const csvContent = [
@@ -83,6 +90,25 @@ export default function Home() {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleEditIconClick = (userId: number) => {
+    console.log("Selected userId:", userId);
+    setSelectedUser(userId);
+    toggleModal();
+  };
+
+  const getRoleName = (roleId: number): string => {
+    switch (roleId) {
+      case 1:
+        return "Administrator";
+      case 2:
+        return "Internal Client";
+      case 3:
+        return "External Client";
+      default:
+        return "Unknown Role";
+    }
   };
 
   return (
@@ -139,14 +165,16 @@ export default function Home() {
             </thead>
             <tbody>
               {currentUsers.map((incident) => (
-                <tr key={incident.id}>
+                <tr key={incident.idUsers}>
                   <td>{incident.name}</td>
                   <td>{incident.email}</td>
-                  <td>{incident.role}</td>
+                  <td>{getRoleName(incident.Roles_idRole)}</td>{" "}
                   <td className={styles.actions}>
                     <img
                       src={editIcon.src}
-                      onClick={toggleModal}
+                      onClick={(event: any) =>
+                        handleEditIconClick(incident.idUsers)
+                      } // Fix: Pass incident.id instead of incident
                       alt="Config"
                     />
                     <img src={deleteImg.src} alt="Delete" />
@@ -168,7 +196,7 @@ export default function Home() {
         </div>
       </main>
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
-        <UserList languageValues={languageValues} userId={1} />
+        <UserList languageValues={languageValues} Roles_idRole={selectedUser} />
       </Modal>
       <Footer updateLanguage={setLanguage} />
     </>

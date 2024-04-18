@@ -6,29 +6,34 @@ import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
 
 interface UserListProps {
   languageValues: { userList: { [key: string]: string } };
-  userId: number;
+  Roles_idRole: number;
 }
 
-const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
+const UserList: React.FC<UserListProps> = ({
+  languageValues,
+  Roles_idRole,
+}) => {
   const [userListData, setUserListData] = useState<IUserList[]>([]);
 
   const fetchUserList = useCallback(async () => {
     try {
-      const response = await fetch(`${apiURL}/users/${userId}`, {
+      const response = await fetch(`${apiURL}/users/${Roles_idRole}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
       if (!response.ok) {
         throw new Error("Failed to fetch user list");
       }
       const data: IUserList[] = await response.json();
+      console.log("Fetched user list data:", data);
       setUserListData(data);
     } catch (error) {
       console.error("Error fetching user list:", error);
     }
-  }, [userId]);
+  }, [Roles_idRole]);
 
   useEffect(() => {
     fetchUserList();
@@ -36,7 +41,7 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
 
   const handleUpdateUser = async (user: IUserList) => {
     try {
-      const response = await fetch(`${apiURL}/users/${user.id}`, {
+      const response = await fetch(`${apiURL}/users/${user.idUsers}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +51,7 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
+
       fetchUserList();
       showSuccessToast("User updated successfully");
     } catch (error) {
@@ -88,13 +94,17 @@ const UserList: React.FC<UserListProps> = ({ languageValues, userId }) => {
         <div className={styles.elementContainer}>
           <label htmlFor="role">{languageValues.userList.role}</label>
           <select
-            value={userListData.length > 0 ? userListData[0].role : ""}
+            value={userListData.length > 0 ? userListData[0].Roles_idRole : ""}
             onChange={(e) =>
-              setUserListData([{ ...userListData[0], role: e.target.value }])
+              setUserListData([
+                {
+                  ...userListData[0],
+                  Roles_idRole: parseInt(e.target.value, 10),
+                },
+              ])
             }
           >
             <option value="admin">Admin</option>
-            <option value="user">User</option>
             <option value="internal">Internal Client</option>
             <option value="external">External Client</option>
           </select>
