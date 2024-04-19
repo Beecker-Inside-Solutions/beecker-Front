@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RightBar.module.css";
 import { IRightBar } from "@/app/interfaces/IRightBar";
 import downArrow from "@/app/images/icons/closeArrow.png";
@@ -10,8 +10,9 @@ import logout from "@/app/images/icons/logout.png";
 import notification from "@/app/images/icons/notification.png";
 import { routes, apiURL } from "@/Constants";
 import { showSuccessAlert } from "../../lib/AlertUtils";
+import NotificationComponent from "../NotificationComponent/NotificationComponent";
+import { INotificationProps } from "@/app/interfaces/INotificationProps";
 const RightBar: React.FC<IRightBar> = ({
-  profileName,
   profileImageUrl,
   logoutHeader,
   logoutText,
@@ -21,18 +22,55 @@ const RightBar: React.FC<IRightBar> = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAlertDropdown, setShowAlertDropdown] = useState(false);
   const [getLogout, setLogout] = useState("");
+  const [profileName, setProfileName] = useState("");
+  const [notifications, setNotifications] = useState<INotificationProps[]>([]);
 
-  const fetchLogout = async () => {
-    const response = await fetch(`${apiURL}/logout/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const data = await response.json();
-    setLogout(data);
+  const fetchLogout = () => {
     showSuccessAlert(logoutHeader, logoutText);
+    localStorage.removeItem("token");
+    window.location.href = routes.login;
+  };
+
+  const fetchInformation = async () => {
+    try {
+      const response = await fetch(`${apiURL}/users/${localStorage.userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user information");
+      }
+      const data = await response.json();
+      setProfileName(data[0].name);
+    } catch (error) {
+      console.error("Error fetching user information:", error);
+    }
+  };
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch(
+        `${apiURL}/notifications/user/${localStorage.userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch notifications");
+      }
+      const data = await response.json();
+      setNotifications(data);
+      setLogout(data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
   };
 
   const toggleDropdown = () => {
@@ -41,12 +79,17 @@ const RightBar: React.FC<IRightBar> = ({
 
   const toggleAlertDropdown = () => {
     setShowAlertDropdown((prevState) => !prevState);
+    fetchNotifications();
   };
 
   const handleLogout = () => {
     fetchLogout();
     localStorage.clear();
   };
+
+  useEffect(() => {
+    fetchInformation();
+  }, []);
 
   return (
     <div className={styles.profileContainer}>
@@ -71,9 +114,15 @@ const RightBar: React.FC<IRightBar> = ({
       {showAlertDropdown && (
         <div className={styles.dropdownMenuAlerts}>
           <ul>
-            <li>
-              <p>Notifications</p>
-            </li>
+            {notifications.map((notification) => (
+              <NotificationComponent
+                key={notification.idNotifications}
+                name={notification.name}
+                description={notification.description}
+                isActive={notification.isActive}
+                idNotifications={notification.idNotifications}
+              />
+            ))}
           </ul>
         </div>
       )}

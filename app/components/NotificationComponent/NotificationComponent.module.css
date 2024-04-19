@@ -1,0 +1,66 @@
+.notificationContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.notificationHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.leftContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.mediumContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.rightContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.deleteButton {
+  color: #f00;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+
+.notificationCircleActive {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(29, 247, 0);
+  margin-right: 10px;
+}
+
+.notificationCircleInactive {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 10px;
+}

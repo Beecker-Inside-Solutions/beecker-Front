@@ -69,7 +69,7 @@ export default function Home() {
         body: JSON.stringify(loginData),
       };
 
-      fetch(`${apiURL}/login/`, requestData)
+      fetch(`${apiURL}/login`, requestData)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -77,7 +77,8 @@ export default function Home() {
           return response.json();
         })
         .then((data) => {
-          if (data.message === "login success") {
+          console.log("Success:", data);
+          if (data.message === "Login successful") {
             showSuccessAlert(
               languageValues.alerts.successAlertTitle,
               languageValues.alerts.loginSuccess
@@ -86,11 +87,7 @@ export default function Home() {
             Object.entries(data).forEach(([key, value]) => {
               const localStorageKeys: { [key: string]: string } = {
                 token: "token",
-                first_name: "first_name",
-                last_name: "last_name",
-                email: "email",
-                phone: "phone",
-                profileImg: "profile_img",
+                userId: "userId",
               };
               if (localStorageKeys.hasOwnProperty(key)) {
                 localStorage.setItem(localStorageKeys[key], String(value));
