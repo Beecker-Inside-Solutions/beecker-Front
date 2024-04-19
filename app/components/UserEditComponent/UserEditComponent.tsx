@@ -38,6 +38,44 @@ const UserList: React.FC<UserListProps> = ({
     fetchUserList();
   }, [fetchUserList]);
 
+  const handleAddNotification = async (user: IUserList) => {
+    try {
+      const response = await fetch(`${apiURL}/notifications/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          name: "User modification",
+          description: `User ${user.name} has been modified`,
+          isActive: true,
+          Users_idUsers: user.idUsers,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add notification");
+      }
+      const responseData = await response.json();
+
+      if (responseData.message === `Notification added`) {
+        showSuccessToast(
+          `⚠️ User: ${user.name} has been updated successfully.`,
+          {
+            autoClose: false,
+            position: "bottom-right",
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error adding notification:", error);
+      showErrorToast("Failed to add notification", {
+        autoClose: 1000,
+        position: "bottom-right",
+      });
+    }
+  };
+
   const handleUpdateUser = async (user: IUserList) => {
     try {
       const { email, name, Roles_idRole: userTypeId } = user;
@@ -52,7 +90,7 @@ const UserList: React.FC<UserListProps> = ({
           body: JSON.stringify({ email, name, userTypeId }),
         }
       );
-      console.log("body", JSON.stringify({ email, userTypeId }));
+      console.log("body", JSON.stringify({ email, name, userTypeId }));
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
@@ -60,6 +98,7 @@ const UserList: React.FC<UserListProps> = ({
       fetchUserList();
       const responseData = await response.json();
       if (responseData.message === `User permissions updated`) {
+        handleAddNotification(user);
         showSuccessToast("User updated successfully", {
           autoClose: 1000,
           position: "bottom-right",

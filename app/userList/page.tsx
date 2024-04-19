@@ -55,9 +55,9 @@ export default function Home() {
   // Pagination logic
   const indexOfLastUser = currentPage * incidentsPerPage;
   const indexOfFirstUser = indexOfLastUser - incidentsPerPage;
-  const currentUsers = filteredUserList.length
-    ? filteredUserList.slice(indexOfFirstUser, indexOfLastUser)
-    : userListData.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = Array.isArray(userListData)
+    ? userListData.slice(indexOfFirstUser, indexOfLastUser)
+    : [];
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
