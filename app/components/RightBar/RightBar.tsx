@@ -114,19 +114,24 @@ const RightBar: React.FC<IRightBar> = ({
       {showAlertDropdown && (
         <div className={styles.dropdownMenuAlerts}>
           <ul>
-            {notifications.map((notification) => (
-              <NotificationComponent
-                key={notification.idNotifications}
-                name={notification.name}
-                description={notification.description}
-                isActive={notification.isActive}
-                idNotifications={notification.idNotifications}
-                fetchNotificationsCallback={fetchNotifications}
-              />
-            ))}
+            {notifications.length > 0 ? (
+              notifications.map((notification) => (
+                <NotificationComponent
+                  key={notification.idNotifications}
+                  name={notification.name}
+                  description={notification.description}
+                  isActive={notification.isActive}
+                  idNotifications={notification.idNotifications}
+                  fetchNotificationsCallback={fetchNotifications}
+                />
+              ))
+            ) : (
+              <li className={styles.noNotifications}>No notifications</li>
+            )}
           </ul>
         </div>
       )}
+
       {showDropdown && (
         <div className={styles.dropdownMenu}>
           <ul>
