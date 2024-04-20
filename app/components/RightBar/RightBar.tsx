@@ -121,6 +121,7 @@ const RightBar: React.FC<IRightBar> = ({
                 description={notification.description}
                 isActive={notification.isActive}
                 idNotifications={notification.idNotifications}
+                fetchNotificationsCallback={fetchNotifications}
               />
             ))}
           </ul>
