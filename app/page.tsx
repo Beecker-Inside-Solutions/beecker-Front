@@ -83,7 +83,7 @@ export default function Home() {
               languageValues.alerts.successAlertTitle,
               languageValues.alerts.loginSuccess
             );
-            window.location.href = routes.dashboard;
+            window.location.href = routes.projects;
             Object.entries(data).forEach(([key, value]) => {
               const localStorageKeys: { [key: string]: string } = {
                 token: "token",

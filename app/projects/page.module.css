@@ -14,16 +14,29 @@
 .topContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   padding: 2rem;
   width: 100%;
   height: 20%;
   margin: 0 auto;
-  background-color: antiquewhite;
 }
 
-.bottomContainer{
+.welcomeContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.welcomeContainer p {
+  font-size: 2rem;
+  font-weight: 100;
+  margin-right: 1rem;
+}
+
+.welcomeText {
+  color: var(--rojo-beecker);
+}
+
+.bottomContainer {
   display: flex;
   flex-direction: column;
   align-items: center;

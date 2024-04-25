@@ -9,19 +9,39 @@ import RightBar from "../components/RightBar/RightBar";
 import SearchPages from "../components/SearchPages/SearchPages";
 import Footer from "../components/Footer/Footer";
 import ProjectComponent from "../components/ProjectComponent/ProjectComponent";
-import Link from "next/link";
-import Modal from "../components/ModalComponent/ModalComponent";
-import IndicatorCheckboxGroup from "../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 import { Project } from "../interfaces/IProject";
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [userName, setUserName] = useState("");
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
     require("@/esValues.json"),
     require("@/enValues.json")
   );
+
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${apiURL}/users/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
+      const data = await response.json();
+      setUserName(data[0].name);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }, []);
 
   const fetchProject = useCallback(async () => {
     try {
@@ -39,7 +59,6 @@ export default function Home() {
         throw new Error("Failed to fetch projects");
       }
       const data = await response.json();
-      console.log(data);
       setProjects(data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -48,9 +67,9 @@ export default function Home() {
 
   useEffect(() => {
     fetchProject();
+    fetchUser();
   }, [fetchProject]);
 
-  console.log(projects);
   return (
     <>
       <LateralNavbar
@@ -69,7 +88,16 @@ export default function Home() {
         isAdmin={false}
       />
       <main className={styles.main}>
-        <div className={styles.topContainer}></div>
+        <div className={styles.topContainer}>
+          <h1 className={styles.title}>
+            <div className={styles.welcomeContainer}>
+              <p className={styles.welcomeText}>
+                {languageValues.dashboard.welcome}{" "}
+              </p>
+              <p>, {userName}</p>
+            </div>
+          </h1>
+        </div>
         <div className={styles.bottomContainer}>
           {projects.map((project) => (
             <ProjectComponent key={project.idProject} project={project} />

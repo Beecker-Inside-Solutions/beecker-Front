@@ -13,7 +13,7 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
   const [showBots, setShowBots] = useState(false);
 
   const toggleBots = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation(); // Prevents click from bubbling to parent elements
+    event.stopPropagation();
     setShowBots(!showBots);
   };
 
@@ -44,7 +44,10 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
             {project.bots.map((bot) => (
               <Link href={`/dashboard/${bot.idBots}`} key={bot.idBots}>
                 <li>
-                  {bot.botName} - {bot.isExecuting ? "Running" : "Stopped"}
+                  <div className={styles.leftContainer}>{bot.botName}</div>
+                  <div className={styles.rightContainer}>
+                    <p>{bot.isExecuting ? "Running" : "Stopped"}</p>
+                  </div>
                 </li>
               </Link>
             ))}

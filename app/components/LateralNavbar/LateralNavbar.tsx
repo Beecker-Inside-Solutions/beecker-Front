@@ -32,7 +32,7 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
       </button>
 
       <div className={`${styles.lateralNavbar} ${isOpen ? styles.open : ""}`}>
-        <Link href={routes.dashboard}>
+        <Link href={routes.projects}>
           <img src={logo || ""} alt="Logo" className={styles.logo} />
         </Link>
         <ul>

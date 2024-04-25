@@ -129,11 +129,6 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.topContainer}>
-            <h1 className={styles.title}>
-              <div className={styles.welcomeContainer}>
-                <p>{languageValues.dashboard.welcome} </p>, {userName}
-              </div>
-            </h1>
             <div className={styles.buttonsContainer}>
               <div className={styles.leftButtonContainer}>
                 <button className={styles.leftButton} onClick={toggleModal}>
