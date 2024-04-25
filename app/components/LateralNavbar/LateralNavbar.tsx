@@ -22,11 +22,7 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-  const { languageValues } = useMultilingualValues(
-    "en",
-    esValues,
-    enValues
-  );
+  const { languageValues } = useMultilingualValues("en", esValues, enValues);
   return (
     <>
       <button onClick={toggleNavbar} className={styles.toggleButton}>
@@ -37,11 +33,7 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
 
       <div className={`${styles.lateralNavbar} ${isOpen ? styles.open : ""}`}>
         <Link href={routes.dashboard}>
-          <img
-            src={logo || ""}
-            alt="Logo"
-            className={styles.logo}
-          />
+          <img src={logo || ""} alt="Logo" className={styles.logo} />
         </Link>
         <ul>
           {Object.keys(lateralNavbar).map((section) => {
@@ -58,17 +50,17 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
 
             return (
               <li key={section}>
-                <p
-                className={styles.sectionTitle}
-                >{section}</p>
+                <p className={styles.sectionTitle}>{section}</p>
                 <ul className={styles.sectionValue}>
                   {sectionItems.map((item) => {
                     const { link, image } = lateralNavbar[section][item];
                     return (
-                      <li key={item}>
-                        {image && <img src={image} alt="Icon" />}
-                        <Link href={link}>{item}</Link>
-                      </li>
+                      <Link href={link}>
+                        <li key={item}>
+                          {image && <img src={image} alt="Icon" />}
+                          {item}
+                        </li>
+                      </Link>
                     );
                   })}
                 </ul>

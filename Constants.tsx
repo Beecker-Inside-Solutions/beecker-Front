@@ -5,6 +5,7 @@ import { IRegex } from "./app/interfaces/IRegex";
 import dashboardImage from "./app/images/icons/dashboard.png";
 import settingsImage from "./app/images/icons/settings.png";
 import mexicoIcon from "./app/images/icons/mexico.png";
+import folderImage from "./app/images/icons/folder.png";
 import ukIcon from "./app/images/icons/uk.png";
 import profileIcon from "./app/images/icons/profile.png";
 import serviceDesk from "./app/images/icons/serviceDesk.png";
@@ -21,18 +22,19 @@ export const routes: IRoutes = {
   login: "/",
   register: "/register",
   forgotPassword: "/forgotPassword",
-  dashboard: "/dashboard",
   profile: "/profile",
   settings: "/settings",
   serviceDesk: "/serviceDesk",
   userList: "/userList",
+  dashboard: "/dashboard",
+  projects: "/projects",
 };
 
 export const lateralNavbarItems: ILateralNavbar = {
   Home: {
-    Dashboard: {
-      link: routes.dashboard,
-      image: dashboardImage.src,
+    Projects: {
+      link: routes.projects,
+      image: folderImage.src,
       adminRequired: false,
     },
   },

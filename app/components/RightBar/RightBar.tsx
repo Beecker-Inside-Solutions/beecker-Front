@@ -12,8 +12,9 @@ import { routes, apiURL } from "@/Constants";
 import { showSuccessAlert } from "../../lib/AlertUtils";
 import NotificationComponent from "../NotificationComponent/NotificationComponent";
 import { INotificationProps } from "@/app/interfaces/INotificationProps";
+import logo from "../../images/logos/logo.png";
+
 const RightBar: React.FC<IRightBar> = ({
-  profileImageUrl,
   logoutHeader,
   logoutText,
   logoutButton,
@@ -98,7 +99,7 @@ const RightBar: React.FC<IRightBar> = ({
           <img src={notification.src} alt="notification" />
         </div>
         <div className={styles.profileImage}>
-          <img src={profileImageUrl} alt={profileName} width={50} height={50} />
+          <img src={logo.src} alt={profileName} width={50} height={50} />
         </div>
         <div className={styles.profileNameContainer}>
           <p className={styles.profileName}>{profileName}</p>
