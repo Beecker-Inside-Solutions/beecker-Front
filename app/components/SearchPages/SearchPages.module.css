@@ -65,20 +65,6 @@
 
 @media (max-width: 767px) {
   .searchPages {
-    height: 5em;
-  }
-
-  .searchPages input {
-    width: 30%;
-  }
-
-  .suggestedPages ul {
-    width: 80%;
-  }
-}
-
-@media print {
-  .searchPages {
     display: none;
   }
 }
