@@ -45,8 +45,8 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
               project.bots.map((bot) => (
                 <Link href={`/dashboard/${bot.idBots}`} key={bot.idBots}>
                   <li>
-                    <div className={styles.leftContainer}>{bot.botName}</div>
-                    <div className={styles.rightContainer}>
+                    <div className={styles.leftContainerBots}>{bot.botName}</div>
+                    <div className={styles.rightContainerBots}>
                       <p>{bot.isExecuting ? "Running" : "Stopped"}</p>
                     </div>
                   </li>
