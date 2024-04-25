@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./ProjectComponent.module.css";
 import { Project } from "@/app/interfaces/IProject";
 import Link from "next/link";
+import whiteArrowDown from "../../images/icons/whiteArrowDown.png";
+import whiteArrowUp from "../../images/icons/whiteArrowUp.png";
 
 interface ProjectComponentProps {
   project: Project;
@@ -23,11 +25,15 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
       >
         <div className={styles.topProjectContainer}>
           <div className={styles.leftContainer}>
-            <h2>{project.projectName}</h2>
+            <p>{project.projectName}</p>
           </div>
           <div className={styles.rightContainer}>
             <button onClick={toggleBots} aria-expanded={showBots}>
-              {showBots ? "Hide Bots" : "Show Bots"}
+              {showBots ? (
+                <img src={whiteArrowUp.src} alt="Arrow Up" />
+              ) : (
+                <img src={whiteArrowDown.src} alt="Arrow Down" />
+              )}
             </button>
           </div>
         </div>
