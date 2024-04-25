@@ -8,19 +8,14 @@ import LateralNavbar from "../components/LateralNavbar/LateralNavbar";
 import RightBar from "../components/RightBar/RightBar";
 import SearchPages from "../components/SearchPages/SearchPages";
 import Footer from "../components/Footer/Footer";
-
+import ProjectComponent from "../components/ProjectComponent/ProjectComponent";
 import Link from "next/link";
 import Modal from "../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
-
-interface IProject {
-  _id: string;
-  projectName: string;
-  projectDescription: string;
-}
+import { Project } from "../interfaces/IProject";
 
 export default function Home() {
-  const [projects, setProjects] = useState<IProject[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -31,7 +26,7 @@ export default function Home() {
   const fetchProject = useCallback(async () => {
     try {
       const response = await fetch(
-        `${apiURL}/projects/user/${localStorage.getItem("userId")}`,
+        `${apiURL}/projects/user/${localStorage.getItem("userId")}/bots`,
         {
           method: "GET",
           headers: {
@@ -44,6 +39,7 @@ export default function Home() {
         throw new Error("Failed to fetch projects");
       }
       const data = await response.json();
+      console.log(data);
       setProjects(data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -73,21 +69,11 @@ export default function Home() {
         isAdmin={false}
       />
       <main className={styles.main}>
-        <div className={styles.sectionTitle}></div>
-        <div className={styles.sectionContent}>
-          <div className={styles.sectionContentTitle}></div>
-          <div className={styles.sectionContentProjects}>
-            {projects.map((project) => (
-              <div className={styles.projectCard} key={project._id}>
-                <Link href={`/projects/${project._id}`}>
-                  <p>
-                    <h3>{project.projectName}</h3>
-                    <p>{project.projectDescription}</p>
-                  </p>
-                </Link>
-              </div>
-            ))}
-          </div>
+        <div className={styles.topContainer}></div>
+        <div className={styles.bottomContainer}>
+          {projects.map((project) => (
+            <ProjectComponent key={project.idProject} project={project} />
+          ))}
         </div>
       </main>
 
