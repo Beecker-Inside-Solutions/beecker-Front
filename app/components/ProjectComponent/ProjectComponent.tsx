@@ -41,16 +41,20 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
       <div className={styles.botContainer}>
         {showBots && (
           <ul>
-            {project.bots.map((bot) => (
-              <Link href={`/dashboard/${bot.idBots}`} key={bot.idBots}>
-                <li>
-                  <div className={styles.leftContainer}>{bot.botName}</div>
-                  <div className={styles.rightContainer}>
-                    <p>{bot.isExecuting ? "Running" : "Stopped"}</p>
-                  </div>
-                </li>
-              </Link>
-            ))}
+            {project.bots.length > 0 ? (
+              project.bots.map((bot) => (
+                <Link href={`/dashboard/${bot.idBots}`} key={bot.idBots}>
+                  <li>
+                    <div className={styles.leftContainer}>{bot.botName}</div>
+                    <div className={styles.rightContainer}>
+                      <p>{bot.isExecuting ? "Running" : "Stopped"}</p>
+                    </div>
+                  </li>
+                </Link>
+              ))
+            ) : (
+              <p className={styles.noBots}>No bots</p>
+            )}
           </ul>
         )}
       </div>

@@ -97,4 +97,16 @@
 .botContainer ul li:hover {
   transition: 0.3s;
   color: #fff;
-  background-color: var(--azul-beecker);}
+  background-color: var(--azul-beecker);
+}
+
+.noBots {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+}
