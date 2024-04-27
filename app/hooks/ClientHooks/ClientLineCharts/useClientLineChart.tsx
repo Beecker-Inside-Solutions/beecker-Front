@@ -1,49 +1,68 @@
 import { useState, useEffect } from "react";
 import { apiURL } from "@/Constants";
 
-const useClientLineChart = (id: number, intervalTime: string) => {
-  const [clientLineData, setClientLineData] = useState<any[]>([]);
-  const [clientLineLabels, setClientLineLabels] = useState<string[]>([]);
+const useClientLineChart = (idBots: number, timeframe: string) => {
+  // State for success labels and data
+  const [clientLineLabelsSuccess, setClientLineLabelsSuccess] = useState<
+    string[]
+  >([]);
+  const [clientLineDataSuccess, setClientLineDataSuccess] = useState<number[]>(
+    []
+  );
+
+  // State for failure labels and data
+  const [clientLineLabelsFailed, setClientLineLabelsFailed] = useState<
+    string[]
+  >([]);
+  const [clientLineDataFailed, setClientLineDataFailed] = useState<number[]>(
+    []
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const url = `${apiURL}/lineChartClient/`;
-      const requestData = {
-        id: id,
-        timezone: "America/Mexico_City",
-        intervaltime: intervalTime,
-      };
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: "token c8611ccb12550346b6c35a7b206fba75a43c20de",
-      };
-
+    const fetchProject = async () => {
       try {
-        const response: Response = await fetch(url, {
+        const response = await fetch(`${apiURL}/bots/executions/${idBots}`, {
           method: "POST",
-          headers: headers,
-          body: JSON.stringify(requestData),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            timeframe: timeframe,
+          }),
         });
-
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Failed to fetch projects");
         }
+        const data = await response.json();
 
-        const jsonData: { labelsSuccess: string[], dataSuccess: any[], dataFailed: any[] } = await response.json();
-        const labels = jsonData.labelsSuccess; // Adjusted to use labelsSuccess
-        const data = jsonData.dataSuccess.concat(jsonData.dataFailed);
-        setClientLineLabels(labels);
-        setClientLineData(data);
-        
+        // Check if data has necessary properties before setting state
+        if (
+          data &&
+          data.labelsSuccess &&
+          data.dataSuccess &&
+          data.labelsFailed &&
+          data.dataFailed
+        ) {
+          setClientLineLabelsSuccess(data.labelsSuccess);
+          setClientLineDataSuccess(data.dataSuccess);
+          setClientLineLabelsFailed(data.labelsFailed);
+          setClientLineDataFailed(data.dataFailed);
+        }
       } catch (error) {
-        console.error("There was a problem with the fetch operation:", error);
+        console.error("Error fetching projects:", error);
       }
     };
 
-    fetchData();
-  }, [id, intervalTime]);
+    fetchProject();
+  }, [idBots, timeframe]); // Add all dependencies that can trigger re-fetching the data
 
-  return { clientLineData, clientLineLabels };
+  return {
+    clientLineLabelsSuccess,
+    clientLineDataSuccess,
+    clientLineLabelsFailed,
+    clientLineDataFailed,
+  };
 };
 
 export default useClientLineChart;

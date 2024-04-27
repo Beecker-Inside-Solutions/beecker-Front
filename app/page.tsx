@@ -77,7 +77,6 @@ export default function Home() {
           return response.json();
         })
         .then((data) => {
-          console.log("Success:", data);
           if (data.message === "Login successful") {
             showSuccessAlert(
               languageValues.alerts.successAlertTitle,
@@ -91,9 +90,6 @@ export default function Home() {
               };
               if (localStorageKeys.hasOwnProperty(key)) {
                 localStorage.setItem(localStorageKeys[key], String(value));
-                console.log(
-                  `Key: ${key}, Value: ${value}, Local Storage Key: ${localStorageKeys[key]}`
-                );
               }
             });
           } else if (data.message === "invalid password") {

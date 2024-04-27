@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
 import logo from "../../images/logos/logo.png";
-import ChartComponent from "../../components/ChartComponent/ChartComponent";
+import ChartComponent from "../DoubleChartComponent/DoubleChartComponent";
 import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClientLineChart";
 import clientBarChart from "../../hooks/ClientHooks/ClientBarChart/useClientBarChart";
 import { renderToStaticMarkup } from "react-dom/server";

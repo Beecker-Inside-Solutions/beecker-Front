@@ -7,7 +7,8 @@ import logo from "../../images/logos/logo.png";
 import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import SearchPages from "../../components/SearchPages/SearchPages";
-import ChartComponent from "../../components/ChartComponent/ChartComponent";
+import ChartComponent from "../../components/DoubleChartComponent/DoubleChartComponent";
+import DoubleChartComponent from "../../components/DoubleChartComponent/DoubleChartComponent";
 import Footer from "../../components/Footer/Footer";
 import AuthRoute from "../../components/AuthComponent/AuthComponent";
 import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClientLineChart";
@@ -19,7 +20,6 @@ import addImg from "../../images/icons/addImage.png";
 import pdfImg from "../../images/icons/pdf.png";
 import whiteArrowUp from "../../images/icons/whiteArrowUp.png";
 import whiteArrowDown from "../../images/icons/whiteArrowDown.png";
-import Link from "next/link";
 import Modal from "../../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 
@@ -30,10 +30,10 @@ interface IndicatorsState {
   successRate: boolean;
 }
 
-export default function Home() {
+export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
-
+  console.log(params.idBot);
   /*
         Charts displays:
       */
@@ -58,10 +58,13 @@ export default function Home() {
       */
 
   // ClientCharts Hooks
-  const { clientLineData, clientLineLabels } = useClientLineChart(
-    14,
-    "monthly"
-  );
+
+  const {
+    clientLineLabelsSuccess,
+    clientLineDataSuccess,
+    clientLineLabelsFailed,
+    clientLineDataFailed,
+  } = useClientLineChart(params.idBot, "monthly");
   const { clientBarData, clientBarLabels } = clientBarChart(14, 90);
 
   /*
@@ -167,22 +170,28 @@ export default function Home() {
               {ClientCharts && (
                 <div className={styles.dropdownMenu}>
                   <div className={styles.graphsContainer}>
-                    <div className={styles.graphLeftContainer}>
-                      <ChartComponent
-                        chartType="bar"
-                        data={clientBarData}
-                        labels={clientBarLabels}
-                        graphTitle={languageValues.dashboard.botBarTitle}
-                        borderColor={getRandomColor()}
-                      />
-                    </div>
+                    <div className={styles.graphLeftContainer}></div>
                     <div className={styles.graphCenterContainer}>
-                      <ChartComponent
+                      <DoubleChartComponent
                         chartType="line"
-                        data={clientLineData}
-                        labels={clientLineLabels}
-                        graphTitle={languageValues.dashboard.botBarTitle}
-                        borderColor={getRandomColor()}
+                        datasets={[
+                          {
+                            label: "Success",
+                            data: clientLineDataSuccess,
+                            borderColor: getRandomColor(), // or a specific color for success
+                            backgroundColor: "rgba(75, 192, 192, 0.2)", // translucent green
+                            fill: false,
+                          },
+                          {
+                            label: "Failed",
+                            data: clientLineDataFailed,
+                            borderColor: getRandomColor(), // or a specific color for failure
+                            backgroundColor: "rgba(255, 99, 132, 0.2)", // translucent red
+                            fill: false,
+                          },
+                        ]}
+                        labels={clientLineLabelsSuccess} // Assuming success and failed share the same labels
+                        graphTitle="Performance Over Time"
                       />
                     </div>
                     <div className={styles.graphRightContainer}></div>
