@@ -85,7 +85,10 @@
     "botCharts": "Charts of active bots",
     "lastCut": " Since Last Cut",
     "lastMonth": " Last Month",
-    "lastYear": " Last Year"
+    "lastYear": " Last Year",
+    "botPerformance": "Bot performance",
+    "success": "Success",
+    "failed": "Failed"
   },
   "incidents": {
     "addButton": "Add Incident",

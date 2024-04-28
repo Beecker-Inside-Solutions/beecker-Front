@@ -33,7 +33,6 @@ interface IndicatorsState {
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
-  console.log(params.idBot);
   /*
         Charts displays:
       */
@@ -176,22 +175,22 @@ export default function Home({ params }: { params: { idBot: number } }) {
                         chartType="line"
                         datasets={[
                           {
-                            label: "Success",
+                            label: languageValues.dashboard.success,
                             data: clientLineDataSuccess,
-                            borderColor: getRandomColor(), // or a specific color for success
-                            backgroundColor: "rgba(75, 192, 192, 0.2)", // translucent green
+                            borderColor: "#6200d1",
+                            backgroundColor: "#803fe0",
                             fill: false,
                           },
                           {
-                            label: "Failed",
+                            label: languageValues.dashboard.failed,
                             data: clientLineDataFailed,
-                            borderColor: getRandomColor(), // or a specific color for failure
-                            backgroundColor: "rgba(255, 99, 132, 0.2)", // translucent red
+                            borderColor: "#e74949",
+                            backgroundColor: "#e74949",
                             fill: false,
                           },
                         ]}
-                        labels={clientLineLabelsSuccess} // Assuming success and failed share the same labels
-                        graphTitle="Performance Over Time"
+                        labels={clientLineLabelsSuccess}
+                        graphTitle={languageValues.dashboard.botPerformance}
                       />
                     </div>
                     <div className={styles.graphRightContainer}></div>

@@ -86,7 +86,11 @@
     "environmentCharts": "Gráficas de entornos",
     "lastCut": " Último corte",
     "lastMonth": " Último Mes",
-    "lastYear": " Último Año"
+    "lastYear": " Último Año",
+    "botPerformance": "Performance del bot",
+    "success": "Exitosos",
+    "failed": "Fallidos"
+  
   },
   "incidents": {
     "addButton": "Añadir Incidente",
