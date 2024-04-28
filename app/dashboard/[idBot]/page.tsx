@@ -7,12 +7,11 @@ import logo from "../../images/logos/logo.png";
 import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import SearchPages from "../../components/SearchPages/SearchPages";
-import ChartComponent from "../../components/DoubleChartComponent/DoubleChartComponent";
 import DoubleChartComponent from "../../components/DoubleChartComponent/DoubleChartComponent";
+import ChartComponent from "@/app/components/ChartComponent/ChartComponent";
 import Footer from "../../components/Footer/Footer";
 import AuthRoute from "../../components/AuthComponent/AuthComponent";
 import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClientLineChart";
-import clientBarChart from "../../hooks/ClientHooks/ClientBarChart/useClientBarChart";
 import useFetchTransactionsData from "../../hooks/Transactions/useFetchTransactionsData";
 import useBotBarChartData from "../../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../../components/IndicatorComponent/IndicatorComponent";
@@ -22,6 +21,7 @@ import whiteArrowUp from "../../images/icons/whiteArrowUp.png";
 import whiteArrowDown from "../../images/icons/whiteArrowDown.png";
 import Modal from "../../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
+import useSuccessAndFailRate from "@/app/hooks/ClientHooks/successAndFailRate/successAndFailRate";
 
 interface IndicatorsState {
   roi: boolean;
@@ -65,8 +65,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
     clientLineLabelsFailed,
     clientLineDataFailed,
   } = useClientLineChart(params.idBot, getSelectedTime);
-  const { clientBarData, clientBarLabels } = clientBarChart(14, 90);
 
+  const { dataSF, labelsSF } = useSuccessAndFailRate(
+    params.idBot,
+    getSelectedTime
+  );
   /*
         Functions:
       */
@@ -188,7 +191,17 @@ export default function Home({ params }: { params: { idBot: number } }) {
               {ClientCharts && (
                 <div className={styles.dropdownMenu}>
                   <div className={styles.graphsContainer}>
-                    <div className={styles.graphLeftContainer}></div>
+                    <div className={styles.graphLeftContainer}>
+                      <ChartComponent
+                        data={dataSF}
+                        labels={labelsSF}
+                        chartType="pie"
+                        graphTitle="Success and Failure Rates"
+                        fillColor={["#803fe0", "#F44336"]} // green and red
+                        borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
+                        isFilled={true} // if applicable to pie chart, typically not used
+                      />
+                    </div>
                     <div className={styles.graphCenterContainer}>
                       <DoubleChartComponent
                         chartType="line"

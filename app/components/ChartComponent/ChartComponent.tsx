@@ -21,7 +21,7 @@ interface ChartProps {
   isFilled?: boolean;
   chartType: keyof ChartTypeRegistry;
   borderColor?: string | string[];
-  fillColor?: string; // Added fill color prop
+  fillColor?: string | string[];
   cName?: string; // Add cName prop for the classname
 }
 
