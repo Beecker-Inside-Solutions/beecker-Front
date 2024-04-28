@@ -88,7 +88,10 @@
     "lastYear": " Last Year",
     "botPerformance": "Bot performance",
     "success": "Success",
-    "failed": "Failed"
+    "failed": "Failed",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "yearly": "Yearly"
   },
   "incidents": {
     "addButton": "Add Incident",

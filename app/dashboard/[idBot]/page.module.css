@@ -257,6 +257,17 @@
   cursor: pointer;
 }
 
+.select {
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 1px solid var(--azul-beecker);
+  background-color: transparent;
+  color: #000;
+  margin-left: 5em;
+}
+
 @media (max-width: 767px) {
   .main {
     padding: 2%;
@@ -354,7 +365,8 @@
 
 @media print {
   .leftButton,
-  .rightButton {
+  .rightButton,
+  .select {
     display: none;
   }
 

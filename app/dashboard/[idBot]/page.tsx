@@ -33,6 +33,7 @@ interface IndicatorsState {
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
+  const [getSelectedTime, setSelectedTime] = useState("monthly");
   /*
         Charts displays:
       */
@@ -63,7 +64,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
     clientLineDataSuccess,
     clientLineLabelsFailed,
     clientLineDataFailed,
-  } = useClientLineChart(params.idBot, "monthly");
+  } = useClientLineChart(params.idBot, getSelectedTime);
   const { clientBarData, clientBarLabels } = clientBarChart(14, 90);
 
   /*
@@ -136,6 +137,24 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 <button className={styles.leftButton} onClick={toggleModal}>
                   <img src={addImg.src} alt="plus" />
                 </button>
+                <div className={styles.mediumSelectContainer}>
+                  <select
+                    value={getSelectedTime}
+                    onChange={(e) => setSelectedTime(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option value="weekly">
+                      {languageValues.dashboard.weekly}
+                    </option>
+
+                    <option value="monthly">
+                      {languageValues.dashboard.monthly}
+                    </option>
+                    <option value="yearly">
+                      {languageValues.dashboard.yearly}
+                    </option>
+                  </select>
+                </div>
               </div>
               <div className={styles.rightButtonContainer}>
                 <button className={styles.rightButton} onClick={printToPDF}>

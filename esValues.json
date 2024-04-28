@@ -89,7 +89,10 @@
     "lastYear": " Último Año",
     "botPerformance": "Performance del bot",
     "success": "Exitosos",
-    "failed": "Fallidos"
+    "failed": "Fallidos",
+    "monthly": "Mensual",
+    "weekly": "Semanal",
+    "yearly": "Anual"
   
   },
   "incidents": {
