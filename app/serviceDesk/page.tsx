@@ -13,6 +13,7 @@ import styles from "./page.module.css";
 import Footer from "../components/Footer/Footer";
 import SearchComponent from "../components/SearchComponent/SearchComponent";
 import Link from "next/link";
+import AuthRoute from "../components/AuthComponent/AuthComponent";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -36,7 +37,7 @@ export default function Home() {
     const testData = generateTestData();
     setIncidentsData(testData);
   }, []);
-  
+
   const generateTestData = (): IIncidences[] => {
     const testData: IIncidences[] = [];
 
@@ -57,7 +58,7 @@ export default function Home() {
         ).toISOString(), // Random date within January 2024
         progress: `${Math.floor(Math.random() * 101)}%`,
         responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
-        description: ""
+        description: "",
       });
     }
 
@@ -104,117 +105,121 @@ export default function Home() {
   };
   return (
     <>
-      <LateralNavbar
-        lateralNavbar={require("@/Constants").lateralNavbarItems}
-        logo={logo.src}
-        user={{ isAdmin: false }}
-      />
-      <RightBar
-        profileName={userName}
-        profileImageUrl={profileImg}
-        logoutHeader={languageValues.rightBar.logoutHeader}
-        logoutText={languageValues.rightBar.logoutText}
-        logoutButton={languageValues.rightBar.logoutButton}
-        profileButton={languageValues.rightBar.profileButton}
-      />
-      <main className={styles.main}>
-        <div className={styles.topContainer}>
-          <div className={styles.leftContainer}>
-            <SearchComponent
-              onSearch={handleSearch}
-              placeholder={languageValues.incidents.searchInput}
-            />
-          </div>
-          <div className={styles.rightContainer}>
-            <button className={styles.exportButton} onClick={exportToExcel}>
-              <p className={styles.buttonText}>
-                {languageValues.incidents.exportButton}
-              </p>
-              <div className={styles.exportIcon}>
-                <img src={excelIcon.src} alt="Excel" />
-              </div>
-            </button>
-            <Link href="/serviceDesk/addIncident">
-              <button className={styles.addButton}>
+      <AuthRoute>
+        <LateralNavbar
+          lateralNavbar={require("@/Constants").lateralNavbarItems}
+          logo={logo.src}
+          user={{ isAdmin: false }}
+        />
+        <RightBar
+          profileName={userName}
+          profileImageUrl={profileImg}
+          logoutHeader={languageValues.rightBar.logoutHeader}
+          logoutText={languageValues.rightBar.logoutText}
+          logoutButton={languageValues.rightBar.logoutButton}
+          profileButton={languageValues.rightBar.profileButton}
+        />
+        <main className={styles.main}>
+          <div className={styles.topContainer}>
+            <div className={styles.leftContainer}>
+              <SearchComponent
+                onSearch={handleSearch}
+                placeholder={languageValues.incidents.searchInput}
+              />
+            </div>
+            <div className={styles.rightContainer}>
+              <button className={styles.exportButton} onClick={exportToExcel}>
                 <p className={styles.buttonText}>
-                  {languageValues.incidents.addButton}
+                  {languageValues.incidents.exportButton}
                 </p>
                 <div className={styles.exportIcon}>
-                  <img src={addIcon.src} alt="Config" />
+                  <img src={excelIcon.src} alt="Excel" />
                 </div>
               </button>
-            </Link>
-          </div>
-        </div>
-        <div className={styles.bottomContainer}>
-          <table className={styles.incidentTable}>
-            <thead>
-              <tr>
-                <th className={styles.actionsHeader}>
-                  {languageValues.incidents.actions}
-                </th>
-                <th className={styles.incidentIdHeader}>
-                  {languageValues.incidents.incidentId}
-                </th>
-                <th className={styles.incidentHeader}>
-                  {languageValues.incidents.incident}
-                </th>
-                <th className={styles.statusHeader}>
-                  {languageValues.incidents.status}
-                </th>
-                <th className={styles.startDateHeader}>
-                  {languageValues.incidents.startDate}
-                </th>
-                <th className={styles.endDateHeader}>
-                  {languageValues.incidents.endDate}
-                </th>
-                <th className={styles.progressHeader}>
-                  {languageValues.incidents.progress}
-                </th>
-                <th className={styles.responsibleHeader}>
-                  {languageValues.incidents.responsible}
-                </th>
-              </tr>
-            </thead>
-            {/* Table body */}
-            <tbody>
-              {currentIncidents.map((incident, index) => (
-                <tr key={index}>
-                  <td className={styles.buttonsContainer}>
-                    <button className={styles.actionButton}>
-                      <img src={configImg.src} alt="Config" />
-                    </button>
-                    <button className={styles.actionButton}>
-                      <img src={deleteImg.src} alt="Delete" />
-                    </button>
-                  </td>
-                  <td className={styles.incidentId}>{incident.incidentId}</td>
-                  <td className={styles.incident}>{incident.incident}</td>
-                  <td className={styles.status}>{incident.status}</td>
-                  <td className={styles.startDate}>
-                    {parseDate(incident.startDate)}
-                  </td>
-                  <td className={styles.endDate}>
-                    {parseDate(incident.endDate)}
-                  </td>
-                  <td className={styles.progress}>{incident.progress}</td>
-                  <td className={styles.responsible}>{incident.responsible}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className={styles.pagination}>
-            {Array.from(
-              { length: Math.ceil(incidentsData.length / incidentsPerPage) },
-              (_, i) => (
-                <button key={i} onClick={() => paginate(i + 1)}>
-                  {i + 1}
+              <Link href="/serviceDesk/addIncident">
+                <button className={styles.addButton}>
+                  <p className={styles.buttonText}>
+                    {languageValues.incidents.addButton}
+                  </p>
+                  <div className={styles.exportIcon}>
+                    <img src={addIcon.src} alt="Config" />
+                  </div>
                 </button>
-              )
-            )}
+              </Link>
+            </div>
           </div>
-        </div>
-      </main>
+          <div className={styles.bottomContainer}>
+            <table className={styles.incidentTable}>
+              <thead>
+                <tr>
+                  <th className={styles.actionsHeader}>
+                    {languageValues.incidents.actions}
+                  </th>
+                  <th className={styles.incidentIdHeader}>
+                    {languageValues.incidents.incidentId}
+                  </th>
+                  <th className={styles.incidentHeader}>
+                    {languageValues.incidents.incident}
+                  </th>
+                  <th className={styles.statusHeader}>
+                    {languageValues.incidents.status}
+                  </th>
+                  <th className={styles.startDateHeader}>
+                    {languageValues.incidents.startDate}
+                  </th>
+                  <th className={styles.endDateHeader}>
+                    {languageValues.incidents.endDate}
+                  </th>
+                  <th className={styles.progressHeader}>
+                    {languageValues.incidents.progress}
+                  </th>
+                  <th className={styles.responsibleHeader}>
+                    {languageValues.incidents.responsible}
+                  </th>
+                </tr>
+              </thead>
+              {/* Table body */}
+              <tbody>
+                {currentIncidents.map((incident, index) => (
+                  <tr key={index}>
+                    <td className={styles.buttonsContainer}>
+                      <button className={styles.actionButton}>
+                        <img src={configImg.src} alt="Config" />
+                      </button>
+                      <button className={styles.actionButton}>
+                        <img src={deleteImg.src} alt="Delete" />
+                      </button>
+                    </td>
+                    <td className={styles.incidentId}>{incident.incidentId}</td>
+                    <td className={styles.incident}>{incident.incident}</td>
+                    <td className={styles.status}>{incident.status}</td>
+                    <td className={styles.startDate}>
+                      {parseDate(incident.startDate)}
+                    </td>
+                    <td className={styles.endDate}>
+                      {parseDate(incident.endDate)}
+                    </td>
+                    <td className={styles.progress}>{incident.progress}</td>
+                    <td className={styles.responsible}>
+                      {incident.responsible}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className={styles.pagination}>
+              {Array.from(
+                { length: Math.ceil(incidentsData.length / incidentsPerPage) },
+                (_, i) => (
+                  <button key={i} onClick={() => paginate(i + 1)}>
+                    {i + 1}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+        </main>
+      </AuthRoute>
       <Footer updateLanguage={setLanguage} />
     </>
   );

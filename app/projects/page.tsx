@@ -10,6 +10,7 @@ import SearchPages from "../components/SearchPages/SearchPages";
 import Footer from "../components/Footer/Footer";
 import ProjectComponent from "../components/ProjectComponent/ProjectComponent";
 import { Project } from "../interfaces/IProject";
+import AuthRoute from "../components/AuthComponent/AuthComponent";
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -72,39 +73,40 @@ export default function Home() {
 
   return (
     <>
-      <LateralNavbar
-        lateralNavbar={require("@/Constants").lateralNavbarItems}
-        logo={logo.src}
-        user={{ isAdmin: false }}
-      />
-      <RightBar
-        logoutHeader={languageValues.rightBar.logoutHeader}
-        logoutText={languageValues.rightBar.logoutText}
-        logoutButton={languageValues.rightBar.logoutButton}
-        profileButton={languageValues.rightBar.profileButton}
-      />
-      <SearchPages
-        searchablePages={require("@/Constants").lateralNavbarItems}
-        isAdmin={false}
-      />
-      <main className={styles.main}>
-        <div className={styles.topContainer}>
-          <h1 className={styles.title}>
-            <div className={styles.welcomeContainer}>
-              <p className={styles.welcomeText}>
-                {languageValues.dashboard.welcome}{" "}
-              </p>
-              <p>, {userName}</p>
-            </div>
-          </h1>
-        </div>
-        <div className={styles.bottomContainer}>
-          {projects.map((project) => (
-            <ProjectComponent key={project.idProject} project={project} />
-          ))}
-        </div>
-      </main>
-
+      <AuthRoute>
+        <LateralNavbar
+          lateralNavbar={require("@/Constants").lateralNavbarItems}
+          logo={logo.src}
+          user={{ isAdmin: false }}
+        />
+        <RightBar
+          logoutHeader={languageValues.rightBar.logoutHeader}
+          logoutText={languageValues.rightBar.logoutText}
+          logoutButton={languageValues.rightBar.logoutButton}
+          profileButton={languageValues.rightBar.profileButton}
+        />
+        <SearchPages
+          searchablePages={require("@/Constants").lateralNavbarItems}
+          isAdmin={false}
+        />
+        <main className={styles.main}>
+          <div className={styles.topContainer}>
+            <h1 className={styles.title}>
+              <div className={styles.welcomeContainer}>
+                <p className={styles.welcomeText}>
+                  {languageValues.dashboard.welcome}{" "}
+                </p>
+                <p>, {userName}</p>
+              </div>
+            </h1>
+          </div>
+          <div className={styles.bottomContainer}>
+            {projects.map((project) => (
+              <ProjectComponent key={project.idProject} project={project} />
+            ))}
+          </div>
+        </main>
+      </AuthRoute>
       <Footer updateLanguage={setLanguage} />
     </>
   );
