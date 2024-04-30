@@ -57,11 +57,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const fetchRoi = useCallback(async () => {
     try {
       const response = await fetch(`${apiURL}/bots/roi/${params.idBot}`, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        body: JSON.stringify({ timeframe: getSelectedTime }),
       });
 
       if (!response.ok) {
@@ -69,15 +70,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
       }
 
       const result = await response.json();
-      console.log(result);
-      console.log(result.data.roi);
-      console.log(result.data.netProfit);
-      setRoi(result.data.roi);
-      setRoiProfit(result.data.netProfit);
+      setRoi(result.data[0].netProfit);
+      setRoiProfit(result.data[0].roi);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [params.idBot]);
+  }, [params.idBot, getSelectedTime]);
 
   /*
         Graph Hooks:
@@ -115,10 +113,9 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
   useEffect(() => {
     fetchRoi();
-  }, [fetchRoi]);
+  }, [fetchRoi, getSelectedTime]);
 
   const [checkedIndicators, setCheckedIndicators] = useState<IndicatorsState>({
     roi: true,
