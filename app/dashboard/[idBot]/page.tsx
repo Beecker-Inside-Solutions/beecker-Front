@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./page.module.css";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
 import { apiURL, graphColors } from "@/Constants";
@@ -45,13 +45,39 @@ export default function Home({ params }: { params: { idBot: number } }) {
     require("@/enValues.json")
   );
 
-  useEffect(() => {
-    const storedUserName = localStorage.getItem("first_name");
-    const storedProfileImg = localStorage.getItem("profile_img");
-    if (storedUserName) setUserName(storedUserName);
-    if (storedProfileImg) setProfileImg(storedProfileImg);
-  }, []);
+  /*
+    Indicators:   
+  */
+  // roi
+  const [roi, setRoi] = useState(0);
+  const [roiProfit, setRoiProfit] = useState(0);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchRoi = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/bots/roi/${params.idBot}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      console.log(result);
+      console.log(result.data.roi);
+      console.log(result.data.netProfit);
+      setRoi(result.data.roi);
+      setRoiProfit(result.data.netProfit);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot]);
 
   /*
         Graph Hooks:
@@ -80,7 +106,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
 
   /*
         Dropdowns:
-      */
+  */
 
   const toggleDropdownClientCharts = () => {
     setClientCharts((prevState) => !prevState);
@@ -90,12 +116,9 @@ export default function Home({ params }: { params: { idBot: number } }) {
     setIsModalOpen(!isModalOpen);
   };
 
-  const [activeIndicators, setActiveIndicators] = useState<IndicatorsState>({
-    roi: false,
-    hoursSaved: false,
-    dollarsSaved: false,
-    successRate: false,
-  });
+  useEffect(() => {
+    fetchRoi();
+  }, [fetchRoi]);
 
   const [checkedIndicators, setCheckedIndicators] = useState<IndicatorsState>({
     roi: true,
@@ -236,10 +259,10 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <div className={styles.indicatorContainer}>
                     <IndicatorComponent
                       title={languageValues.indicators.roi}
-                      value={263858}
+                      value={roi}
                       status={true}
                       profitActivator={true}
-                      profit={100}
+                      profit={roiProfit}
                       languageValues={languageValues}
                       type="money"
                     />

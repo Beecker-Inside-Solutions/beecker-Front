@@ -53,8 +53,6 @@ export default function Home() {
   };
 
   const checkRequiredFields = () => {
-    console.log("Checking required fields");
-    console.log("User state:", user);
     const requiredFields = [
       "email",
       "password",
