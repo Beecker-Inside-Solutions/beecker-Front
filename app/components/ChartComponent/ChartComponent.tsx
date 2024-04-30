@@ -32,7 +32,7 @@ const ChartComponent: React.FC<ChartProps> = ({
   isFilled,
   chartType,
   borderColor = "rgba(75,192,192,1)",
-  fillColor, // Receive fill color prop
+  fillColor,
   cName,
 }) => {
   if (!validChartTypes.includes(chartType)) {
@@ -56,11 +56,11 @@ const ChartComponent: React.FC<ChartProps> = ({
             labels,
             datasets: [
               {
-                label: graphTitle,
+                label: graphTitle, // This sets the dataset label but doesn't control the chart title
                 data,
                 fill: isFilled ? true : false,
                 borderColor: borderColor,
-                backgroundColor: fillColor, // Set fill color
+                backgroundColor: fillColor,
                 borderWidth: 2,
                 pointRadius: 5,
                 pointHoverRadius: 8,
@@ -68,13 +68,21 @@ const ChartComponent: React.FC<ChartProps> = ({
             ],
           },
           options: {
-            responsive: true, // Make the chart responsive
-            maintainAspectRatio: false, // Don't maintain aspect ratio
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+              },
+              title: {
+                display: true,
+                text: graphTitle,
+              },
+            },
           },
         });
       }
     }
-
     // Cleanup function
     return () => {
       if (chartInstance.current) {

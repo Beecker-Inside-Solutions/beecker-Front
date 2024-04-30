@@ -72,33 +72,11 @@
   margin: 2em;
 }
 
-.graphLeftContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 25%;
-  height: 100%;
-  padding: 2em;
-}
-
-.graphCenterContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-}
-
+.graphLeftContainer,
+.graphCenterContainer,
 .graphRightContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 25%;
   height: 100%;
-  padding: 2em;
 }
 
 .pieChart {
