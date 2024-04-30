@@ -76,7 +76,7 @@
 .graphCenterContainer,
 .graphRightContainer {
   width: 25%;
-  height: 100%;
+  height: 20em;
 }
 
 .pieChart {
