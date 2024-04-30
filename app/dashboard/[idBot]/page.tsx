@@ -62,7 +62,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ timeframe: getSelectedTime }),
+        body: JSON.stringify({ timeframe: "yearly" }),
       });
 
       if (!response.ok) {
