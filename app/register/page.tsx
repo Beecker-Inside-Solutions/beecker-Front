@@ -45,6 +45,8 @@ export default function Home() {
     return (
       regex.email.test(user.email) &&
       regex.password.test(user.password) &&
+      regex.name.test(user.name) &&
+      regex.name.test(user.lastName) &&
       user.name &&
       user.lastName &&
       user.dateOfBirth &&
@@ -78,6 +80,11 @@ export default function Home() {
 
     if (!regex.email.test(user.email)) {
       showErrorAlert("Invalid email format", "");
+      return;
+    }
+
+    if (!regex.name.test(user.name) || !regex.name.test(user.lastName)) {
+      showErrorAlert("Invalid name or last name", "");
       return;
     }
 
