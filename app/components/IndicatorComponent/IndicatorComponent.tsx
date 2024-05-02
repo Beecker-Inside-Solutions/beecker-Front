@@ -71,7 +71,7 @@ const IndicatorComponent: React.FC<IIndicators> = ({
         <div className={styles.indicatorBody}>
           <p className={styles.indicatorValue}>
             {typeSymbol === "$" && typeSymbol}
-            {formatValue(value)}
+            {formatValue(value? value : 0)}
             {typeSymbol !== "$" && typeSymbol}
           </p>
           <div className={styles.indicatorValuesContainer}>

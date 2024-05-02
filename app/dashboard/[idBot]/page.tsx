@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, use } from "react";
 import styles from "./page.module.css";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
 import { apiURL, graphColors } from "@/Constants";
@@ -52,6 +52,14 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const [roi, setRoi] = useState(0);
   const [roiProfit, setRoiProfit] = useState(0);
 
+  // hours saved
+  const [hoursSaved, setHoursSaved] = useState(0);
+  const [hoursSavedProfit, setHoursSavedProfit] = useState(0);
+
+  // success rate
+  const [successRate, setSuccessRate] = useState(0);
+  const [successRateProfit, setSuccessRateProfit] = useState(0);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchRoi = useCallback(async () => {
@@ -71,7 +79,67 @@ export default function Home({ params }: { params: { idBot: number } }) {
 
       const result = await response.json();
       setRoi(result.data[0].netProfit);
-      setRoiProfit(result.data[0].roi);
+      setRoiProfit(parseFloat(result.data[0].roi.toFixed(2)));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot, getSelectedTime]);
+
+  const fetchSavedHours = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${apiURL}/bots/savedHours/${params.idBot}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ timeframe: getSelectedTime }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      setHoursSaved(result.data[0].savedHours);
+      setHoursSavedProfit(
+        parseFloat(result.data[0].savedPercentage.toFixed(2))
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot, getSelectedTime]);
+
+  const fetchSuccessRate = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${apiURL}/bots/averageSuccess/${params.idBot}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ timeframe: getSelectedTime }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      const correctExecutions = result.data[0].successCount;
+      const totalExecutions = result.data[0].totalExecutions;
+      const calculatedSuccessRate = correctExecutions;
+      setSuccessRate(calculatedSuccessRate);
+      setSuccessRateProfit(parseFloat(calculatedSuccessRate.toFixed(2)));
+      setSuccessRateProfit(
+        parseFloat(result.data[0].averageSuccessRate.toFixed(2))
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -115,7 +183,9 @@ export default function Home({ params }: { params: { idBot: number } }) {
   };
   useEffect(() => {
     fetchRoi();
-  }, [fetchRoi, getSelectedTime]);
+    fetchSavedHours();
+    fetchSuccessRate();
+  }, [fetchRoi, fetchSavedHours, fetchSuccessRate, getSelectedTime]);
 
   const [checkedIndicators, setCheckedIndicators] = useState<IndicatorsState>({
     roi: true,
@@ -272,10 +342,10 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <div className={styles.indicatorContainer}>
                     <IndicatorComponent
                       title={languageValues.indicators.hoursSaved}
-                      value={1456}
+                      value={hoursSaved}
                       status={true}
                       profitActivator={false}
-                      profit={-10}
+                      profit={hoursSavedProfit}
                       languageValues={languageValues}
                       type=""
                     />
@@ -302,12 +372,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <div className={styles.indicatorContainer}>
                     <IndicatorComponent
                       title={languageValues.indicators.successRate}
-                      value={0.5}
+                      value={successRate}
                       status={true}
                       profitActivator={false}
-                      profit={0}
+                      profit={successRateProfit}
                       languageValues={languageValues}
-                      type="percentage"
+                      type=""
                     />
                   </div>
                 ) : (

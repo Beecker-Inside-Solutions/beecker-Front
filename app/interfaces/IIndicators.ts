@@ -2,7 +2,7 @@ import { Values } from "./IValues";
 
 export interface IIndicators {
   title: string;
-  value: number;
+  value?: number;
   status: boolean;
   profitActivator: boolean;
   profit: number;
