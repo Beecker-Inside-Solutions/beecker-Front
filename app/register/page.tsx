@@ -30,9 +30,19 @@ export default function Home() {
     userTypeId: 2,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === "dateOfBirth") {
+      const selectedDate = new Date(value);
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0); // Normalize current date to remove time portion
+
+      if (selectedDate > currentDate) {
+        // Optionally, show an error message to the user
+        showErrorAlert("Date of birth cannot be in the future.", "");
+        return; // Prevent the update if the date is not valid
+      }
+    }
 
     if (name === "confirmPassword") {
       setConfirmPassword(value);
