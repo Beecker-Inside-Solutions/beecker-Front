@@ -30,16 +30,24 @@ export default function Home() {
     userTypeId: 2,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "dateOfBirth") {
       const selectedDate = new Date(value);
-      const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0); // Normalize current date to remove time portion
+      const minDate = new Date();
+      minDate.setFullYear(minDate.getFullYear() - 120);
+      minDate.setHours(0, 0, 0, 0); // Normalize date
 
-      if (selectedDate > currentDate) {
-        // Optionally, show an error message to the user
-        showErrorAlert("Date of birth cannot be in the future.", "");
+      const maxDate = new Date();
+      maxDate.setFullYear(maxDate.getFullYear() - 18);
+      maxDate.setHours(0, 0, 0, 0); // Normalize date
+
+      if (selectedDate > maxDate || selectedDate < minDate) {
+        showErrorAlert(
+          "Date of birth must be between 18 and 120 years ago.",
+          ""
+        );
         return; // Prevent the update if the date is not valid
       }
     }
@@ -88,16 +96,19 @@ export default function Home() {
       return;
     }
 
+    // Validate email
     if (!regex.email.test(user.email)) {
       showErrorAlert("Invalid email format", "");
       return;
     }
 
+    // Validate names
     if (!regex.name.test(user.name) || !regex.name.test(user.lastName)) {
       showErrorAlert("Invalid name or last name", "");
       return;
     }
 
+    // Validate password
     if (!regex.password.test(user.password)) {
       showErrorAlert(
         "Password must be at least 8 characters long and include a lowercase letter, an uppercase letter, a number, and a special character.",
@@ -106,19 +117,24 @@ export default function Home() {
       return;
     }
 
+    // Validate date of birth for age limits
     const dob = new Date(user.dateOfBirth);
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0); 
-    if (dob > currentDate) {
-      showErrorAlert("Date of birth cannot be in the future.", "");
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 120);
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 18);
+    if (dob > maxDate || dob < minDate) {
+      showErrorAlert("Date of birth must be between 18 and 120 years ago.", "");
       return;
     }
 
+    // Validate password confirmation
     if (user.password !== confirmPassword) {
       showErrorAlert("Passwords do not match", "");
       return;
     }
 
+    // Prepare and send request to server
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -232,7 +248,20 @@ export default function Home() {
                       name="dateOfBirth"
                       placeholder={languageValues.registerPage.dateOfBirthLabel}
                       className={styles.input}
-                      max={new Date().toISOString().split("T")[0]} // Sets the max date attribute to today
+                      max={
+                        new Date(
+                          new Date().setFullYear(new Date().getFullYear() - 18)
+                        )
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                      min={
+                        new Date(
+                          new Date().setFullYear(new Date().getFullYear() - 120)
+                        )
+                          .toISOString()
+                          .split("T")[0]
+                      }
                       value={user.dateOfBirth}
                       onChange={handleChange}
                     />
