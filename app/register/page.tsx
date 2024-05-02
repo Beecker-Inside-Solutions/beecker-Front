@@ -30,7 +30,6 @@ export default function Home() {
     userTypeId: 2,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "dateOfBirth") {
@@ -43,7 +42,7 @@ export default function Home() {
       maxDate.setFullYear(maxDate.getFullYear() - 18);
       maxDate.setHours(0, 0, 0, 0); // Normalize date
 
-      if (selectedDate > maxDate || selectedDate < minDate) {
+      if (selectedDate > maxDate) {
         showErrorAlert(
           "Date of birth must be between 18 and 120 years ago.",
           ""
@@ -248,20 +247,7 @@ export default function Home() {
                       name="dateOfBirth"
                       placeholder={languageValues.registerPage.dateOfBirthLabel}
                       className={styles.input}
-                      max={
-                        new Date(
-                          new Date().setFullYear(new Date().getFullYear() - 18)
-                        )
-                          .toISOString()
-                          .split("T")[0]
-                      }
-                      min={
-                        new Date(
-                          new Date().setFullYear(new Date().getFullYear() - 120)
-                        )
-                          .toISOString()
-                          .split("T")[0]
-                      }
+                      max={new Date().toISOString().split("T")[0]} // Sets the max date attribute to today
                       value={user.dateOfBirth}
                       onChange={handleChange}
                     />
