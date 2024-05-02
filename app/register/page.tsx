@@ -106,6 +106,14 @@ export default function Home() {
       return;
     }
 
+    const dob = new Date(user.dateOfBirth);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); 
+    if (dob > currentDate) {
+      showErrorAlert("Date of birth cannot be in the future.", "");
+      return;
+    }
+
     if (user.password !== confirmPassword) {
       showErrorAlert("Passwords do not match", "");
       return;
