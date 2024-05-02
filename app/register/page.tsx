@@ -214,6 +214,7 @@ export default function Home() {
                       name="dateOfBirth"
                       placeholder={languageValues.registerPage.dateOfBirthLabel}
                       className={styles.input}
+                      max={new Date().toISOString().split("T")[0]} // Sets the max date attribute to today
                       value={user.dateOfBirth}
                       onChange={handleChange}
                     />
