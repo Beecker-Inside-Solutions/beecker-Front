@@ -57,8 +57,24 @@ export default function Home() {
       setUser((prevUser) => ({ ...prevUser, [name]: value }));
     }
   };
-
   const isFormValid = () => {
+    const dob = new Date(user.dateOfBirth);
+    const currentDate = new Date();
+
+    // Setting the maximum date for minimum age of 18 years
+    const maxDate = new Date(
+      currentDate.getFullYear() - 18,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
+    // Setting the minimum date for maximum age of 120 years
+    const minDate = new Date(
+      currentDate.getFullYear() - 120,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
     return (
       regex.email.test(user.email) &&
       regex.password.test(user.password) &&
@@ -67,6 +83,8 @@ export default function Home() {
       user.name &&
       user.lastName &&
       user.dateOfBirth &&
+      dob <= maxDate &&
+      dob >= minDate &&
       user.password === confirmPassword
     );
   };
