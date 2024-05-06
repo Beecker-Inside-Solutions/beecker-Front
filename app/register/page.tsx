@@ -30,128 +30,78 @@ export default function Home() {
     userTypeId: 2,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    name: "",
+    lastName: "",
+    dateOfBirth: "",
+    confirmPassword: "",
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "dateOfBirth") {
-      const selectedDate = new Date(value);
-      const minDate = new Date();
-      minDate.setFullYear(minDate.getFullYear() - 120);
-      minDate.setHours(0, 0, 0, 0); // Normalize date
-
-      const maxDate = new Date();
-      maxDate.setFullYear(maxDate.getFullYear() - 18);
-      maxDate.setHours(0, 0, 0, 0); // Normalize date
-
-      if (selectedDate > maxDate) {
-        showErrorAlert(
-          "Date of birth must be between 18 and 120 years ago.",
-          ""
-        );
-        return; // Prevent the update if the date is not valid
-      }
-    }
-
     if (name === "confirmPassword") {
       setConfirmPassword(value);
     } else {
       setUser((prevUser) => ({ ...prevUser, [name]: value }));
     }
-  };
-  const isFormValid = () => {
-    const dob = new Date(user.dateOfBirth);
-    const currentDate = new Date();
 
-    // Setting the maximum date for minimum age of 18 years
-    const maxDate = new Date(
-      currentDate.getFullYear() - 18,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
+    // Reset errors
+    setErrors((prev) => ({ ...prev, [name]: "" }));
 
-    // Setting the minimum date for maximum age of 120 years
-    const minDate = new Date(
-      currentDate.getFullYear() - 120,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
-
-    return (
-      regex.email.test(user.email) &&
-      regex.password.test(user.password) &&
-      regex.name.test(user.name) &&
-      regex.name.test(user.lastName) &&
-      user.name &&
-      user.lastName &&
-      user.dateOfBirth &&
-      dob <= maxDate &&
-      dob >= minDate &&
-      user.password === confirmPassword
-    );
-  };
-
-  const checkRequiredFields = () => {
-    const requiredFields = [
-      "email",
-      "password",
-      "name",
-      "lastName",
-      "dateOfBirth",
-    ];
-    for (let field of requiredFields) {
-      if (!user[field]) {
-        showWarningAlert(`Please fill in your ${field}`, "");
-        return true;
-      }
+    // Validate the input fields
+    if (name === "email" && !regex.email.test(value)) {
+      setErrors((prev) => ({ ...prev, email: "Invalid email format" }));
+    } else if (name === "password" && !regex.password.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        password:
+          "Password must include at least 8 characters, one uppercase, one lowercase, a number, and a special character",
+      }));
+    } else if (
+      (name === "name" || name === "lastName") &&
+      !regex.name.test(value)
+    ) {
+      setErrors((prev) => ({ ...prev, [name]: "Invalid format" }));
+    } else if (name === "dateOfBirth" && !isValidDate(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        dateOfBirth: "Date of birth must be between 18 and 120 years ago",
+      }));
+    } else if (name === "confirmPassword" && value !== user.password) {
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Passwords do not match",
+      }));
     }
-    return false;
+  };
+
+  const isValidDate = (dateString: string) => {
+    const selectedDate = new Date(dateString);
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 120);
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 18);
+    return selectedDate <= maxDate && selectedDate >= minDate;
+  };
+
+  const isFormValid = () => {
+    return (
+      Object.values(errors).every((error) => error === "") &&
+      Object.values(user).every((value) => value !== "") &&
+      confirmPassword === user.password
+    );
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (checkRequiredFields()) {
+    if (!isFormValid()) {
+      showErrorAlert("Please ensure all fields are filled correctly.", "");
       return;
     }
 
-    // Validate email
-    if (!regex.email.test(user.email)) {
-      showErrorAlert("Invalid email format", "");
-      return;
-    }
-
-    // Validate names
-    if (!regex.name.test(user.name) || !regex.name.test(user.lastName)) {
-      showErrorAlert("Invalid name or last name", "");
-      return;
-    }
-
-    // Validate password
-    if (!regex.password.test(user.password)) {
-      showErrorAlert(
-        "Password must be at least 8 characters long and include a lowercase letter, an uppercase letter, a number, and a special character.",
-        ""
-      );
-      return;
-    }
-
-    // Validate date of birth for age limits
-    const dob = new Date(user.dateOfBirth);
-    const minDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 120);
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 18);
-    if (dob > maxDate || dob < minDate) {
-      showErrorAlert("Date of birth must be between 18 and 120 years ago.", "");
-      return;
-    }
-
-    // Validate password confirmation
-    if (user.password !== confirmPassword) {
-      showErrorAlert("Passwords do not match", "");
-      return;
-    }
-
-    // Prepare and send request to server
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -194,6 +144,9 @@ export default function Home() {
                       value={user.name}
                       onChange={handleChange}
                     />
+                    {errors.name && (
+                      <p className={styles.error}>{errors.name}</p>
+                    )}
                   </div>
                 </div>
                 <div className={styles.formGroup}>
@@ -212,6 +165,9 @@ export default function Home() {
                       value={user.lastName}
                       onChange={handleChange}
                     />
+                    {errors.lastName && (
+                      <p className={styles.error}>{errors.lastName}</p>
+                    )}
                   </div>
                 </div>
                 <div className={styles.formGroup}>
@@ -230,6 +186,9 @@ export default function Home() {
                       value={user.password}
                       onChange={handleChange}
                     />
+                    {errors.password && (
+                      <p className={styles.error}>{errors.password}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -250,6 +209,9 @@ export default function Home() {
                       value={user.email}
                       onChange={handleChange}
                     />
+                    {errors.email && (
+                      <p className={styles.error}>{errors.email}</p>
+                    )}
                   </div>
                 </div>
                 <div className={styles.formGroup}>
@@ -269,6 +231,9 @@ export default function Home() {
                       value={user.dateOfBirth}
                       onChange={handleChange}
                     />
+                    {errors.dateOfBirth && (
+                      <p className={styles.error}>{errors.dateOfBirth}</p>
+                    )}
                   </div>
                 </div>
                 <div className={styles.formGroup}>
@@ -286,8 +251,12 @@ export default function Home() {
                         languageValues.registerPage.confirmPasswordLabel
                       }
                       className={styles.input}
+                      value={confirmPassword}
                       onChange={handleChange}
                     />
+                    {errors.confirmPassword && (
+                      <p className={styles.error}>{errors.confirmPassword}</p>
+                    )}
                   </div>
                 </div>
               </div>

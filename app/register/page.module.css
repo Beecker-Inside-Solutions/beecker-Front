@@ -150,6 +150,11 @@
   cursor: not-allowed;
 }
 
+.error {
+  color: var(--rojo-beecker);
+  font-size: 0.8rem;
+}
+
 @media (max-width: 767px) {
   .main {
     position: relative;
