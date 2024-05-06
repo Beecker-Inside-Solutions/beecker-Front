@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./ProjectComponent.module.css";
+import styles from "./ProjectComponent.module.scss";
 import { Project } from "@/app/interfaces/IProject";
 import Link from "next/link";
 import whiteArrowDown from "../../images/icons/whiteArrowDown.png";
@@ -10,42 +10,21 @@ interface ProjectComponentProps {
 }
 
 const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
-  const [showBots, setShowBots] = useState(false);
-
-  const toggleBots = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setShowBots(!showBots);
-  };
-
   return (
     <>
-      <div
-        className={styles.projectComponent}
-        onClick={() => setShowBots(!showBots)}
-      >
-        <div className={styles.topProjectContainer}>
-          <div className={styles.leftContainer}>
+      <div className={styles.container}>
+        <details className={styles.details}>
+          <summary className={styles.summary}>
             <p>{project.projectName}</p>
-          </div>
-          <div className={styles.rightContainer}>
-            <button onClick={toggleBots} aria-expanded={showBots}>
-              {showBots ? (
-                <img src={whiteArrowUp.src} alt="Arrow Up" />
-              ) : (
-                <img src={whiteArrowDown.src} alt="Arrow Down" />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className={styles.botContainer}>
-        {showBots && (
-          <ul>
+          </summary>
+          <ul className={styles.unoredList}>
             {project.bots.length > 0 ? (
               project.bots.map((bot) => (
                 <Link href={`/dashboard/${bot.idBots}`} key={bot.idBots}>
                   <li>
-                    <div className={styles.leftContainerBots}>{bot.botName}</div>
+                    <span className={styles.leftContainerBots}>
+                      {bot.botName}
+                    </span>
                     <div className={styles.rightContainerBots}>
                       <p>{bot.isExecuting ? "Running" : "Stopped"}</p>
                     </div>
@@ -56,7 +35,7 @@ const ProjectComponent: React.FC<ProjectComponentProps> = ({ project }) => {
               <p className={styles.noBots}>No bots</p>
             )}
           </ul>
-        )}
+        </details>
       </div>
     </>
   );

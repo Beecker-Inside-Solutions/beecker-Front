@@ -94,9 +94,9 @@ export default function Home() {
             <h1 className={styles.title}>
               <div className={styles.welcomeContainer}>
                 <p className={styles.welcomeText}>
-                  {languageValues.dashboard.welcome}{" "}
+                  {languageValues.dashboard.welcome},{" "}
                 </p>
-                <p>, {userName}</p>
+                <p> {userName}</p>
               </div>
             </h1>
           </div>

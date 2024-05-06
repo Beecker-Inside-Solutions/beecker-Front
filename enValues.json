@@ -68,7 +68,7 @@
     "roi": "ROI",
     "hoursSaved": "Hours Saved",
     "dollarsSaved": "Dollars Saved",
-    "successRate": "Success Rate"
+    "successRate": "Correct Executions"
   },
   "dashboard": {
     "header": "Dashboard",
@@ -87,6 +87,7 @@
     "lastMonth": " Last Month",
     "lastYear": " Last Year",
     "botPerformance": "Bot performance",
+    "successFailRate": "Success/Fail Rate",
     "success": "Success",
     "failed": "Failed",
     "monthly": "Monthly",

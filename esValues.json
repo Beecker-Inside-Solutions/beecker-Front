@@ -57,7 +57,7 @@
     "roi": "ROI",
     "hoursSaved": "Horas Ahorradas",
     "dollarsSaved": "Dólares Ahorrados",
-    "successRate": "Tasa de Éxito"
+    "successRate": "Ejecuciones Correctas"
   },
 
   "registerPage": {
@@ -88,12 +88,12 @@
     "lastMonth": " Último Mes",
     "lastYear": " Último Año",
     "botPerformance": "Performance del bot",
+    "successFailRate": "Tasa de éxito y falla",
     "success": "Exitosos",
     "failed": "Fallidos",
     "monthly": "Mensual",
     "weekly": "Semanal",
     "yearly": "Anual"
-  
   },
   "incidents": {
     "addButton": "Añadir Incidente",

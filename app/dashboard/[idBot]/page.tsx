@@ -286,8 +286,8 @@ export default function Home({ params }: { params: { idBot: number } }) {
                         <ChartComponent
                           data={dataSF}
                           labels={labelsSF}
-                          chartType="pie"
-                          graphTitle="Success and Failure Rates"
+                          chartType="bar"
+                          graphTitle={languageValues.dashboard.successFailRate}
                           fillColor={["#803fe0", "#F44336"]} // green and red
                           borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
                           isFilled={true} // if applicable to pie chart, typically not used
