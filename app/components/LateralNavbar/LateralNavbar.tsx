@@ -26,9 +26,11 @@ const LateralNavbar: React.FC<LateralProps & { user: User }> = ({
   return (
     <>
       <button onClick={toggleNavbar} className={styles.toggleButton}>
-        {isOpen
-          ? languageValues.lateralNavbar.closeMenu
-          : languageValues.lateralNavbar.openMenu}
+        {isOpen ? (
+          <p className={styles.openCloseButton}>←</p>
+        ) : (
+          <p className={styles.openCloseButton}>☰</p>
+        )}
       </button>
 
       <div className={`${styles.lateralNavbar} ${isOpen ? styles.open : ""}`}>
