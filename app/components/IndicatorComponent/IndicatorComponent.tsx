@@ -31,10 +31,6 @@ const IndicatorComponent: React.FC<IIndicators> = ({
       typeSymbol = "";
   }
 
-  const toggleDropDown = () => {
-    setStatus(!status);
-  };
-
   const renderProfitLoss = () => {
     if (profit > 0) {
       return `+ ${profit}`;
@@ -55,35 +51,24 @@ const IndicatorComponent: React.FC<IIndicators> = ({
 
   return (
     <div className={styles.indicatorContainer}>
-      <div className={styles.indicatorHeader} onClick={toggleDropDown}>
-        <div className={styles.indicatorTitle}>
+      <div className={styles.indicatorBody}>
+        <div className={styles.indicatorHeader}>
           <p>{title}</p>
         </div>
-        <div className={styles.indicatorArrow}>
-          {status ? (
-            <img src={openArrow.src} alt="Open Arrow" />
-          ) : (
-            <img src={closeArrow.src} alt="Close Arrow" />
-          )}
+        <p className={styles.indicatorValue}>
+          {typeSymbol === "$" && typeSymbol}
+          {formatValue(value ? value : 0)}
+          {typeSymbol !== "$" && typeSymbol}
+        </p>
+        <div className={styles.profitContainer}>
+          <p className={profit > 0 ? styles.profit : styles.profitLoss}>
+            {renderProfitLoss()}%{" "}
+          </p>{" "}
+          <p
+          className={styles.since}
+          > {languageValues.dashboard.lastCut}</p>
         </div>
       </div>
-      {status ? (
-        <div className={styles.indicatorBody}>
-          <p className={styles.indicatorValue}>
-            {typeSymbol === "$" && typeSymbol}
-            {formatValue(value? value : 0)}
-            {typeSymbol !== "$" && typeSymbol}
-          </p>
-          <div className={styles.indicatorValuesContainer}>
-            <div className={styles.profitContainer}>
-              <p className={profit > 0 ? styles.profit : styles.profitLoss}>
-                {renderProfitLoss()}%{" "}
-              </p>{" "}
-              {languageValues.dashboard.lastCut}
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 };
