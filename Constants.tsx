@@ -5,9 +5,9 @@ import { IRegex } from "./app/interfaces/IRegex";
 import dashboardImage from "./app/images/icons/dashboard.png";
 import settingsImage from "./app/images/icons/settings.png";
 import mexicoIcon from "./app/images/icons/mexico.png";
-import folderImage from "./app/images/icons/folder.png";
+import projectsImage from "./app/images/icons/projectsImage.png";
+import userList from "./app/images/icons/userList.png";
 import ukIcon from "./app/images/icons/uk.png";
-import profileIcon from "./app/images/icons/profile.png";
 import serviceDesk from "./app/images/icons/serviceDesk.png";
 import { IDefaultColors } from "./app/interfaces/IDefaultColors";
 
@@ -34,7 +34,7 @@ export const lateralNavbarItems: ILateralNavbar = {
   Home: {
     Projects: {
       link: routes.projects,
-      image: folderImage.src,
+      image: projectsImage.src,
       adminRequired: false,
     },
   },
@@ -50,7 +50,7 @@ export const lateralNavbarItems: ILateralNavbar = {
   Administration: {
     ["User List"]: {
       link: routes.userList,
-      image: profileIcon.src,
+      image: userList.src,
       adminRequired: false,
     },
   },
