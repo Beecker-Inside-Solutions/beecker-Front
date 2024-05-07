@@ -33,6 +33,7 @@ interface IndicatorsState {
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
+  const [botName, setBotName] = useState("");
   const [getSelectedTime, setSelectedTime] = useState("monthly");
   /*
         Charts displays:
@@ -62,6 +63,26 @@ export default function Home({ params }: { params: { idBot: number } }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const fetchBotInfo = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/bots/${params.idBot}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+      setBotName(result[0].botName);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot]);
   const fetchRoi = useCallback(async () => {
     try {
       const response = await fetch(`${apiURL}/bots/roi/${params.idBot}`, {
@@ -182,10 +203,17 @@ export default function Home({ params }: { params: { idBot: number } }) {
     setIsModalOpen(!isModalOpen);
   };
   useEffect(() => {
+    fetchBotInfo();
     fetchRoi();
     fetchSavedHours();
     fetchSuccessRate();
-  }, [fetchRoi, fetchSavedHours, fetchSuccessRate, getSelectedTime]);
+  }, [
+    fetchBotInfo,
+    fetchRoi,
+    fetchSavedHours,
+    fetchSuccessRate,
+    getSelectedTime,
+  ]);
 
   const [checkedIndicators, setCheckedIndicators] = useState<IndicatorsState>({
     roi: true,
@@ -224,104 +252,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
           isAdmin={false}
         />
         <main className={styles.main}>
-          <div className={styles.container}>
-            <div className={styles.topContainer}>
-              <div className={styles.buttonsContainer}>
-                <div className={styles.leftButtonContainer}>
-                  <button className={styles.leftButton} onClick={toggleModal}>
-                    <img src={addImg.src} alt="plus" />
-                  </button>
-                  <div className={styles.mediumSelectContainer}>
-                    <select
-                      value={getSelectedTime}
-                      onChange={(e) => setSelectedTime(e.target.value)}
-                      className={styles.select}
-                    >
-                      <option value="weekly">
-                        {languageValues.dashboard.weekly}
-                      </option>
-
-                      <option value="monthly">
-                        {languageValues.dashboard.monthly}
-                      </option>
-                      <option value="yearly">
-                        {languageValues.dashboard.yearly}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div className={styles.rightButtonContainer}>
-                  <button className={styles.rightButton} onClick={printToPDF}>
-                    <p className={styles.downloadText}>
-                      {languageValues.dashboard.downloadPDF}
-                    </p>
-                    <img
-                      src={pdfImg.src}
-                      alt="pdf"
-                      className={styles.downloadIcon}
-                    />
-                  </button>
-                </div>
-              </div>
+          <div className={styles.topContainer}>
+            <div className={styles.botNameContainer}>
+              <h1>{botName}</h1>
             </div>
-            <div className={styles.bottomContainer}>
-              <div className={styles.topGraphsContainer}>
-                <div
-                  className={styles.titleContainer}
-                  onClick={toggleDropdownClientCharts}
-                >
-                  <p className={styles.bottomTitle}>
-                    {languageValues.dashboard.clientCharts}
-                  </p>
-                  {ClientCharts ? (
-                    <img src={whiteArrowDown.src} alt="arrow-up" />
-                  ) : (
-                    <img src={whiteArrowUp.src} alt="arrow-down" />
-                  )}
-                </div>
-                {ClientCharts && (
-                  <div className={styles.dropdownMenu}>
-                    <div className={styles.graphsContainer}>
-                      <div className={styles.graphLeftContainer}>
-                        <ChartComponent
-                          data={dataSF}
-                          labels={labelsSF}
-                          chartType="bar"
-                          graphTitle={languageValues.dashboard.successFailRate}
-                          fillColor={["#803fe0", "#F44336"]} // green and red
-                          borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
-                          isFilled={true} // if applicable to pie chart, typically not used
-                        />
-                      </div>
-                      <div className={styles.graphCenterContainer}>
-                        <DoubleChartComponent
-                          chartType="line"
-                          datasets={[
-                            {
-                              label: languageValues.dashboard.success,
-                              data: clientLineDataSuccess,
-                              borderColor: "#6200d1",
-                              backgroundColor: "#803fe0",
-                              fill: false,
-                            },
-                            {
-                              label: languageValues.dashboard.failed,
-                              data: clientLineDataFailed,
-                              borderColor: "#e74949",
-                              backgroundColor: "#e74949",
-                              fill: false,
-                            },
-                          ]}
-                          labels={clientLineLabelsSuccess}
-                          graphTitle={languageValues.dashboard.botPerformance}
-                        />
-                      </div>
-                      <div className={styles.graphRightContainer}></div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className={styles.bottomGraphsContainer}>
+            <div className={styles.topBottomContainer}>
+              <div className={styles.indicatorsContainer}>
                 {checkedIndicators.roi ? (
                   <div className={styles.indicatorContainer}>
                     <IndicatorComponent
@@ -384,8 +320,10 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <></>
                 )}
               </div>
+              <div className={styles.controllersContainer}></div>
             </div>
           </div>
+          <div className={styles.bottomContainer}></div>
         </main>
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
           <IndicatorCheckboxGroup
