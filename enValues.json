@@ -21,6 +21,14 @@
     "openMenu": "☰ Open Menu",
     "closeMenu": "← Close Menu"
   },
+  "errorsAlerts": {
+    "passwordsDontMatch": "Passwords don't match.",
+    "invalidEmail": "Invalid email.",
+    "emptyFields": "Please fill in all fields.",
+    "invalidDate": "Invalid date of birth. Must be beteen 18 and 120 years old.",
+    "invalidPassword": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character (!@#$%^&*).",
+    "invalidName": "Invalid name."
+  },
 
   "alerts": {
     "warningAlertTitle": "Warning",

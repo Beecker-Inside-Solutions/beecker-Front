@@ -13,4 +13,5 @@ export interface Values {
   incidents: LanguageValues;
   addIncident: LanguageValues;
   userList: LanguageValues;
+  errorsAlerts: LanguageValues;
 }

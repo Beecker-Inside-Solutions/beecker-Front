@@ -20,6 +20,14 @@
     "openMenu": "☰ Abrir Menú",
     "closeMenu": "← Cerrar Menú"
   },
+  "errorsAlerts": {
+    "passwordsDontMatch": "Las contraseñas no coinciden.",
+    "invalidEmail": "Correo electrónico inválido.",
+    "emptyFields": "Por favor, rellene todos los campos.",
+    "invalidDate": "Fecha inválida. Debe de estar entre los 18 a 120 años.",
+    "invalidPassword": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número, y un carácter especial (!@#$%^&*).",
+    "invalidName": "Nombre inválido."
+  },
 
   "alerts": {
     "warningAlertTitle": "Advertencia",
@@ -131,4 +139,5 @@
     "saveButton": "Guardar",
     "cancelButton": "Cancelar"
   }
+
 }

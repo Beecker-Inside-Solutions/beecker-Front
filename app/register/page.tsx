@@ -52,27 +52,26 @@ export default function Home() {
 
     // Validate the input fields
     if (name === "email" && !regex.email.test(value)) {
-      setErrors((prev) => ({ ...prev, email: "Invalid email format" }));
+      setErrors((prev) => ({ ...prev, email: languageValues.errorsAlerts.invalidEmail }));
     } else if (name === "password" && !regex.password.test(value)) {
       setErrors((prev) => ({
         ...prev,
-        password:
-          "Password must include at least 8 characters, one uppercase, one lowercase, a number, and a special character",
+        password: languageValues.errorsAlerts.invalidPassword,
       }));
     } else if (
       (name === "name" || name === "lastName") &&
       !regex.name.test(value)
     ) {
-      setErrors((prev) => ({ ...prev, [name]: "Invalid format" }));
+      setErrors((prev) => ({ ...prev, [name]: languageValues.errorsAlerts.invalidName }));
     } else if (name === "dateOfBirth" && !isValidDate(value)) {
       setErrors((prev) => ({
         ...prev,
-        dateOfBirth: "Date of birth must be between 18 and 120 years ago",
+        dateOfBirth: languageValues.errorsAlerts.invalidDate,
       }));
     } else if (name === "confirmPassword" && value !== user.password) {
       setErrors((prev) => ({
         ...prev,
-        confirmPassword: "Passwords do not match",
+        confirmPassword: languageValues.errorsAlerts.passwordsDontMatch,
       }));
     }
   };
