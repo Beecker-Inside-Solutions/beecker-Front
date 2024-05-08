@@ -64,18 +64,18 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchBotInfo = useCallback(async () => {
-    try {
-      const response = await fetch(`${apiURL}/bots/${params.idBot}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+    const url = `${apiURL}/bots/${params.idBot}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error("Failed to fetch bot info");
 
       const result = await response.json();
       setBotName(result[0].botName);
