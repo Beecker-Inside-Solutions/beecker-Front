@@ -323,7 +323,57 @@ export default function Home({ params }: { params: { idBot: number } }) {
               <div className={styles.controllersContainer}></div>
             </div>
           </div>
-          <div className={styles.bottomContainer}></div>
+          <div className={styles.bottomContainer}>
+            <div className={styles.topBottomContainer}>
+              <div className={styles.topLeftContainer}>
+                <h2 className={styles.graphTitle}>
+                  {languageValues.dashboard.clientCharts}
+                </h2>
+              </div>
+              <div className={styles.topRightContainer}>
+                <button className={styles.exportButton} onClick={toggleModal}>
+                  {languageValues.dashboard.exportReport}
+                </button>
+              </div>
+            </div>
+            <div className={styles.graphsContainer}>
+              <div className={styles.graphContainer}>
+                <ChartComponent
+                  data={dataSF}
+                  labels={labelsSF}
+                  chartType="bar"
+                  graphTitle={languageValues.dashboard.successFailRate}
+                  fillColor={["#803fe0", "#F44336"]} // green and red
+                  borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
+                  isFilled={true} // if applicable to pie chart, typically not used
+                />
+              </div>
+              <div className={styles.graphContainer}>
+                <DoubleChartComponent
+                  chartType="line"
+                  datasets={[
+                    {
+                      label: languageValues.dashboard.success,
+                      data: clientLineDataSuccess,
+                      borderColor: "#6200d1",
+                      backgroundColor: "#803fe0",
+                      fill: false,
+                    },
+                    {
+                      label: languageValues.dashboard.failed,
+                      data: clientLineDataFailed,
+                      borderColor: "#e74949",
+                      backgroundColor: "#e74949",
+                      fill: false,
+                    },
+                  ]}
+                  labels={clientLineLabelsSuccess}
+                  graphTitle={languageValues.dashboard.botPerformance}
+                />
+              </div>
+              <div className={styles.graphContainer}></div>
+            </div>
+          </div>
         </main>
         <Modal isOpen={isModalOpen} onClose={toggleModal}>
           <IndicatorCheckboxGroup

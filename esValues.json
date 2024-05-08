@@ -86,6 +86,7 @@
     "logout": "Log Out",
     "downloadPDF": "Exportar a PDF",
     "downloadXLSX": "Exportar a Excel",
+    "exportReport": "Exportar Reporte",
     "bottomTitle": "Transacciones",
     "transactionsTitle": "Transacciones",
     "environmentTitleCharts": "Gráficas de entornos",
@@ -95,7 +96,7 @@
     "lastCut": " Último corte",
     "lastMonth": " Último Mes",
     "lastYear": " Último Año",
-    "botPerformance": "Performance del bot",
+    "botPerformance": "Rendimiento del bot",
     "successFailRate": "Tasa de éxito y falla",
     "success": "Exitosos",
     "failed": "Fallidos",
@@ -139,5 +140,4 @@
     "saveButton": "Guardar",
     "cancelButton": "Cancelar"
   }
-
 }
