@@ -15,13 +15,12 @@ import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClie
 import useFetchTransactionsData from "../../hooks/Transactions/useFetchTransactionsData";
 import useBotBarChartData from "../../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../../components/IndicatorComponent/IndicatorComponent";
-import addImg from "../../images/icons/addImage.png";
+import filterImg from "../../images/icons/filter.png";
 import pdfImg from "../../images/icons/pdf.png";
-import whiteArrowUp from "../../images/icons/whiteArrowUp.png";
-import whiteArrowDown from "../../images/icons/whiteArrowDown.png";
 import Modal from "../../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 import useSuccessAndFailRate from "@/app/hooks/ClientHooks/successAndFailRate/successAndFailRate";
+import customizeImg from "../../images/icons/settings.png";
 
 interface IndicatorsState {
   roi: boolean;
@@ -191,17 +190,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
     return graphColors[randomIndex].hexCode;
   };
 
-  /*
-        Dropdowns:
-  */
-
-  const toggleDropdownClientCharts = () => {
-    setClientCharts((prevState) => !prevState);
-  };
-
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  // Call all the fetch functions on mount
   useEffect(() => {
     fetchBotInfo();
     fetchRoi();
@@ -320,7 +313,44 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <></>
                 )}
               </div>
-              <div className={styles.controllersContainer}></div>
+              <div className={styles.controllersContainer}>
+                <div className={styles.controllerContainer}>
+                  <button
+                    className={styles.controllerButton}
+                    onClick={printToPDF}
+                  >
+                    <div className={styles.iconContainer}>
+                      <img src={customizeImg.src} alt="" />
+                    </div>
+                    <p className={styles.controllerButtonText}>
+                      {languageValues.dashboard.customize}
+                    </p>
+                  </button>
+                </div>
+                <div className={styles.controllerContainer}>
+                  <div className={styles.icon}>
+                    <img src={filterImg.src} alt="add" />
+                  </div>
+                  <div className={styles.controllerElement}>
+                    <select
+                      value={getSelectedTime}
+                      onChange={(e) => setSelectedTime(e.target.value)}
+                      className={styles.select}
+                    >
+                      <option value="weekly">
+                        {languageValues.dashboard.weekly}
+                      </option>
+
+                      <option value="monthly">
+                        {languageValues.dashboard.monthly}
+                      </option>
+                      <option value="yearly">
+                        {languageValues.dashboard.yearly}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className={styles.bottomContainer}>
