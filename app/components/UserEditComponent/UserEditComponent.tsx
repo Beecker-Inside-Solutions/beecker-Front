@@ -149,9 +149,6 @@ const UserList: React.FC<UserListProps> = ({
         >
           {languageValues.userList.saveButton}
         </button>
-        <button className={styles.buttonCancel} onClick={fetchUserList}>
-          {languageValues.userList.cancelButton}
-        </button>
       </div>
     </div>
   );

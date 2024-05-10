@@ -108,10 +108,12 @@
 }
 
 .incidentTable thead {
-  background-color: #803fe0;
+  background-color: #6200D1;
   color: #fff;
   position: sticky;
   top: 0;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
 }
 
 .incidentTable thead,
