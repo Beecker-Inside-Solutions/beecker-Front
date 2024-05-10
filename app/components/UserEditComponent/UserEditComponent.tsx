@@ -1,9 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { IUserList } from "../../interfaces/IIUserList";
+import { IUserList } from "@/app/interfaces/IIUserList";
 import styles from "./UserEdit.module.css";
 import { apiURL } from "@/Constants";
 import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
 import Swal from "sweetalert2";
+
 interface UserListProps {
   languageValues: { userList: { [key: string]: string } };
   Roles_idRole: number;
@@ -14,6 +15,7 @@ const UserList: React.FC<UserListProps> = ({
   Roles_idRole,
 }) => {
   const [userListData, setUserListData] = useState<IUserList[]>([]);
+  const [selectedType, setSelectedType] = useState<number>(1); // Ensure this is a valid and existing role ID.
 
   const fetchUserList = useCallback(async () => {
     try {
@@ -29,8 +31,12 @@ const UserList: React.FC<UserListProps> = ({
       }
       const data: IUserList[] = await response.json();
       setUserListData(data);
+      if (data.length > 0) {
+        setSelectedType(data[0].Roles_idRole); // Set initial role based on the first user data fetched
+      }
     } catch (error) {
       console.error("Error fetching user list:", error);
+      showErrorToast("Failed to fetch user list");
     }
   }, [Roles_idRole]);
 
@@ -56,114 +62,52 @@ const UserList: React.FC<UserListProps> = ({
       if (!response.ok) {
         throw new Error("Failed to add notification");
       }
-      const responseData = await response.json();
-
-      if (responseData.message === `Notification added`) {
-        showSuccessToast(
-          `⚠️ User: ${user.name} has been updated successfully.`,
-          {
-            autoClose: false,
-            position: "bottom-right",
-          }
-        );
-      }
+      showSuccessToast(`⚠️ User: ${user.name} has been updated successfully.`);
     } catch (error) {
       console.error("Error adding notification:", error);
-      showErrorToast("Failed to add notification", {
-        autoClose: 1000,
-        position: "bottom-right",
-      });
+      showErrorToast("Failed to add notification");
     }
   };
 
   const handleUpdateUser = async (user: IUserList) => {
+    console.log("Selected Type for Update:", selectedType); // Debugging line
     try {
-      const { email, name, Roles_idRole: userTypeId } = user;
+      const { email, idUsers } = user;
       const response = await fetch(
-        `${apiURL}/users/updatePermissions/${user.Roles_idRole}`,
+        `${apiURL}/users/updatePermissions/${idUsers}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ email, name, userTypeId }),
+          body: JSON.stringify({ email, userTypeId: selectedType }),
         }
       );
-      console.log("body", JSON.stringify({ email, name, userTypeId }));
+      console.log(
+        "API Request Body:",
+        JSON.stringify({ email, userTypeId: selectedType })
+      ); // Further debugging
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
 
-      fetchUserList();
       const responseData = await response.json();
-      if (responseData.message === `User permissions updated`) {
+      if (responseData.message === "User permissions updated") {
         handleAddNotification(user);
-        showSuccessToast("User updated successfully", {
-          autoClose: 1000,
-          position: "bottom-right",
-        });
+        showSuccessToast("User updated successfully");
       }
     } catch (error) {
       console.error("Error updating user:", error);
-      showErrorToast("Failed to update user", {
-        autoClose: 1000,
-        position: "bottom-right",
-      });
+      showErrorToast("Failed to update user");
     }
   };
-
-  const handleUseDelete = async (id: number) => {
-    try {
-      const response = await fetch(`${apiURL}/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete user");
-      }
-      fetchUserList();
-      const responseData = await response.json();
-      if (responseData.message === `User deleted`) {
-        showSuccessToast("User deleted successfully", {
-          autoClose: 1000,
-          position: "bottom-right",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      showErrorToast("Failed to delete user", {
-        autoClose: 1000,
-        position: "bottom-right",
-      });
-    }
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserListData([
-      { ...userListData[0], name: e.target.value },
-      ...userListData.slice(1),
-    ]);
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserListData([
-      { ...userListData[0], email: e.target.value },
-      ...userListData.slice(1),
-    ]);
-  };
-
-  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUserListData([
-      {
-        ...userListData[0],
-        Roles_idRole: parseInt(e.target.value, 10),
-      },
-      ...userListData.slice(1),
-    ]);
+  const handleUserChange = (index: number, changes: Partial<IUserList>) => {
+    setUserListData((current) =>
+      current.map((user, idx) =>
+        idx === index ? { ...user, ...changes } : user
+      )
+    );
   };
 
   return (
@@ -172,29 +116,25 @@ const UserList: React.FC<UserListProps> = ({
         <h2>{languageValues.userList.editUser}</h2>
         <div className={styles.elementContainer}>
           <label htmlFor="name">{languageValues.userList.name}</label>
-          <input
-            type="text"
-            value={userListData.length > 0 ? userListData[0].name : "Name 0"}
-            onChange={handleNameChange}
-          />
+          <p>{userListData[0]?.name}</p>
         </div>
         <div className={styles.elementContainer}>
           <label htmlFor="email">{languageValues.userList.email}</label>
           <input
             type="text"
-            value={
-              userListData.length > 0
-                ? userListData[0].email
-                : "random0@gmailcom"
-            }
-            onChange={handleEmailChange}
+            value={userListData[0]?.email || ""}
+            onChange={(e) => handleUserChange(0, { email: e.target.value })}
           />
         </div>
         <div className={styles.elementContainer}>
           <label htmlFor="role">{languageValues.userList.role}</label>
           <select
-            value={userListData.length > 0 ? userListData[0].Roles_idRole : ""}
-            onChange={handleRoleChange}
+            value={selectedType}
+            onChange={(e) => {
+              const newType = parseInt(e.target.value, 10); // Ensure correct parsing
+              console.log("New selected type:", newType); // Debugging line
+              setSelectedType(newType);
+            }}
           >
             <option value={1}>Administrator</option>
             <option value={2}>Internal Client</option>
@@ -205,11 +145,11 @@ const UserList: React.FC<UserListProps> = ({
       <div className={styles.bottomContainer}>
         <button
           className={styles.buttonSave}
-          onClick={() => handleUpdateUser(userListData[0])}
+          onClick={() => userListData[0] && handleUpdateUser(userListData[0])}
         >
           {languageValues.userList.saveButton}
         </button>
-        <button className={styles.buttonCancel} onClick={() => fetchUserList()}>
+        <button className={styles.buttonCancel} onClick={fetchUserList}>
           {languageValues.userList.cancelButton}
         </button>
       </div>

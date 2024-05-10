@@ -16,6 +16,8 @@ import Modal from "../components/ModalComponent/ModalComponent";
 import UserList from "../components/UserEditComponent/UserEditComponent";
 import { apiURL } from "@/Constants";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
+import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
+
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -46,6 +48,7 @@ export default function Home() {
         console.error("Error fetching user data:", error); // Log fetch error
       }
     };
+
     fetchData();
   }, []);
 
@@ -95,7 +98,37 @@ export default function Home() {
 
   const handleEditIconClick = (userId: number) => {
     setSelectedUser(userId);
+    console.log("Selected user:", userId);
     toggleModal();
+  };
+
+  const handleUseDelete = async (id: number) => {
+    try {
+      const response = await fetch(`${apiURL}/users/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+      fetchUserList();
+      const responseData = await response.json();
+      if (responseData.message === `User deleted`) {
+        showSuccessToast("User deleted successfully", {
+          autoClose: 1000,
+          position: "bottom-right",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      showErrorToast("Failed to delete user", {
+        autoClose: 1000,
+        position: "bottom-right",
+      });
+    }
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -187,7 +220,13 @@ export default function Home() {
                         } // Fix: Pass incident.id instead of incident
                         alt="Config"
                       />
-                      <img src={deleteImg.src} alt="Delete" />
+                      <img
+                        src={deleteImg.src}
+                        onClick={(event: any) =>
+                          handleUseDelete(incident.idUsers)
+                        }
+                        alt="Delete"
+                      />
                     </td>
                   </tr>
                 ))}
