@@ -1,78 +1,142 @@
 .modalContent {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
 }
 
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+  border-left: 3px solid var(--morado-beecker);
+  padding: 1em;
+}
+
+.titleContainer h2 {
+  font-size: 1.8em;
+  font-weight: 300;
+}
+
 .itemContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   width: 100%;
-  height: 25%;
-  margin: 0.5em;
-  border-radius: 8px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--azul-beecker);
+  height: 90%;
 }
 
 .labelContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   width: 50%;
   height: 100%;
 }
 
 .labelContainer label {
-  margin: 0.5em;
-  font-size: 2rem;
+  font-size: 1.5em;
+  font-weight: 300;
 }
 
 .checkboxContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   width: 50%;
   height: 100%;
 }
 
-.checkboxContainer input[type="checkbox"] {
-  margin: 0.5em;
-  width: 2em;
-  height: 2em;
-  border: 1px solid #000;
-  border-radius: 8px;
-  background-color: #fff;
+.box_1 {
+  background: #eee;
 }
 
-.checkboxContainer input[type="checkbox"]:checked {
-  background-color: #000;
+.checkbox {
+  font-size: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 3.5em;
+  height: 1.5em;
+  background: #ddd;
+  border-radius: 3em;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-.checkboxContainer input[type="checkbox"]:checked:after {
+.checkbox:checked {
+  background: var(--morado-beecker);
+}
+
+.checkbox:after {
+  position: absolute;
   content: "";
-  display: block;
-  width: 1em;
-  height: 1em;
-  background-color: #fff;
-  border-radius: 8px;
-  animation: fadeInCheck 0.3s ease forwards;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background: #fff;
+  -webkit-box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
+  left: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-@keyframes fadeInCheck {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.checkbox:checked:after {
+  left: calc(100% - 1.5em);
+}
+
+.selectContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.labelContainerTwo {
+  font-size: 1.2em;
+  font-weight: 300;
+  width: 50%;
+}
+
+.selectContainerTwo {
+  width: 50%;
+  height: 3em;
+}
+
+.select {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #e0dfdf;
+  background-color: transparent;
+  color: #000;
 }

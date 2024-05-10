@@ -91,6 +91,8 @@
     "transactionsTitle": "Transacciones",
     "environmentTitleCharts": "Gráficas de entornos",
     "customize": "Personalizar",
+    "visualizeMetrics": "Visualizar Métricas",
+    "ChartTypes": "Tipos de Gráficas",
     "botBarTitle": "Bots",
     "clientCharts": "Gráficas de clientes",
     "environmentCharts": "Gráficas de entornos",
@@ -105,6 +107,13 @@
     "weekly": "Semanal",
     "yearly": "Anual"
   },
+
+  "charts": {
+    "chartOne": "Gráfico 1",
+    "chartTwo": "Gráfico 2",
+    "chartThree": "Gráfico 3"
+  },
+
   "incidents": {
     "addButton": "Añadir Incidente",
     "actions": "Acciones",

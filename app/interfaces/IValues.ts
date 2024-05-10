@@ -4,6 +4,7 @@ export interface Values {
   lateralNavbar: LanguageValues;
   rightBar: LanguageValues;
   searchBar: LanguageValues;
+  charts: LanguageValues;
   alerts: LanguageValues;
   loginPage: LanguageValues;
   indicators: LanguageValues;

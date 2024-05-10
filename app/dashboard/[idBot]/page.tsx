@@ -317,7 +317,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 <div className={styles.controllerContainer}>
                   <button
                     className={styles.controllerButton}
-                    onClick={printToPDF}
+                    onClick={toggleModal}
                   >
                     <div className={styles.iconContainer}>
                       <img src={customizeImg.src} alt="" />
@@ -409,15 +409,24 @@ export default function Home({ params }: { params: { idBot: number } }) {
           <IndicatorCheckboxGroup
             languageValues={{
               indicators: {
-                roi: "Return on Investment",
-                hoursSaved: "Hours Saved",
-                dollarsSaved: "Dollars Saved",
-                successRate: "Success Rate",
+                roi: languageValues.indicators.roi,
+                hoursSaved: languageValues.indicators.hoursSaved,
+                dollarsSaved: languageValues.indicators.dollarsSaved,
+                successRate: languageValues.indicators.successRate,
               },
             }}
+            secondLanguageValues={{
+              charts: {
+                chartOne: languageValues.charts.chartOne,
+                chartTwo: languageValues.charts.chartTwo,
+                chartThree: languageValues.charts.chartThree,
+              },
+            }}
+            visualizeMetrics={languageValues.dashboard.visualizeMetrics}
+            chartType={languageValues.dashboard.ChartTypes}
             checkedIndicators={checkedIndicators}
             onToggleCheckbox={handleToggleCheckbox}
-          />{" "}
+          />
         </Modal>
       </AuthRoute>
 

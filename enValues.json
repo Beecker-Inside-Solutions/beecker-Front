@@ -90,6 +90,8 @@
     "customize": "Customize",
     "transactionsTitle": "Transactions",
     "botBarTitle": "Bots",
+    "visualizeMetrics": "Visualize Metrics",
+    "ChartTypes": "Chart Types",
     "clientCharts": "Client Charts",
     "environmentCharts": "Environment Charts",
     "botCharts": "Charts of active bots",
@@ -120,6 +122,12 @@
     "return": "← Return",
     "save": "Save",
     "cancel": "Cancel"
+  },
+
+  "charts": {
+    "chartOne": "Chart 1",
+    "chartTwo": "Chart 2",
+    "chartThree": "Chart 3"
   },
 
   "addIncident": {
