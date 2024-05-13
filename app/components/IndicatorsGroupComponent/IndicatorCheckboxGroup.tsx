@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./IndicatorCheckboxGroup.module.css";
 import { ChartTypeRegistry } from "chart.js/auto";
+import { Charts } from "@/app/interfaces/ICharts";
 
 interface IndicatorsState {
   roi: boolean;
@@ -11,22 +12,26 @@ interface IndicatorsState {
 
 interface IndicatorCheckboxGroupProps {
   languageValues: { indicators: { [key: string]: string } };
-  secondLanguageValues: { charts: { [key: string]: string } };
+  secondLanguageValues: { charts: Charts };
   checkedIndicators: IndicatorsState;
   onToggleCheckbox: (indicator: keyof IndicatorsState) => void;
   visualizeMetrics: string;
-  chartType: string;
+  chartTitle: string;
+  onChartTypeChange: (
+    type: keyof ChartTypeRegistry,
+    chartId: keyof Charts
+  ) => void;
 }
 
 const validChartTypes: Array<keyof ChartTypeRegistry> = [
-  "line",
   "bar",
-  "radar",
-  "doughnut",
-  "polarArea",
+  "line",
+  "scatter",
   "bubble",
   "pie",
-  "scatter",
+  "doughnut",
+  "polarArea",
+  "radar",
 ];
 
 const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
@@ -35,8 +40,17 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
   checkedIndicators,
   onToggleCheckbox,
   visualizeMetrics,
-  chartType,
+  chartTitle,
+  onChartTypeChange,
 }) => {
+  const handleChartTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    chartId: keyof Charts
+  ) => {
+    const selectedType = event.target.value as keyof ChartTypeRegistry;
+    onChartTypeChange(selectedType, chartId);
+  };
+
   return (
     <div className={styles.modalContent}>
       <div className={styles.leftContainer}>
@@ -63,17 +77,18 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>{chartType}</h2>
+          <h2 className={styles.title}>Chart Type</h2>
         </div>
-        {Object.entries(secondLanguageValues.charts).map(([key, value]) => (
-          <div className={styles.selectContainer}>
-            <div className={styles.labelContainerTwo}>
-              <label className={styles.label} key={key}>
-                {value}
-              </label>
-            </div>
-            <div className={styles.selectContainerTwo}>
-              <select className={styles.select}>
+        {Object.entries(secondLanguageValues.charts).map(
+          ([chartId, chartType]) => (
+            <div className={styles.selectContainer} key={chartId}>
+              <select
+                className={styles.select}
+                value={chartType}
+                onChange={(e) =>
+                  handleChartTypeChange(e, chartId as keyof Charts)
+                }
+              >
                 {validChartTypes.map((type) => (
                   <option key={type} value={type}>
                     {type}
@@ -81,8 +96,8 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
                 ))}
               </select>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );

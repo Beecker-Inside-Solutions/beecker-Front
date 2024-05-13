@@ -21,14 +21,14 @@ import Modal from "../../components/ModalComponent/ModalComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 import useSuccessAndFailRate from "@/app/hooks/ClientHooks/successAndFailRate/successAndFailRate";
 import customizeImg from "../../images/icons/settings.png";
-
+import { ChartTypeRegistry } from "chart.js/auto";
+import { Charts } from "@/app/interfaces/ICharts";
 interface IndicatorsState {
   roi: boolean;
   hoursSaved: boolean;
   dollarsSaved: boolean;
   successRate: boolean;
 }
-
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -214,10 +214,26 @@ export default function Home({ params }: { params: { idBot: number } }) {
     dollarsSaved: true,
     successRate: true,
   });
+
+  const [selectedChart, setSelectedChart] = useState<Charts>({
+    chartOne: "pie",
+    chartTwo: "line",
+    chartThree: "bar",
+  });
+
   const handleToggleCheckbox = (indicator: keyof IndicatorsState) => {
     setCheckedIndicators((prevState) => ({
       ...prevState,
       [indicator]: !prevState[indicator],
+    }));
+  };
+  const handleChartTypeChange = (
+    type: keyof ChartTypeRegistry,
+    chartId: keyof Charts
+  ) => {
+    setSelectedChart((prevSelectedChart) => ({
+      ...prevSelectedChart,
+      [chartId]: type,
     }));
   };
 
@@ -371,7 +387,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 <ChartComponent
                   data={dataSF}
                   labels={labelsSF}
-                  chartType="bar"
+                  chartType={selectedChart.chartOne as keyof ChartTypeRegistry}
                   graphTitle={languageValues.dashboard.successFailRate}
                   fillColor={["#803fe0", "#F44336"]} // green and red
                   borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
@@ -380,7 +396,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
               </div>
               <div className={styles.graphContainer}>
                 <DoubleChartComponent
-                  chartType="line"
+                  chartType={selectedChart.chartTwo as keyof ChartTypeRegistry}
                   datasets={[
                     {
                       label: languageValues.dashboard.success,
@@ -416,16 +432,13 @@ export default function Home({ params }: { params: { idBot: number } }) {
               },
             }}
             secondLanguageValues={{
-              charts: {
-                chartOne: languageValues.charts.chartOne,
-                chartTwo: languageValues.charts.chartTwo,
-                chartThree: languageValues.charts.chartThree,
-              },
+              charts: selectedChart,
             }}
             visualizeMetrics={languageValues.dashboard.visualizeMetrics}
-            chartType={languageValues.dashboard.ChartTypes}
+            chartTitle={languageValues.dashboard.ChartTypes}
             checkedIndicators={checkedIndicators}
             onToggleCheckbox={handleToggleCheckbox}
+            onChartTypeChange={handleChartTypeChange}
           />
         </Modal>
       </AuthRoute>
