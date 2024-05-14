@@ -26,8 +26,6 @@ interface IndicatorCheckboxGroupProps {
 const validChartTypes: Array<keyof ChartTypeRegistry> = [
   "bar",
   "line",
-  "scatter",
-  "bubble",
   "pie",
   "doughnut",
   "polarArea",
@@ -77,11 +75,12 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
       </div>
       <div className={styles.rightContainer}>
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>Chart Type</h2>
+          <h2 className={styles.title}>{chartTitle}</h2>
         </div>
         {Object.entries(secondLanguageValues.charts).map(
           ([chartId, chartType]) => (
             <div className={styles.selectContainer} key={chartId}>
+              <p className={styles.chartTitle}></p>
               <select
                 className={styles.select}
                 value={chartType}

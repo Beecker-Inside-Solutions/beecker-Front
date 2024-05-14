@@ -134,9 +134,43 @@
 
 .select {
   width: 100%;
-  height: 100%;
+  height: 5em;
   border-radius: 10px;
   border: 1px solid #e0dfdf;
   background-color: transparent;
   color: #000;
+}
+
+@media (max-width: 767px) {
+  .modalContent {
+    flex-direction: column;
+  }
+
+  .leftContainer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .rightContainer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .titleContainer {
+    height: 10%;
+  }
+
+  .itemContainer {
+    height: 90%;
+  }
+
+  .labelContainer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .selectContainer {
+    width: 100%;
+    height: 50%;
+  }
 }
