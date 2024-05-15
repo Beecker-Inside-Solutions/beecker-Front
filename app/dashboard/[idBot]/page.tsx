@@ -242,6 +242,36 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const printToPDF = () => {
     window.print();
   };
+
+  const exportToCSV = useCallback(async () => {
+    const url = `${apiURL}/bots/${params.idBot}/export-statistics`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ timeframe: getSelectedTime }),
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error("Failed to fetch bot info");
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `bot_statistics_${params.idBot}_${getSelectedTime}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot, getSelectedTime]);
+
   return (
     <>
       <AuthRoute>
@@ -451,7 +481,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
             pdfText={languageValues.dashboard.downloadPDF}
             csvText={languageValues.dashboard.downloadXLSX}
             handlePdfExport={printToPDF}
-            handleCsvExport={printToPDF}
+            handleCsvExport={exportToCSV}
           />
         </Modal>
       </AuthRoute>
