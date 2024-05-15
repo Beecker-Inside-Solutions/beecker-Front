@@ -5,7 +5,6 @@ import { IRightBar } from "@/app/interfaces/IRightBar";
 import downArrow from "@/app/images/icons/closeArrow.png";
 import upArrow from "@/app/images/icons/openArrow.png";
 import Link from "next/link";
-import profile from "@/app/images/icons/profile.png";
 import logout from "@/app/images/icons/logout.png";
 import notification from "@/app/images/icons/notification.png";
 import { routes, apiURL } from "@/Constants";
@@ -136,12 +135,6 @@ const RightBar: React.FC<IRightBar> = ({
       {showDropdown && (
         <div className={styles.dropdownMenu}>
           <ul>
-            <Link href="/profile">
-              <li>
-                <img className={styles.profileIcon} src={profile.src} />
-                <p>{profileButton}</p>
-              </li>
-            </Link>
             <Link
               href="/"
               onClick={() => {

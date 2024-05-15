@@ -12,23 +12,17 @@ import ChartComponent from "@/app/components/ChartComponent/ChartComponent";
 import Footer from "../../components/Footer/Footer";
 import AuthRoute from "../../components/AuthComponent/AuthComponent";
 import useClientLineChart from "../../hooks/ClientHooks/ClientLineCharts/useClientLineChart";
-import useFetchTransactionsData from "../../hooks/Transactions/useFetchTransactionsData";
-import useBotBarChartData from "../../hooks/BotCharts/useBotBarChartData";
 import IndicatorComponent from "../../components/IndicatorComponent/IndicatorComponent";
 import filterImg from "../../images/icons/filter.png";
-import pdfImg from "../../images/icons/pdf.png";
 import Modal from "../../components/ModalComponent/ModalComponent";
+import ExportComponent from "@/app/components/ExportComponent/ExportComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 import useSuccessAndFailRate from "@/app/hooks/ClientHooks/successAndFailRate/successAndFailRate";
 import customizeImg from "../../images/icons/settings.png";
 import { ChartTypeRegistry } from "chart.js/auto";
 import { Charts } from "@/app/interfaces/ICharts";
-interface IndicatorsState {
-  roi: boolean;
-  hoursSaved: boolean;
-  dollarsSaved: boolean;
-  successRate: boolean;
-}
+import { IndicatorsState } from "@/app/interfaces/IIndicatorsState";
+
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
@@ -60,7 +54,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
   const [successRate, setSuccessRate] = useState(0);
   const [successRateProfit, setSuccessRateProfit] = useState(0);
 
+  /*
+    Modal Hooks:
+  */
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const fetchBotInfo = useCallback(async () => {
     const url = `${apiURL}/bots/${params.idBot}`;
@@ -192,6 +190,10 @@ export default function Home({ params }: { params: { idBot: number } }) {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const toggleExportModal = () => {
+    setIsExportModalOpen(!isExportModalOpen);
   };
 
   // Call all the fetch functions on mount
@@ -377,7 +379,10 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 </h2>
               </div>
               <div className={styles.topRightContainer}>
-                <button className={styles.exportButton} onClick={toggleModal}>
+                <button
+                  className={styles.exportButton}
+                  onClick={toggleExportModal}
+                >
                   {languageValues.dashboard.exportReport}
                 </button>
               </div>
@@ -439,6 +444,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
             checkedIndicators={checkedIndicators}
             onToggleCheckbox={handleToggleCheckbox}
             onChartTypeChange={handleChartTypeChange}
+          />
+        </Modal>
+        <Modal isOpen={isExportModalOpen} onClose={toggleExportModal}>
+          <ExportComponent
+            pdfText={languageValues.dashboard.downloadPDF}
+            csvText={languageValues.dashboard.downloadXLSX}
           />
         </Modal>
       </AuthRoute>
