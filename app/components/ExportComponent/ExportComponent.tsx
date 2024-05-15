@@ -6,16 +6,22 @@ import csvImg from "../../images/icons/excel.png";
 interface ExportComponentProps {
   pdfText: string;
   csvText: string;
+  handlePdfExport: () => void;
+  handleCsvExport: () => void;
 }
 
 const ExportComponent: React.FC<ExportComponentProps> = ({
   pdfText,
   csvText,
+    handlePdfExport,
+    handleCsvExport,
 }) => {
   return (
     <div className={styles.exportComponent}>
       <div className={styles.leftContainer}>
-        <button className={styles.pdfButton}>
+        <button className={styles.pdfButton}
+        onClick={handlePdfExport}
+        >
           <div className={styles.imgContainer}>
             <img src={pdfImg.src} alt={pdfText} />
           </div>
@@ -23,7 +29,9 @@ const ExportComponent: React.FC<ExportComponentProps> = ({
         </button>
       </div>
       <div className={styles.rightContainer}>
-        <button className={styles.csvButton}>
+        <button className={styles.csvButton}
+        onClick={handleCsvExport}
+        >
           <div className={styles.imgContainer}>
             <img src={csvImg.src} alt={csvText} />
           </div>

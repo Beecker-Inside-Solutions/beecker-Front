@@ -450,6 +450,8 @@ export default function Home({ params }: { params: { idBot: number } }) {
           <ExportComponent
             pdfText={languageValues.dashboard.downloadPDF}
             csvText={languageValues.dashboard.downloadXLSX}
+            handlePdfExport={printToPDF}
+            handleCsvExport={printToPDF}
           />
         </Modal>
       </AuthRoute>

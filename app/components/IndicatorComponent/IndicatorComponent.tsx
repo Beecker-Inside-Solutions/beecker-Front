@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { IIndicators } from "@/app/interfaces/IIndicators";
 import styles from "./IndicatorComponent.module.css";
-import openArrow from "../../images/icons/openArrow.png";
-import closeArrow from "../../images/icons/closeArrow.png";
 
 const IndicatorComponent: React.FC<IIndicators> = ({
   title,
@@ -64,9 +62,7 @@ const IndicatorComponent: React.FC<IIndicators> = ({
           <p className={profit > 0 ? styles.profit : styles.profitLoss}>
             {renderProfitLoss()}%{" "}
           </p>{" "}
-          <p
-          className={styles.since}
-          > {languageValues.dashboard.lastCut}</p>
+          <p className={styles.since}> {languageValues.dashboard.lastCut}</p>
         </div>
       </div>
     </div>

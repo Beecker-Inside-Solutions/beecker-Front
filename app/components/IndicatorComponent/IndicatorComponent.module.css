@@ -55,7 +55,7 @@
   font-size: 1.2rem;
 }
 
-.since{
+.since {
   font-size: 1.2rem;
   font-weight: 100;
   margin-left: 0.5em;
@@ -93,13 +93,37 @@
 @media print {
   .indicatorContainer {
     margin: 1em;
-  }
-
-  .indicatorHeader {
-    width: 50%;
+    border-radius: 10px;
   }
 
   .indicatorBody {
-    width: 50%;
+    border-right: none;
+    text-align: center;
+    align-items: center;
+  }
+
+  .indicatorHeader {
+    justify-content: center;
+    height: 20%;
+  }
+
+  .indicatorHeader p {
+    font-size: 1rem;
+    border-bottom: 1px solid var(--azul-beecker);
+  }
+
+  .indicatorValue {
+    height: 30%;
+  }
+
+  .profitContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30%;
+  }
+
+  .profit, .profitLoss, .since{
+    font-size: 1rem;
   }
 }
