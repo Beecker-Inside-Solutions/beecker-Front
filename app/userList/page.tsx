@@ -17,6 +17,7 @@ import UserList from "../components/UserEditComponent/UserEditComponent";
 import { apiURL } from "@/Constants";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
+import AuthAdmin from "../components/AuthAdminComponent/AuthAdmin";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -155,102 +156,104 @@ export default function Home() {
 
   return (
     <>
-      <AuthRoute>
-        <LateralNavbar
-          lateralNavbar={require("@/Constants").lateralNavbarItems}
-          logo={logo.src}
-        />
-        <RightBar
-          profileName={userName}
-          profileImageUrl={profileImg}
-          logoutHeader={languageValues.rightBar.logoutHeader}
-          logoutText={languageValues.rightBar.logoutText}
-          logoutButton={languageValues.rightBar.logoutButton}
-          profileButton={languageValues.rightBar.profileButton}
-        />
-        <main className={styles.main}>
-          <div className={styles.topContainer}>
-            <div className={styles.leftContainer}>
-              <SearchComponent
-                onSearch={handleSearch}
-                placeholder={languageValues.userList.searchInput}
-              />
-            </div>
-            <div className={styles.rightContainer}>
-              <button className={styles.exportButton} onClick={exportToExcel}>
-                <p className={styles.buttonText}>
-                  {languageValues.incidents.exportButton}
-                </p>
-                <div className={styles.exportIcon}>
-                  <img src={excelIcon.src} alt="Excel" />
-                </div>
-              </button>
-            </div>
-          </div>
-          <div className={styles.bottomContainer}>
-            <table className={styles.incidentTable}>
-              <thead>
-                <tr>
-                  <th className={styles.actionsHeader}>
-                    {languageValues.userList.name}
-                  </th>
-                  <th className={styles.incidentIdHeader}>
-                    {languageValues.userList.email}
-                  </th>
-                  <th className={styles.incidentHeader}>
-                    {languageValues.userList.role}
-                  </th>
-                  <th className={styles.statusHeader}>
-                    {languageValues.userList.actions}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentUsers.map((incident) => (
-                  <tr key={incident.idUsers}>
-                    <td>{incident.name}</td>
-                    <td>{incident.email}</td>
-                    <td>{getRoleName(incident.Roles_idRole)}</td>{" "}
-                    <td className={styles.actions}>
-                      <img
-                        src={editIcon.src}
-                        onClick={(event: any) =>
-                          handleEditIconClick(incident.idUsers)
-                        } // Fix: Pass incident.id instead of incident
-                        alt="Config"
-                      />
-                      <img
-                        src={deleteImg.src}
-                        onClick={(event: any) =>
-                          handleUseDelete(incident.idUsers)
-                        }
-                        alt="Delete"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className={styles.pagination}>
-              {Array.from(
-                { length: Math.ceil(userListData.length / incidentsPerPage) },
-                (_, i) => (
-                  <button key={i} onClick={() => paginate(i + 1)}>
-                    {i + 1}
-                  </button>
-                )
-              )}
-            </div>
-          </div>
-        </main>
-        <Modal isOpen={isModalOpen} onClose={toggleModal}>
-          <UserList
-            languageValues={languageValues}
-            Roles_idRole={selectedUser}
+      <AuthAdmin>
+        <AuthRoute>
+          <LateralNavbar
+            lateralNavbar={require("@/Constants").lateralNavbarItems}
+            logo={logo.src}
           />
-        </Modal>
-      </AuthRoute>
-      <Footer updateLanguage={setLanguage} />
+          <RightBar
+            profileName={userName}
+            profileImageUrl={profileImg}
+            logoutHeader={languageValues.rightBar.logoutHeader}
+            logoutText={languageValues.rightBar.logoutText}
+            logoutButton={languageValues.rightBar.logoutButton}
+            profileButton={languageValues.rightBar.profileButton}
+          />
+          <main className={styles.main}>
+            <div className={styles.topContainer}>
+              <div className={styles.leftContainer}>
+                <SearchComponent
+                  onSearch={handleSearch}
+                  placeholder={languageValues.userList.searchInput}
+                />
+              </div>
+              <div className={styles.rightContainer}>
+                <button className={styles.exportButton} onClick={exportToExcel}>
+                  <p className={styles.buttonText}>
+                    {languageValues.incidents.exportButton}
+                  </p>
+                  <div className={styles.exportIcon}>
+                    <img src={excelIcon.src} alt="Excel" />
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className={styles.bottomContainer}>
+              <table className={styles.incidentTable}>
+                <thead>
+                  <tr>
+                    <th className={styles.actionsHeader}>
+                      {languageValues.userList.name}
+                    </th>
+                    <th className={styles.incidentIdHeader}>
+                      {languageValues.userList.email}
+                    </th>
+                    <th className={styles.incidentHeader}>
+                      {languageValues.userList.role}
+                    </th>
+                    <th className={styles.statusHeader}>
+                      {languageValues.userList.actions}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentUsers.map((incident) => (
+                    <tr key={incident.idUsers}>
+                      <td>{incident.name}</td>
+                      <td>{incident.email}</td>
+                      <td>{getRoleName(incident.Roles_idRole)}</td>{" "}
+                      <td className={styles.actions}>
+                        <img
+                          src={editIcon.src}
+                          onClick={(event: any) =>
+                            handleEditIconClick(incident.idUsers)
+                          } // Fix: Pass incident.id instead of incident
+                          alt="Config"
+                        />
+                        <img
+                          src={deleteImg.src}
+                          onClick={(event: any) =>
+                            handleUseDelete(incident.idUsers)
+                          }
+                          alt="Delete"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className={styles.pagination}>
+                {Array.from(
+                  { length: Math.ceil(userListData.length / incidentsPerPage) },
+                  (_, i) => (
+                    <button key={i} onClick={() => paginate(i + 1)}>
+                      {i + 1}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          </main>
+          <Modal isOpen={isModalOpen} onClose={toggleModal}>
+            <UserList
+              languageValues={languageValues}
+              Roles_idRole={selectedUser}
+            />
+          </Modal>
+        </AuthRoute>
+        <Footer updateLanguage={setLanguage} />
+      </AuthAdmin>
     </>
   );
 }
