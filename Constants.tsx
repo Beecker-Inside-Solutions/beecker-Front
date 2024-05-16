@@ -51,15 +51,7 @@ export const lateralNavbarItems: ILateralNavbar = {
     ["User List"]: {
       link: routes.userList,
       image: userList.src,
-      adminRequired: false,
-    },
-  },
-
-  Preferences: {
-    Settings: {
-      link: routes.settings,
-      image: settingsImage.src,
-      adminRequired: false,
+      adminRequired: true,
     },
   },
 };
