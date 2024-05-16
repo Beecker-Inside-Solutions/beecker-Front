@@ -51,7 +51,6 @@ export default function Home() {
         <LateralNavbar
           lateralNavbar={require("@/Constants").lateralNavbarItems}
           logo={logo.src}
-          user={{ isAdmin: false }}
         />
         <RightBar
           profileName={userName}
