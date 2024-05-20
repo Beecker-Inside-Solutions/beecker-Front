@@ -143,7 +143,21 @@ export default function Home() {
               name="password"
               onChange={handlePasswordLogin}
             />
-            <button type="submit" className={styles.button}>
+            <button
+              type="submit"
+              className={`${styles.button} ${
+                emailLogin.trim() === "" ||
+                passwordLogin.trim() === "" ||
+                !regex.email.test(emailLogin)
+                  ? styles.disabled
+                  : ""
+              }`}
+              disabled={
+                emailLogin.trim() === "" ||
+                passwordLogin.trim() === "" ||
+                !regex.email.test(emailLogin)
+              }
+            >
               {languageValues.loginPage.loginButton}
             </button>
             <div className={styles.forgotPasswordContainer}>

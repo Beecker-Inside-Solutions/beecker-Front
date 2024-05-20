@@ -114,6 +114,12 @@
   color: var(--azul-beecker);
 }
 
+.disabled {
+  background-color: #cccccc; /* Change this to the desired color */
+  /* Add any additional styles for the disabled button */
+}
+
+
 @media (max-width: 767px) {
   .main {
     padding: 1rem;
