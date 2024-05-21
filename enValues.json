@@ -136,7 +136,8 @@
     "file": "Add File",
     "description": "Description",
     "submitButton": "Add Incident",
-    "cancelButton": "Cancel"
+    "cancelButton": "Cancel",
+    "addFileButton": "Add File"
   },
   "userList": {
     "name": "Name",

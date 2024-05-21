@@ -163,6 +163,20 @@
   transition: 0.3s;
 }
 
+.addButton{
+  background-color: #409916;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 100;
+  padding: 0.5rem 1rem;
+  width: 10em;
+  margin: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+
+}
+
 @media (max-width: 767px) {
   .main {
     padding: 2rem;

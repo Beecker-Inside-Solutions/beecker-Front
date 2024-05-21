@@ -137,7 +137,8 @@
     "file": "Adjuntar Archivo",
     "description": "Descripción",
     "submitButton": "Agregar Incidente",
-    "cancelButton": "Cancelar"
+    "cancelButton": "Cancelar",
+    "addFileButton": "Agregar Archivo"
   },
 
   "userList": {
