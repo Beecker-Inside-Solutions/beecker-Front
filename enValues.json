@@ -120,6 +120,7 @@
     "exportButton": "Export to XLSX",
     "description": "Description",
     "return": "← Return",
+    "projects": "Project",
     "save": "Save",
     "cancel": "Cancel"
   },

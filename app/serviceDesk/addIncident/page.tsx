@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import useMultilingualValues from "../../hooks/useMultilingualValues";
 import logo from "../../images/logos/logo.png";
@@ -10,6 +10,8 @@ import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
 import { statusOptions, lateralNavbarItems } from "@/Constants";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
+import { apiURL } from "@/Constants";
+import { Project } from "@/app/interfaces/IProject";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -21,6 +23,7 @@ export default function Home() {
   const [profileImg, setProfileImg] = useState(logo.src);
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
   const [fileInputs, setFileInputs] = useState(["file-0"]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     // Fetch user data logic
@@ -32,6 +35,28 @@ export default function Home() {
     // Fetch incidents data logic
     // setIncidentsData(fetchedIncidentsData);
   }, []);
+
+  const fetchProjects = useCallback(async () => {
+    try {
+      fetch(`${apiURL}/projects/user/${localStorage.getItem("userId")}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setProjects(data);
+        });
+    } catch (error) {
+      console.error("Error fetching projects: ", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const addFileInput = () => {
     if (fileInputs.length < 3) {
@@ -105,6 +130,20 @@ export default function Home() {
                     />
                   </div>
                   <div className={styles.inputContainer}>
+                    <label htmlFor="projects">
+                      {languageValues.incidents.projects}
+                    </label>
+                    <select name="projects" id="projects" className={styles.input}>
+                      {projects.map((project) => (
+                        <option key={project.idProject} value={project.idProject}>
+                          {project.projectName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className={styles.rightContainer}>
+                  <div className={styles.inputContainer}>
                     <label htmlFor="status">
                       {languageValues.incidents.status}
                     </label>
@@ -116,8 +155,6 @@ export default function Home() {
                       ))}
                     </select>
                   </div>
-                </div>
-                <div className={styles.rightContainer}>
                   {fileInputs.map((fileInput, index) => (
                     <div className={styles.inputContainer} key={fileInput}>
                       <label htmlFor={fileInput}>

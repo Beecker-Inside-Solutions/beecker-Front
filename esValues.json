@@ -128,6 +128,7 @@
     "exportButton": "Exportar a Excel",
     "description": "Descripción",
     "return": "← Regresar",
+    "projects": "Proyecto",
     "save": "Guardar",
     "cancel": "Cancelar"
   },
