@@ -12,6 +12,7 @@ import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import { apiURL } from "@/Constants";
 import { Project } from "@/app/interfaces/IProject";
+import { IUser } from "@/app/interfaces/IUser";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -24,6 +25,7 @@ export default function Home() {
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
   const [fileInputs, setFileInputs] = useState(["file-0"]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [responsibles, setResponsibles] = useState([]);
 
   useEffect(() => {
     // Fetch user data logic
@@ -42,7 +44,7 @@ export default function Home() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
         .then((response) => response.json())
@@ -54,14 +56,71 @@ export default function Home() {
     }
   }, []);
 
+  const fetchResponsibles = useCallback(async () => {
+    try {
+      fetch(`${apiURL}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const responsibleFullNames = data.map(
+            (responsible: IUser) =>
+              `${responsible.name} ${responsible.lastName}`
+          );
+
+          setResponsibles(responsibleFullNames);
+          console.log(responsibleFullNames);
+        });
+    } catch (error) {
+      console.error("Error fetching responsibles: ", error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchProjects();
-  }, [fetchProjects]);
+    fetchResponsibles();
+  }, [fetchProjects, fetchResponsibles]);
 
   const addFileInput = () => {
     if (fileInputs.length < 3) {
       setFileInputs([...fileInputs, `file-${fileInputs.length}`]);
     }
+  };
+
+  const removeFileInput = (index: number) => {
+    setFileInputs(fileInputs.filter((_, i) => i !== index));
+  };
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const data = {
+      incidentName: formData.get("incidentName"),
+      responsible: formData.get("responsible"),
+      startDate: formData.get("startDate"),
+      endDate: formData.get("endDate"),
+      projects: formData.get("projects"),
+      status: formData.get("status"),
+      description: formData.get("description"),
+    };
+
+    fetch(`${apiURL}/incidents`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
@@ -101,11 +160,17 @@ export default function Home() {
                     <label htmlFor="responsible">
                       {languageValues.incidents.responsible}
                     </label>
-                    <input
+                    <select
                       name="responsible"
                       id="responsible"
                       className={styles.input}
-                    />
+                    >
+                      {responsibles.map((responsible) => (
+                        <option key={responsible} value={responsible}>
+                          {responsible}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className={styles.inputContainer}>
                     <label htmlFor="startDate">
@@ -133,9 +198,16 @@ export default function Home() {
                     <label htmlFor="projects">
                       {languageValues.incidents.projects}
                     </label>
-                    <select name="projects" id="projects" className={styles.input}>
+                    <select
+                      name="projects"
+                      id="projects"
+                      className={styles.input}
+                    >
                       {projects.map((project) => (
-                        <option key={project.idProject} value={project.idProject}>
+                        <option
+                          key={project.idProject}
+                          value={project.idProject}
+                        >
                           {project.projectName}
                         </option>
                       ))}
@@ -166,6 +238,13 @@ export default function Home() {
                         id={fileInput}
                         className={styles.input}
                       />
+                      <button
+                        type="button"
+                        onClick={() => removeFileInput(index)}
+                        className={styles.removeButton}
+                      >
+                        {languageValues.addIncident.removeFileButton}
+                      </button>
                     </div>
                   ))}
                   {fileInputs.length < 3 && (

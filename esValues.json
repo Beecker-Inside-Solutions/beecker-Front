@@ -139,7 +139,8 @@
     "description": "Descripción",
     "submitButton": "Agregar Incidente",
     "cancelButton": "Cancelar",
-    "addFileButton": "Agregar Archivo"
+    "addFileButton": "Agregar Archivo",
+    "removeFileButton": "X"
   },
 
   "userList": {
