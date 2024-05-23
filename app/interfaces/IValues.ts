@@ -15,4 +15,5 @@ export interface Values {
   addIncident: LanguageValues;
   userList: LanguageValues;
   errorsAlerts: LanguageValues;
+  statusTypes: LanguageValues;
 }

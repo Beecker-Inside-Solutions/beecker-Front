@@ -152,5 +152,14 @@
     "editUser": "Editar Usuario",
     "saveButton": "Guardar",
     "cancelButton": "Cancelar"
+  },
+
+  "statusTypes": {
+    "open": "Abierto",
+    "inProgress": "En Progreso",
+    "closed": "Cerrado",
+    "queued": "En Cola",
+    "cancelled": "Cancelado",
+    "testing": "En Pruebas"
   }
 }

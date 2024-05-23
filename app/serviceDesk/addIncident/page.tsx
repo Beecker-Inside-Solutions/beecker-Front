@@ -7,7 +7,7 @@ import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import Footer from "../../components/Footer/Footer";
 import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
-import { statusOptions, lateralNavbarItems, apiURL } from "@/Constants";
+import { lateralNavbarItems, apiURL } from "@/Constants";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import { Project } from "@/app/interfaces/IProject";
 import { IUser } from "@/app/interfaces/IUser";
@@ -26,6 +26,15 @@ export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [responsibles, setResponsibles] = useState([]);
   const [formError, setFormError] = useState<string | null>(null);
+
+  const statusOptions = [
+    { value: 0, label: languageValues.statusTypes.open },
+    { value: 1, label: languageValues.statusTypes.inProgress },
+    { value: 2, label: languageValues.statusTypes.queued },
+    { value: 3, label: languageValues.statusTypes.testing },
+    { value: 4, label: languageValues.statusTypes.closed },
+    { value: 5, label: languageValues.statusTypes.cancelled },
+  ];
 
   useEffect(() => {
     // Fetch user data logic
@@ -111,7 +120,6 @@ export default function Home() {
     }
 
     const data: IIncidences = {
-      idIncident: "", // You can assign an empty string or generate an appropriate ID if needed
       incidentName: formData.get("incidentName") as string,
       responsible: formData.get("responsible") as string,
       startDate: formData.get("startDate")
@@ -120,10 +128,12 @@ export default function Home() {
       endDate: formData.get("endDate")
         ? new Date(formData.get("endDate") as string)
         : null,
-      projects: formData.get("projects")
+      projectID: formData.get("projects")
         ? Number(formData.get("projects") as string)
         : null,
-      status: formData.get("status") as string,
+      status: formData.get("status")
+        ? Number(formData.get("status") as string)
+        : 0,
       description: formData.get("description") as string,
       progress: 0,
     };

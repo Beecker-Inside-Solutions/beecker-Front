@@ -100,6 +100,26 @@ export default function Home() {
     console.log(data);
     setIncidentsData(data);
   }, []);
+
+  const getStatusLabel = (status: number) => {
+    switch (status) {
+      case 0:
+        return languageValues.statusTypes.open;
+      case 1:
+        return languageValues.statusTypes.inProgress;
+      case 2:
+        return languageValues.statusTypes.queued;
+      case 3:
+        return languageValues.statusTypes.testing;
+      case 4:
+        return languageValues.statusTypes.closed;
+      case 5:
+        return languageValues.statusTypes.cancelled;
+      default:
+        return "UNKNOWN";
+    }
+  };
+
   return (
     <>
       <AuthRoute>
@@ -188,7 +208,9 @@ export default function Home() {
                     </td>
                     <td className={styles.incidentId}>{incident.idIncident}</td>
                     <td className={styles.incident}>{incident.incidentName}</td>
-                    <td className={styles.status}>{incident.status}</td>
+                    <td className={styles.status}>
+                      {getStatusLabel(incident.status)}
+                    </td>
                     <td className={styles.startDate}>
                       {parseDate(incident.startDate)}
                     </td>

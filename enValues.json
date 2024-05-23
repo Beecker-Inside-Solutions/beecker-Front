@@ -150,5 +150,14 @@
     "editUser": "Edit User",
     "saveButton": "Save",
     "cancelButton": "Cancel"
+  },
+
+  "statusTypes": {
+    "open": "Open",
+    "inProgress": "In Progress",
+    "closed": "Closed",
+    "queued": "Queued",
+    "cancelled": "Cancelled",
+    "testing": "Testing"
   }
 }

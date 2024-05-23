@@ -7,7 +7,6 @@ import RightBar from "../../../components/RightBar/RightBar";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import styles from "./page.module.css";
 import Footer from "../../../components/Footer/Footer";
-import { statusOptions } from "@/Constants";
 import taskIcon from "../../../images/icons/taskIcon.png";
 import editIcon from "../../../images/icons/edit.png";
 import Link from "next/link";
@@ -24,16 +23,26 @@ export default function Home() {
 
   const [isEdit, setIsEdit] = useState(false);
 
+  const statusOptions = [
+    { value: 0, label: languageValues.statusTypes.open },
+    { value: 1, label: languageValues.statusTypes.inProgress },
+    { value: 2, label: languageValues.statusTypes.queued },
+    { value: 3, label: languageValues.statusTypes.testing },
+    { value: 4, label: languageValues.statusTypes.closed },
+    { value: 5, label: languageValues.statusTypes.cancelled },
+  ];
+
   // Incidents data
   const [incident, setIncident] = useState<IIncidences>({
-    idIncident: "",
+    idIncident: 0,
     incidentName: "",
     responsible: "",
     startDate: null,
     endDate: null,
-    projects: null,
-    status: "",
+    projectID: null,
+    status: 0,
     description: "",
+    progress: null,
   });
   // OnClick Edit
   const onClickEdit = () => {
@@ -115,11 +124,11 @@ export default function Home() {
                     {isEdit ? (
                       <select
                         className={styles.select}
-                        value={incident.status}
+                        value={incident.status.toString()} // Make sure incident.status is a string
                         onChange={(e) =>
                           setIncident({
                             ...incident,
-                            status: e.target.value.toString(),
+                            status: parseInt(e.target.value), // Parse string value to number
                           })
                         }
                       >

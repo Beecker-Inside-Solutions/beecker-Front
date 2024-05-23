@@ -70,8 +70,3 @@ export const graphColors: IDefaultColors[] = [
   { colorName: "azul-oscuro", hexCode: "#0000ff" },
 ];
 
-export const statusOptions = [
-  { value: "Pending", label: "Pending" },
-  { value: "In Progress", label: "In Progress" },
-  { value: "Closed", label: "Closed" },
-];
