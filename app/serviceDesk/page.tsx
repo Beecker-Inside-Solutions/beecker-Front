@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useMultilingualValues from "../hooks/useMultilingualValues";
 import logo from ".././images/logos/logo.png";
 import configImg from ".././images/icons/config.png";
@@ -14,6 +14,7 @@ import Footer from "../components/Footer/Footer";
 import SearchComponent from "../components/SearchComponent/SearchComponent";
 import Link from "next/link";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
+import { apiURL } from "@/Constants";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -34,36 +35,10 @@ export default function Home() {
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    const testData = generateTestData();
-    setIncidentsData(testData);
+    //const testData = generateTestData();
+    //setIncidentsData(testData);
+    fetchData();
   }, []);
-
-  const generateTestData = (): IIncidences[] => {
-    const testData: IIncidences[] = [];
-
-    for (let i = 1; i <= 10; i++) {
-      testData.push({
-        incidentId: `INC-${i}`,
-        incident: `Incident ${i}`,
-        status: Math.random() > 0.5 ? "Resolved" : "Pending",
-        startDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        endDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        progress: `${Math.floor(Math.random() * 101)}%`,
-        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
-        description: "",
-      });
-    }
-
-    return testData;
-  };
 
   //Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
@@ -78,8 +53,8 @@ export default function Home() {
   const handleSearch = (searchTerm: string) => {
     const filtered = incidentsData.filter(
       (incident) =>
-        incident.incidentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        incident.incident.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        incident.idIncident.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        incident.incidentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         incident.responsible.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredIncidents(filtered);
@@ -103,6 +78,13 @@ export default function Home() {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB"); // en-GB locale uses Day-Month-Year format
   };
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch(`${apiURL}/incidents`);
+    const data = await response.json();
+    console.log(data);
+    setIncidentsData(data);
+  }, []);
   return (
     <>
       <AuthRoute>
@@ -189,8 +171,8 @@ export default function Home() {
                         <img src={deleteImg.src} alt="Delete" />
                       </button>
                     </td>
-                    <td className={styles.incidentId}>{incident.incidentId}</td>
-                    <td className={styles.incident}>{incident.incident}</td>
+                    <td className={styles.incidentId}>{incident.idIncident}</td>
+                    <td className={styles.incident}>{incident.incidentName}</td>
                     <td className={styles.status}>{incident.status}</td>
                     <td className={styles.startDate}>
                       {parseDate(incident.startDate)}
@@ -223,3 +205,34 @@ export default function Home() {
     </>
   );
 }
+
+/*
+
+
+  const generateTestData = (): IIncidences[] => {
+    const testData: IIncidences[] = [];
+
+    for (let i = 1; i <= 10; i++) {
+      testData.push({
+        incidentId: `INC-${i}`,
+        incident: `Incident ${i}`,
+        status: Math.random() > 0.5 ? "Resolved" : "Pending",
+        startDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        endDate: new Date(
+          2024,
+          0,
+          Math.floor(Math.random() * 30) + 1
+        ).toISOString(), // Random date within January 2024
+        progress: `${Math.floor(Math.random() * 101)}%`,
+        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
+        description: "",
+      });
+    }
+
+    return testData;
+  };
+*/

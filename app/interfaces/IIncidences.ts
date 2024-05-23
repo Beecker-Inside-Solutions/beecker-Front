@@ -1,6 +1,6 @@
   export interface IIncidences {
-    incidentId: string;
-    incident: string;
+    idIncident: string;
+    incidentName: string;
     status: string;
     startDate: string;
     endDate: string;
