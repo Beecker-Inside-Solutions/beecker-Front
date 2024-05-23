@@ -51,12 +51,21 @@ export default function Home() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleSearch = (searchTerm: string) => {
-    const filtered = incidentsData.filter(
-      (incident) =>
-        incident.idIncident.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        incident.incidentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        incident.responsible.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = incidentsData.filter((incident) => {
+      const idIncident = (
+        typeof incident.idIncident === "string" || typeof incident.idIncident === "number"
+          ? incident.idIncident
+          : ""
+      ).toString().toLowerCase();
+      const incidentName = incident.incidentName.toLowerCase();
+      const responsible = incident.responsible.toLowerCase();
+
+      return (
+        idIncident.includes(searchTerm.toLowerCase()) ||
+        incidentName.includes(searchTerm.toLowerCase()) ||
+        responsible.includes(searchTerm.toLowerCase())
+      );
+    });
     setFilteredIncidents(filtered);
   };
 
