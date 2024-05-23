@@ -11,6 +11,7 @@ import { lateralNavbarItems, apiURL } from "@/Constants";
 import { IIncidences } from "@/app/interfaces/IIncidences";
 import { Project } from "@/app/interfaces/IProject";
 import { IUser } from "@/app/interfaces/IUser";
+import { showSuccessAlert, showErrorAlert } from "@/app/lib/AlertUtils";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -102,7 +103,7 @@ export default function Home() {
     }
   };
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -138,20 +139,29 @@ export default function Home() {
       progress: 0,
     };
 
-    console.log("sendData: ", data);
-    /*
-    fetch(`${apiURL}/incidents`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });*/
+    try {
+      const response = await fetch(`${apiURL}/incidents`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      console.log(result);
+      showSuccessAlert(
+        languageValues.alerts.successAlertTitle,
+        languageValues.addIncident.successMessage
+      );
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+      showErrorAlert(
+        languageValues.alerts.errorAlertTitle,
+        languageValues.addIncident.errorSubmittingForm
+      );
+      setFormError("An error occurred while submitting the form.");
+    }
   };
 
   return (

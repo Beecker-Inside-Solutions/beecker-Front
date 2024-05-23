@@ -97,7 +97,6 @@ export default function Home() {
   const fetchData = useCallback(async () => {
     const response = await fetch(`${apiURL}/incidents`);
     const data = await response.json();
-    console.log(data);
     setIncidentsData(data);
   }, []);
 

@@ -99,7 +99,6 @@ export default function Home() {
 
   const handleEditIconClick = (userId: number) => {
     setSelectedUser(userId);
-    console.log("Selected user:", userId);
     toggleModal();
   };
 

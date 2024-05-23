@@ -70,7 +70,6 @@ const UserList: React.FC<UserListProps> = ({
   };
 
   const handleUpdateUser = async (user: IUserList) => {
-    console.log("Selected Type for Update:", selectedType); // Debugging line
     try {
       const { email, idUsers } = user;
       const response = await fetch(
@@ -83,10 +82,6 @@ const UserList: React.FC<UserListProps> = ({
           },
           body: JSON.stringify({ email, userTypeId: selectedType }),
         }
-      );
-      console.log(
-        "API Request Body:",
-        JSON.stringify({ email, userTypeId: selectedType })
       ); // Further debugging
       if (!response.ok) {
         throw new Error("Failed to update user");
@@ -132,7 +127,6 @@ const UserList: React.FC<UserListProps> = ({
             value={selectedType}
             onChange={(e) => {
               const newType = parseInt(e.target.value, 10); // Ensure correct parsing
-              console.log("New selected type:", newType); // Debugging line
               setSelectedType(newType);
             }}
           >
