@@ -7,12 +7,11 @@ import LateralNavbar from "../../components/LateralNavbar/LateralNavbar";
 import RightBar from "../../components/RightBar/RightBar";
 import Footer from "../../components/Footer/Footer";
 import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
-import { statusOptions, lateralNavbarItems } from "@/Constants";
+import { statusOptions, lateralNavbarItems, apiURL } from "@/Constants";
 import { IIncidences } from "@/app/interfaces/IIncidences";
-import styles from "./page.module.css";
-import { apiURL } from "@/Constants";
 import { Project } from "@/app/interfaces/IProject";
 import { IUser } from "@/app/interfaces/IUser";
+import styles from "./page.module.css";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -26,6 +25,7 @@ export default function Home() {
   const [fileInputs, setFileInputs] = useState(["file-0"]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [responsibles, setResponsibles] = useState([]);
+  const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch user data logic
@@ -40,17 +40,18 @@ export default function Home() {
 
   const fetchProjects = useCallback(async () => {
     try {
-      fetch(`${apiURL}/projects/user/${localStorage.getItem("userId")}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setProjects(data);
-        });
+      const response = await fetch(
+        `${apiURL}/projects/user/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setProjects(data);
     } catch (error) {
       console.error("Error fetching projects: ", error);
     }
@@ -58,23 +59,18 @@ export default function Home() {
 
   const fetchResponsibles = useCallback(async () => {
     try {
-      fetch(`${apiURL}/users`, {
+      const response = await fetch(`${apiURL}/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const responsibleFullNames = data.map(
-            (responsible: IUser) =>
-              `${responsible.name} ${responsible.lastName}`
-          );
-
-          setResponsibles(responsibleFullNames);
-          console.log(responsibleFullNames);
-        });
+      });
+      const data = await response.json();
+      const responsibleFullNames = data.map(
+        (responsible: IUser) => `${responsible.name} ${responsible.lastName}`
+      );
+      setResponsibles(responsibleFullNames);
     } catch (error) {
       console.error("Error fetching responsibles: ", error);
     }
@@ -92,13 +88,28 @@ export default function Home() {
   };
 
   const removeFileInput = (index: number) => {
-    setFileInputs(fileInputs.filter((_, i) => i !== index));
+    if (fileInputs.length > 1) {
+      setFileInputs(fileInputs.filter((_, i) => i !== index));
+    }
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    let hasFileAttached = false;
+    fileInputs.forEach((fileInput) => {
+      if (formData.get(fileInput)) {
+        hasFileAttached = true;
+      }
+    });
+
+    if (!hasFileAttached) {
+      setFormError(languageValues.addIncident.fileRequiredError);
+      return;
+    }
+
     const data = {
       incidentName: formData.get("incidentName"),
       responsible: formData.get("responsible"),
@@ -136,7 +147,7 @@ export default function Home() {
           profileButton={languageValues.rightBar.profileButton}
         />
         <main className={styles.main}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleFormSubmit}>
             <div className={styles.topContainer}>
               <div className={styles.titleContainer}>
                 <h1 className={styles.title}>
@@ -238,13 +249,15 @@ export default function Home() {
                         id={fileInput}
                         className={styles.input}
                       />
-                      <button
-                        type="button"
-                        onClick={() => removeFileInput(index)}
-                        className={styles.removeButton}
-                      >
-                        {languageValues.addIncident.removeFileButton}
-                      </button>
+                      {fileInputs.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeFileInput(index)}
+                          className={styles.removeButton}
+                        >
+                          {languageValues.addIncident.removeFileButton}
+                        </button>
+                      )}
                     </div>
                   ))}
                   {fileInputs.length < 3 && (
@@ -259,6 +272,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            {formError && <p className={styles.error}>{formError}</p>}
             <div className={styles.bottomContainer}>
               <div className={styles.inputContainer}>
                 <label htmlFor="description">
