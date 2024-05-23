@@ -26,8 +26,8 @@ export default function Home() {
 
   // Incidents data
   const [incident, setIncident] = useState<IIncidences>({
-    incidentId: "PIPO-52",
-    incident: "Incidente1",
+    idIncident: "PIPO-52",
+    incidentName: "Incidente1",
     status: "Pending",
     startDate: "20-12-2024",
     endDate: "21-12-2024",
@@ -79,13 +79,13 @@ export default function Home() {
                 <input
                   type="text"
                   className={styles.input}
-                  value={incident.incident}
+                  value={incident.incidentName}
                   onChange={(e) =>
-                    setIncident({ ...incident, incident: e.target.value })
+                    setIncident({ ...incident, incidentName: e.target.value })
                   }
                 />
               ) : (
-                <h1 className={styles.incidentTitle}>{incident.incident}</h1>
+                <h1 className={styles.incidentTitle}>{incident.incidentName}</h1>
               )}
             </div>
             <div className={styles.topRightContainer}>

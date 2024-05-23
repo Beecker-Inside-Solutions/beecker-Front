@@ -215,33 +215,3 @@ export default function Home() {
   );
 }
 
-/*
-
-
-  const generateTestData = (): IIncidences[] => {
-    const testData: IIncidences[] = [];
-
-    for (let i = 1; i <= 10; i++) {
-      testData.push({
-        incidentId: `INC-${i}`,
-        incident: `Incident ${i}`,
-        status: Math.random() > 0.5 ? "Resolved" : "Pending",
-        startDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        endDate: new Date(
-          2024,
-          0,
-          Math.floor(Math.random() * 30) + 1
-        ).toISOString(), // Random date within January 2024
-        progress: `${Math.floor(Math.random() * 101)}%`,
-        responsible: `User ${Math.floor(Math.random() * 5) + 1}`,
-        description: "",
-      });
-    }
-
-    return testData;
-  };
-*/
