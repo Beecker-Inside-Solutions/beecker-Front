@@ -26,16 +26,15 @@ export default function Home() {
 
   // Incidents data
   const [incident, setIncident] = useState<IIncidences>({
-    idIncident: "PIPO-52",
-    incidentName: "Incidente1",
-    status: "Pending",
-    startDate: "20-12-2024",
-    endDate: "21-12-2024",
-    progress: "75%",
-    responsible: "Antonio Niguerron",
-    description: "Description",
+    idIncident: "",
+    incidentName: "",
+    responsible: "",
+    startDate: null,
+    endDate: null,
+    projects: null,
+    status: "",
+    description: "",
   });
-
   // OnClick Edit
   const onClickEdit = () => {
     setIsEdit(!isEdit);
@@ -85,7 +84,9 @@ export default function Home() {
                   }
                 />
               ) : (
-                <h1 className={styles.incidentTitle}>{incident.incidentName}</h1>
+                <h1 className={styles.incidentTitle}>
+                  {incident.incidentName}
+                </h1>
               )}
             </div>
             <div className={styles.topRightContainer}>
@@ -116,7 +117,10 @@ export default function Home() {
                         className={styles.select}
                         value={incident.status}
                         onChange={(e) =>
-                          setIncident({ ...incident, status: e.target.value })
+                          setIncident({
+                            ...incident,
+                            status: e.target.value.toString(),
+                          })
                         }
                       >
                         {statusOptions.map((option) => (
@@ -169,16 +173,28 @@ export default function Home() {
                       <input
                         type="date"
                         className={styles.input}
-                        value={incident.startDate}
+                        value={
+                          incident.startDate
+                            ? new Date(incident.startDate)
+                                .toISOString()
+                                .substr(0, 10)
+                            : ""
+                        }
                         onChange={(e) =>
                           setIncident({
                             ...incident,
-                            startDate: e.target.value,
+                            startDate: e.target.value
+                              ? new Date(e.target.value) // Convert string to Date object
+                              : null,
                           })
                         }
                       />
                     ) : (
-                      <p className={styles.elementText}>{incident.startDate}</p>
+                      <p className={styles.elementText}>
+                        {incident.startDate
+                          ? new Date(incident.startDate).toLocaleDateString()
+                          : ""}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -193,13 +209,28 @@ export default function Home() {
                       <input
                         type="date"
                         className={styles.input}
-                        value={incident.endDate}
+                        value={
+                          incident.endDate
+                            ? new Date(incident.endDate)
+                                .toISOString()
+                                .substr(0, 10)
+                            : ""
+                        }
                         onChange={(e) =>
-                          setIncident({ ...incident, endDate: e.target.value })
+                          setIncident({
+                            ...incident,
+                            endDate: e.target.value
+                              ? new Date(e.target.value) // Convert string to Date object
+                              : null,
+                          })
                         }
                       />
                     ) : (
-                      <p className={styles.elementText}>{incident.endDate}</p>
+                      <p className={styles.elementText}>
+                        {incident.endDate
+                          ? new Date(incident.endDate).toLocaleDateString()
+                          : ""}
+                      </p>
                     )}
                   </div>
                 </div>

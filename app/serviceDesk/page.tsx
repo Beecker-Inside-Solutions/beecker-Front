@@ -53,10 +53,13 @@ export default function Home() {
   const handleSearch = (searchTerm: string) => {
     const filtered = incidentsData.filter((incident) => {
       const idIncident = (
-        typeof incident.idIncident === "string" || typeof incident.idIncident === "number"
+        typeof incident.idIncident === "string" ||
+        typeof incident.idIncident === "number"
           ? incident.idIncident
           : ""
-      ).toString().toLowerCase();
+      )
+        .toString()
+        .toLowerCase();
       const incidentName = incident.incidentName.toLowerCase();
       const responsible = incident.responsible.toLowerCase();
 
@@ -83,9 +86,12 @@ export default function Home() {
     link.click();
   };
 
-  const parseDate = (dateString: string) => {
+  const parseDate = (dateString: Date | null) => {
+    if (dateString === null) {
+      return ""; // Or any other appropriate handling for null dates
+    }
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB"); // en-GB locale uses Day-Month-Year format
+    return date.toLocaleDateString("en-GB");
   };
 
   const fetchData = useCallback(async () => {
@@ -214,4 +220,3 @@ export default function Home() {
     </>
   );
 }
-

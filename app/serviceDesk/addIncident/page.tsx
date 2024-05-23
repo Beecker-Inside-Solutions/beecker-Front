@@ -110,16 +110,26 @@ export default function Home() {
       return;
     }
 
-    const data = {
-      incidentName: formData.get("incidentName"),
-      responsible: formData.get("responsible"),
-      startDate: formData.get("startDate"),
-      endDate: formData.get("endDate"),
-      projects: formData.get("projects"),
-      status: formData.get("status"),
-      description: formData.get("description"),
+    const data: IIncidences = {
+      idIncident: "", // You can assign an empty string or generate an appropriate ID if needed
+      incidentName: formData.get("incidentName") as string,
+      responsible: formData.get("responsible") as string,
+      startDate: formData.get("startDate")
+        ? new Date(formData.get("startDate") as string)
+        : null,
+      endDate: formData.get("endDate")
+        ? new Date(formData.get("endDate") as string)
+        : null,
+      projects: formData.get("projects")
+        ? Number(formData.get("projects") as string)
+        : null,
+      status: formData.get("status") as string,
+      description: formData.get("description") as string,
+      progress: 0,
     };
 
+    console.log("sendData: ", data);
+    /*
     fetch(`${apiURL}/incidents`, {
       method: "POST",
       headers: {
@@ -131,7 +141,7 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-      });
+      });*/
   };
 
   return (

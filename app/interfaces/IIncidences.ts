@@ -1,10 +1,11 @@
   export interface IIncidences {
     idIncident: string;
-    incidentName: string;
-    status: string;
-    startDate: string;
-    endDate: string;
-    progress: string;
-    responsible: string;
-    description: string;
+    incidentName: string,
+    responsible: string,
+    startDate: Date | null,
+    endDate: Date | null,
+    projects: number | null,
+    status: string,
+    description: string
+    progress: number | null
   }
