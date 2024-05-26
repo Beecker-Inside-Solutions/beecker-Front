@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useMultilingualValues from "../../../hooks/useMultilingualValues";
 import logo from "../../../images/logos/logo.png";
 import LateralNavbar from "../../../components/LateralNavbar/LateralNavbar";
@@ -11,8 +11,9 @@ import taskIcon from "../../../images/icons/taskIcon.png";
 import editIcon from "../../../images/icons/edit.png";
 import Link from "next/link";
 import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
+import { apiURL } from "@/Constants";
 
-export default function Home() {
+export default function Home({ params }: { params: { idIncident: number } }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
     require("@/esValues.json"),
@@ -52,6 +53,24 @@ export default function Home() {
   const cancelEdit = () => {
     setIsEdit(false);
   };
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/incidents/${params.idIncident}`);
+      const data = await response.json();
+      setIncident(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [params.idIncident]);
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("first_name");
+    const storedProfileImg = localStorage.getItem("profile_img");
+    if (storedUserName) setUserName(storedUserName);
+    if (storedProfileImg) setProfileImg(storedProfileImg);
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>

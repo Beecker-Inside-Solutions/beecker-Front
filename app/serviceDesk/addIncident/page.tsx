@@ -150,10 +150,21 @@ export default function Home() {
       });
       const result = await response.json();
       console.log(result);
-      showSuccessAlert(
-        languageValues.alerts.successAlertTitle,
-        languageValues.addIncident.successMessage
-      );
+      if (response.ok) {
+        showSuccessAlert(
+          languageValues.alerts.successAlertTitle,
+          languageValues.addIncident.successMessage
+        );
+        await fetchAddFiles(result.incidentID); // Ensure the correct key name here
+        form.reset();
+        window.location.href = "/serviceDesk";
+      } else {
+        showErrorAlert(
+          languageValues.alerts.errorAlertTitle,
+          languageValues.addIncident.errorSubmittingForm
+        );
+        setFormError("An error occurred while submitting the form.");
+      }
     } catch (error) {
       console.error("Error submitting form: ", error);
       showErrorAlert(
@@ -162,6 +173,44 @@ export default function Home() {
       );
       setFormError("An error occurred while submitting the form.");
     }
+  };
+
+  const fetchAddFiles = async (incidentId: number) => {
+    const form = document.querySelector("form");
+
+    if (!form) {
+      console.error("Form not found");
+      return;
+    }
+
+    const formData = new FormData(form);
+    const files = Array.from(fileInputs).map((fileInput) =>
+      formData.get(fileInput)
+    );
+
+    const promises = files.map(async (file) => {
+      if (file) {
+        const data = new FormData();
+        data.append("file", file as File);
+        data.append("incidentID", incidentId.toString()); // Ensure the correct key name here
+
+        try {
+          const response = await fetch(`${apiURL}/files`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: data,
+          });
+          const result = await response.json();
+          console.log(result);
+        } catch (error) {
+          console.error("Error uploading file: ", error);
+        }
+      }
+    });
+
+    await Promise.all(promises);
   };
 
   return (

@@ -198,9 +198,14 @@ export default function Home() {
                 {currentIncidents.map((incident, index) => (
                   <tr key={index}>
                     <td className={styles.buttonsContainer}>
-                      <button className={styles.actionButton}>
-                        <img src={configImg.src} alt="Config" />
-                      </button>
+                      <Link
+                        href={`/serviceDesk/incident/${incident.idIncident}`}
+                        passHref
+                      >
+                        <button className={styles.actionButton}>
+                          <img src={configImg.src} alt="Config" />
+                        </button>
+                      </Link>
                       <button className={styles.actionButton}>
                         <img src={deleteImg.src} alt="Delete" />
                       </button>
