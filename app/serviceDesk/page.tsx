@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, use } from "react";
 import useMultilingualValues from "../hooks/useMultilingualValues";
 import logo from ".././images/logos/logo.png";
 import configImg from ".././images/icons/config.png";
@@ -15,7 +15,7 @@ import SearchComponent from "../components/SearchComponent/SearchComponent";
 import Link from "next/link";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import { apiURL } from "@/Constants";
-
+import useFetchUserType from "../hooks/useFetchUserType/useFetchUserType";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -30,6 +30,8 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const incidentsPerPage = 8;
 
+  const { user, fetchUserType } = useFetchUserType();
+
   useEffect(() => {
     const storedUserName = localStorage.getItem("first_name");
     const storedProfileImg = localStorage.getItem("profile_img");
@@ -37,6 +39,7 @@ export default function Home() {
     if (storedProfileImg) setProfileImg(storedProfileImg);
     //const testData = generateTestData();
     //setIncidentsData(testData);
+    fetchUserType();
     fetchData();
   }, []);
 
@@ -206,9 +209,11 @@ export default function Home() {
                           <img src={configImg.src} alt="Config" />
                         </button>
                       </Link>
-                      <button className={styles.actionButton}>
-                        <img src={deleteImg.src} alt="Delete" />
-                      </button>
+                      {user.isAdmin && (
+                        <button className={styles.actionButton}>
+                          <img src={deleteImg.src} alt="Delete" />
+                        </button>
+                      )}
                     </td>
                     <td className={styles.incidentId}>{incident.idIncident}</td>
                     <td className={styles.incident}>{incident.incidentName}</td>
