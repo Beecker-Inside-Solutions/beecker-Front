@@ -130,7 +130,13 @@
     "return": "← Regresar",
     "projects": "Proyecto",
     "save": "Guardar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "deleteSuccessTitle": "Éxito",
+    "deleteSuccessMessage": "Incidente eliminado exitosamente.",
+    "deleteErrorTitle": "Error",
+    "deleteErrorText": "Error al eliminar el incidente. Por favor, inténtelo de nuevo.",
+    "deleteConfirmTitle": "Borrar Incidente",
+    "deleteConfirmText": "¿Estás seguro de que deseas eliminar este incidente?"
   },
   "addIncident": {
     "addIncidentHeader": "Información del Incidente",

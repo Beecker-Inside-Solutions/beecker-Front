@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback, use } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useMultilingualValues from "../hooks/useMultilingualValues";
 import logo from ".././images/logos/logo.png";
 import configImg from ".././images/icons/config.png";
@@ -16,6 +16,11 @@ import Link from "next/link";
 import AuthRoute from "../components/AuthComponent/AuthComponent";
 import { apiURL } from "@/Constants";
 import useFetchUserType from "../hooks/useFetchUserType/useFetchUserType";
+import {
+  showConfirmAlert,
+  showSuccessAlert,
+  showErrorAlert,
+} from "../lib/AlertUtils";
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -122,6 +127,42 @@ export default function Home() {
     }
   };
 
+  const fetchDeleteIncident = useCallback(async (idIncident: number) => {
+    showConfirmAlert(
+      languageValues.incidents.deleteConfirmTitle,
+      languageValues.incidents.deleteConfirmText,
+      "OK",
+      async () => {
+        try {
+          const response = await fetch(`${apiURL}/incidents/${idIncident}`, {
+            method: "DELETE",
+          });
+          if (response.status === 200) {
+            showSuccessAlert(
+              languageValues.incidents.deleteSuccessTitle,
+              languageValues.incidents.deleteSuccessText
+            );
+            fetchData();
+          } else {
+            showErrorAlert(
+              languageValues.incidents.deleteErrorTitle,
+              languageValues.incidents.deleteErrorText
+            );
+          }
+        } catch (error) {
+          showErrorAlert(
+            languageValues.incidents.deleteErrorTitle,
+            languageValues.incidents.deleteErrorText
+          );
+        }
+      },
+      () => {
+        // Optional: Do something if cancelled, or leave empty to do nothing
+        console.log("Delete cancelled");
+      }
+    );
+  }, []);
+
   return (
     <>
       <AuthRoute>
@@ -196,7 +237,6 @@ export default function Home() {
                   </th>
                 </tr>
               </thead>
-              {/* Table body */}
               <tbody>
                 {currentIncidents.map((incident, index) => (
                   <tr key={index}>
@@ -210,7 +250,16 @@ export default function Home() {
                         </button>
                       </Link>
                       {user.isAdmin && (
-                        <button className={styles.actionButton}>
+                        <button
+                          className={styles.actionButton}
+                          onClick={() => {
+                            if (incident.idIncident !== undefined) {
+                              fetchDeleteIncident(incident.idIncident);
+                            } else {
+                              console.error("idIncident is undefined");
+                            }
+                          }} // Wrap in anonymous function and check for undefined
+                        >
                           <img src={deleteImg.src} alt="Delete" />
                         </button>
                       )}

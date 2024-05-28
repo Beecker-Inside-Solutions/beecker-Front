@@ -1,10 +1,12 @@
-import Swal, { SweetAlertIcon } from "sweetalert2";
+import { SweetAlertIcon } from "sweetalert2";
 
 export interface AlertOptions {
   title: string;
   text: string;
-  type: SweetAlertIcon;
-  icon?: SweetAlertIcon; // Adding the icon property
-  confirmButtonText: string;
+  icon?: SweetAlertIcon;
+  confirmButtonText?: string;
+  cancelButtonText?: string;
+  showCancelButton?: boolean;
   func?: () => void;
+  cancelFunc?: () => void;
 }

@@ -11,6 +11,8 @@ export const showAlert = (options: AlertOptions) => {
   Swal.fire(mergedOptions).then((result) => {
     if (result.isConfirmed && options.func) {
       options.func();
+    } else if (result.isDismissed && options.cancelFunc) {
+      options.cancelFunc();
     }
   });
 };
@@ -23,7 +25,6 @@ export const showSuccessAlert = (
   showAlert({
     title,
     text,
-    type: "success", // Add the missing 'type' property
     icon: "success",
     confirmButtonText: "OK",
     func,
@@ -38,7 +39,6 @@ export const showErrorAlert = (
   showAlert({
     title,
     text,
-    type: "error", // Add the missing 'type' property
     icon: "error",
     confirmButtonText: "OK",
     func,
@@ -53,7 +53,6 @@ export const showInfoAlert = (
   showAlert({
     title,
     text,
-    type: "info", // Add the missing 'type' property
     icon: "info",
     confirmButtonText: "OK",
     func,
@@ -68,7 +67,6 @@ export const showWarningAlert = (
   showAlert({
     title,
     text,
-    type: "warning", // Add the missing 'type' property
     icon: "warning",
     confirmButtonText: "OK",
     func,
@@ -79,15 +77,18 @@ export const showConfirmAlert = (
   title: string,
   text: string,
   confirmButtonText: string,
-  func: () => void
+  func: () => void,
+  cancelFunc?: () => void
 ) => {
   showAlert({
     title,
     text,
-    type: "warning", // Add the missing 'type' property
     icon: "warning",
     confirmButtonText,
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
     func,
+    cancelFunc,
   });
 };
 
