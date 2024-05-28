@@ -139,7 +139,8 @@
     "submitButton": "Add Incident",
     "cancelButton": "Cancel",
     "addFileButton": "Add File",
-    "removeFileButton": "X"
+    "removeFileButton": "X",
+    "noFiles": "No files added"
   },
   "userList": {
     "name": "Name",

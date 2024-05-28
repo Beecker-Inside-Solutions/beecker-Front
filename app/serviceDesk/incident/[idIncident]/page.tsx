@@ -12,6 +12,7 @@ import editIcon from "../../../images/icons/edit.png";
 import Link from "next/link";
 import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
 import { apiURL } from "@/Constants";
+import { IFiles } from "@/app/interfaces/IFiles";
 
 export default function Home({ params }: { params: { idIncident: number } }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -23,6 +24,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
   const [profileImg, setProfileImg] = useState(logo.src);
 
   const [isEdit, setIsEdit] = useState(false);
+  const [files, setFiles] = useState<IFiles[]>([]);
 
   const statusOptions = [
     { value: 0, label: languageValues.statusTypes.open },
@@ -58,11 +60,53 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       const response = await fetch(`${apiURL}/incidents/${params.idIncident}`);
       const data = await response.json();
       setIncident(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
   }, [params.idIncident]);
+
+  const getFiles = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/files/${params.idIncident}`);
+      const data = await response.json();
+
+      // Check if data is an object
+      if (typeof data !== "object" || Array.isArray(data)) {
+        console.error("Fetched data is not an object:", data);
+        return; // Exit the function early
+      }
+
+      // Decode Buffer data and map to IFiles interface
+      const decodedFile: IFiles = {
+        idFiles: data.idFiles,
+        file: new TextDecoder().decode(Uint8Array.from(data.file.data)),
+        Incidents_idIncident: data.Incidents_idIncident,
+      };
+
+      setFiles([decodedFile]);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [params.idIncident]);
+
+  const getStatusLabel = (status: number) => {
+    switch (status) {
+      case 0:
+        return languageValues.statusTypes.open;
+      case 1:
+        return languageValues.statusTypes.inProgress;
+      case 2:
+        return languageValues.statusTypes.queued;
+      case 3:
+        return languageValues.statusTypes.testing;
+      case 4:
+        return languageValues.statusTypes.closed;
+      case 5:
+        return languageValues.statusTypes.cancelled;
+      default:
+        return "UNKNOWN";
+    }
+  };
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("first_name");
@@ -70,7 +114,59 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
     fetchData();
+    getFiles();
   }, [fetchData]);
+
+  const updateIncident = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/incidents/${params.idIncident}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(incident),
+      });
+      if (response.ok) {
+        setIsEdit(false);
+      } else {
+        console.error("Error updating incident");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [incident, params.idIncident]);
+
+  const renderFiles = () => {
+    return (
+      <div className={styles.filesContainer}>
+        <h2>Files:</h2>
+        <ul className={styles.filesList}>
+          {files.map((file, index) => (
+            <li key={index}>
+              <a
+                href={createDownloadUrl(file.file)}
+                download={`file_${file.idFiles}.${getFileExtension(file.file)}`}
+              >
+                File {file.idFiles}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  // Function to create a download URL from file content
+  const createDownloadUrl = (content: string) => {
+    const blob = new Blob([content], { type: "application/octet-stream" });
+    return URL.createObjectURL(blob);
+  };
+
+  // Function to get the file extension
+  const getFileExtension = (fileName: string) => {
+    return fileName.split(".").pop();
+  };
 
   return (
     <>
@@ -131,139 +227,144 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                 {languageValues.addIncident.addIncidentHeader}
               </h1>
             </div>
-            <div className={styles.mediumContent}>
-              <div className={styles.leftContainer}>
-                <div className={styles.elementContainer}>
-                  <div className={styles.labelContainer}>
-                    <label className={styles.label}>
-                      {languageValues.incidents.status}: &nbsp;
-                    </label>
+            <div className={styles.top_MediumContainer}>
+              <div className={styles.mediumContent}>
+                <div className={styles.leftContainer}>
+                  <div className={styles.elementContainer}>
+                    <div className={styles.labelContainer}>
+                      <label className={styles.label}>
+                        {languageValues.incidents.status}: &nbsp;
+                      </label>
+                    </div>
+                    <div className={styles.valueContainer}>
+                      {isEdit ? (
+                        <select
+                          className={styles.select}
+                          value={incident.status.toString()} // Make sure incident.status is a string
+                          onChange={(e) =>
+                            setIncident({
+                              ...incident,
+                              status: parseInt(e.target.value), // Parse string value to number
+                            })
+                          }
+                        >
+                          {statusOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p className={styles.elementText}>
+                          {getStatusLabel(incident.status)}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div className={styles.valueContainer}>
-                    {isEdit ? (
-                      <select
-                        className={styles.select}
-                        value={incident.status.toString()} // Make sure incident.status is a string
-                        onChange={(e) =>
-                          setIncident({
-                            ...incident,
-                            status: parseInt(e.target.value), // Parse string value to number
-                          })
-                        }
-                      >
-                        {statusOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <p className={styles.elementText}>{incident.status}</p>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.elementContainer}>
-                  <div className={styles.labelContainer}>
-                    <label className={styles.label}>
-                      {languageValues.incidents.responsible}: &nbsp;
-                    </label>
-                  </div>
-                  <div className={styles.valueContainer}>
-                    {isEdit ? (
-                      <input
-                        type="text"
-                        className={styles.input}
-                        value={incident.responsible}
-                        onChange={(e) =>
-                          setIncident({
-                            ...incident,
-                            responsible: e.target.value,
-                          })
-                        }
-                      />
-                    ) : (
-                      <p className={styles.elementText}>
-                        {incident.responsible}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className={styles.rightContainer}>
-                <div className={styles.elementContainer}>
-                  <div className={styles.labelContainer}>
-                    <label className={styles.label}>
-                      {languageValues.incidents.startDate}: &nbsp;
-                    </label>
-                  </div>
-                  <div className={styles.valueContainer}>
-                    {isEdit ? (
-                      <input
-                        type="date"
-                        className={styles.input}
-                        value={
-                          incident.startDate
-                            ? new Date(incident.startDate)
-                                .toISOString()
-                                .substr(0, 10)
-                            : ""
-                        }
-                        onChange={(e) =>
-                          setIncident({
-                            ...incident,
-                            startDate: e.target.value
-                              ? new Date(e.target.value) // Convert string to Date object
-                              : null,
-                          })
-                        }
-                      />
-                    ) : (
-                      <p className={styles.elementText}>
-                        {incident.startDate
-                          ? new Date(incident.startDate).toLocaleDateString()
-                          : ""}
-                      </p>
-                    )}
+                  <div className={styles.elementContainer}>
+                    <div className={styles.labelContainer}>
+                      <label className={styles.label}>
+                        {languageValues.incidents.responsible}: &nbsp;
+                      </label>
+                    </div>
+                    <div className={styles.valueContainer}>
+                      {isEdit ? (
+                        <input
+                          type="text"
+                          className={styles.input}
+                          value={incident.responsible}
+                          onChange={(e) =>
+                            setIncident({
+                              ...incident,
+                              responsible: e.target.value,
+                            })
+                          }
+                        />
+                      ) : (
+                        <p className={styles.elementText}>
+                          {incident.responsible}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className={styles.elementContainer}>
-                  <div className={styles.labelContainer}>
-                    <label className={styles.label}>
-                      {languageValues.incidents.endDate}: &nbsp;
-                    </label>
+                <div className={styles.rightContainer}>
+                  <div className={styles.elementContainer}>
+                    <div className={styles.labelContainer}>
+                      <label className={styles.label}>
+                        {languageValues.incidents.startDate}: &nbsp;
+                      </label>
+                    </div>
+                    <div className={styles.valueContainer}>
+                      {isEdit ? (
+                        <input
+                          type="date"
+                          className={styles.input}
+                          value={
+                            incident.startDate
+                              ? new Date(incident.startDate)
+                                  .toISOString()
+                                  .substr(0, 10)
+                              : ""
+                          }
+                          onChange={(e) =>
+                            setIncident({
+                              ...incident,
+                              startDate: e.target.value
+                                ? new Date(e.target.value) // Convert string to Date object
+                                : null,
+                            })
+                          }
+                        />
+                      ) : (
+                        <p className={styles.elementText}>
+                          {incident.startDate
+                            ? new Date(incident.startDate).toLocaleDateString()
+                            : ""}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div className={styles.valueContainer}>
-                    {isEdit ? (
-                      <input
-                        type="date"
-                        className={styles.input}
-                        value={
-                          incident.endDate
-                            ? new Date(incident.endDate)
-                                .toISOString()
-                                .substr(0, 10)
-                            : ""
-                        }
-                        onChange={(e) =>
-                          setIncident({
-                            ...incident,
-                            endDate: e.target.value
-                              ? new Date(e.target.value) // Convert string to Date object
-                              : null,
-                          })
-                        }
-                      />
-                    ) : (
-                      <p className={styles.elementText}>
-                        {incident.endDate
-                          ? new Date(incident.endDate).toLocaleDateString()
-                          : ""}
-                      </p>
-                    )}
+                  <div className={styles.elementContainer}>
+                    <div className={styles.labelContainer}>
+                      <label className={styles.label}>
+                        {languageValues.incidents.endDate}: &nbsp;
+                      </label>
+                    </div>
+                    <div className={styles.valueContainer}>
+                      {isEdit ? (
+                        <input
+                          type="date"
+                          className={styles.input}
+                          value={
+                            incident.endDate
+                              ? new Date(incident.endDate)
+                                  .toISOString()
+                                  .substr(0, 10)
+                              : ""
+                          }
+                          onChange={(e) =>
+                            setIncident({
+                              ...incident,
+                              endDate: e.target.value
+                                ? new Date(e.target.value) // Convert string to Date object
+                                : null,
+                            })
+                          }
+                        />
+                      ) : (
+                        <p className={styles.elementText}>
+                          {incident.endDate
+                            ? new Date(incident.endDate).toLocaleDateString()
+                            : ""}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div className={styles.bottom_MediumContainer}>{renderFiles()}</div>
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.titleContainer}>

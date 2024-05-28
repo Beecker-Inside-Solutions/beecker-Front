@@ -140,7 +140,8 @@
     "submitButton": "Agregar Incidente",
     "cancelButton": "Cancelar",
     "addFileButton": "Agregar Archivo",
-    "removeFileButton": "X"
+    "removeFileButton": "X",
+    "noFiles": "No hay archivos seleccionados"
   },
 
   "userList": {
