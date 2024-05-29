@@ -119,7 +119,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
 
   const updateIncident = useCallback(async () => {
     try {
-      const response = await fetch(`${apiURL}/incidents/${params.idIncident}`, {
+      const response = await fetch(`${apiURL}/files/incidents/${params.idIncident}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
