@@ -136,7 +136,11 @@
     "deleteErrorTitle": "Error",
     "deleteErrorText": "Error al eliminar el incidente. Por favor, inténtelo de nuevo.",
     "deleteConfirmTitle": "Borrar Incidente",
-    "deleteConfirmText": "¿Estás seguro de que deseas eliminar este incidente?"
+    "deleteConfirmText": "¿Estás seguro de que deseas eliminar este incidente?",
+    "files": "Archivos",
+    "downloadImage": "Descargar Imagen",
+    "downloadFile": "Descargar Archivo",
+    "downloadPDF": "Descargar PDF"
   },
   "addIncident": {
     "addIncidentHeader": "Información del Incidente",

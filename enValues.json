@@ -128,8 +128,11 @@
     "deleteErrorTitle": "Error",
     "deleteErrorText": "Error deleting incident. Please try again.",
     "deleteConfirmTitle": "Delete Incident",
-    "deleteConfirmText": "Are you sure you want to delete this incident?"
-  
+    "deleteConfirmText": "Are you sure you want to delete this incident?",
+    "files": "Files",
+    "downloadImage": "Download Image",
+    "downloadFile": "Download File",
+    "downloadPDF": "Download PDF"
   },
 
   "charts": {

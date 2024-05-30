@@ -13,6 +13,8 @@ import Link from "next/link";
 import AuthRoute from "@/app/components/AuthComponent/AuthComponent";
 import { apiURL } from "@/Constants";
 import { IFiles } from "@/app/interfaces/IFiles";
+import downloadPDFIcon from "../../../images/icons/downloadPDF.png";
+import downloadFileIcon from "../../../images/icons/downloadFile.png";
 
 export default function Home({ params }: { params: { idIncident: number } }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -111,7 +113,9 @@ export default function Home({ params }: { params: { idIncident: number } }) {
 
   const getFiles = useCallback(async () => {
     try {
-      const response = await fetch(`${apiURL}/files/incidents/${params.idIncident}`);
+      const response = await fetch(
+        `${apiURL}/files/incidents/${params.idIncident}`
+      );
       const data = await response.json();
 
       const filesData = Array.isArray(data) ? data : [data];
@@ -141,33 +145,95 @@ export default function Home({ params }: { params: { idIncident: number } }) {
   };
 
   const renderFiles = () => {
+    const handleDownload = (url: string, fileName: string) => {
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
     return (
       <div className={styles.filesContainer}>
-        <h2>Files:</h2>
+        <div className={styles.titleContainer}>
+          <h2 className={styles.incidentTitle}>
+            {languageValues.incidents.files}
+          </h2>
+        </div>
         <ul className={styles.filesList}>
           {files.map((file) => (
-            <li key={file.idFiles}>
+            <li key={file.idFiles} className={styles.fileItem}>
               {file.fileType.startsWith("image/") ? (
-                <a
-                  href={createDownloadUrl(file.file, file.fileType)}
-                  download={`image_${file.idFiles}`}
+                <button
+                  onClick={() =>
+                    handleDownload(
+                      createDownloadUrl(file.file, file.fileType),
+                      `image_${file.idFiles}`
+                    )
+                  }
+                  className={styles.imageButton}
+                  id="imageButton"
                 >
-                  Download Image
-                </a>
+                  <div className={styles.iconContainer}>
+                    <img
+                      src={downloadFileIcon.src}
+                      alt="file"
+                      className={styles.fileImage}
+                    />
+                  </div>
+                  <div className={styles.buttonTextContainer}>
+                    <span className={styles.buttonText}>
+                      {languageValues.incidents.downloadImage}
+                    </span>
+                  </div>
+                </button>
               ) : file.fileType === "application/pdf" ? (
-                <a
-                  href={createDownloadUrl(file.file, file.fileType)}
-                  download={`pdf_${file.idFiles}`}
+                <button
+                  onClick={() =>
+                    handleDownload(
+                      createDownloadUrl(file.file, file.fileType),
+                      `pdf_${file.idFiles}`
+                    )
+                  }
+                  className={styles.pdfButton}
                 >
-                  Download PDF
-                </a>
+                  <div className={styles.iconContainer}>
+                    <img
+                      src={downloadPDFIcon.src}
+                      alt="file"
+                      className={styles.fileImage}
+                    />
+                  </div>
+                  <div className={styles.buttonTextContainer}>
+                    <span className={styles.buttonText}>
+                      {languageValues.incidents.downloadPDF}
+                    </span>
+                  </div>
+                </button>
               ) : (
-                <a
-                  href={createDownloadUrl(file.file, file.fileType)}
-                  download={`file_${file.idFiles}`}
+                <button
+                  onClick={() =>
+                    handleDownload(
+                      createDownloadUrl(file.file, file.fileType),
+                      `file_${file.idFiles}`
+                    )
+                  }
+                  className={styles.downloadButton}
                 >
-                  Download File {file.idFiles}
-                </a>
+                  <div className={styles.iconContainer}>
+                    <img
+                      src={downloadFileIcon.src}
+                      alt="file"
+                      className={styles.fileImage}
+                    />
+                  </div>
+                  <div className={styles.buttonTextContainer}>
+                    <span className={styles.buttonText}>
+                      {languageValues.incidents.downloadPDF}
+                    </span>
+                  </div>
+                </button>
               )}
             </li>
           ))}
