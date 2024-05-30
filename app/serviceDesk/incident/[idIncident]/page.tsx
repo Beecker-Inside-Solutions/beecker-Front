@@ -22,20 +22,8 @@ export default function Home({ params }: { params: { idIncident: number } }) {
   );
   const [userName, setUserName] = useState("");
   const [profileImg, setProfileImg] = useState(logo.src);
-
   const [isEdit, setIsEdit] = useState(false);
   const [files, setFiles] = useState<IFiles[]>([]);
-
-  const statusOptions = [
-    { value: 0, label: languageValues.statusTypes.open },
-    { value: 1, label: languageValues.statusTypes.inProgress },
-    { value: 2, label: languageValues.statusTypes.queued },
-    { value: 3, label: languageValues.statusTypes.testing },
-    { value: 4, label: languageValues.statusTypes.closed },
-    { value: 5, label: languageValues.statusTypes.cancelled },
-  ];
-
-  // Incidents data
   const [incident, setIncident] = useState<IIncidences>({
     idIncident: 0,
     incidentName: "",
@@ -47,43 +35,24 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     description: "",
     progress: null,
   });
-  // OnClick Edit
-  const onClickEdit = () => {
-    setIsEdit(!isEdit);
-  };
 
-  const cancelEdit = () => {
-    setIsEdit(false);
-  };
+  const statusOptions = [
+    { value: 0, label: languageValues.statusTypes.open },
+    { value: 1, label: languageValues.statusTypes.inProgress },
+    { value: 2, label: languageValues.statusTypes.queued },
+    { value: 3, label: languageValues.statusTypes.testing },
+    { value: 4, label: languageValues.statusTypes.closed },
+    { value: 5, label: languageValues.statusTypes.cancelled },
+  ];
+
+  const onClickEdit = () => setIsEdit(!isEdit);
+  const cancelEdit = () => setIsEdit(false);
+
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(`${apiURL}/incidents/${params.idIncident}`);
       const data = await response.json();
       setIncident(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [params.idIncident]);
-
-  const getFiles = useCallback(async () => {
-    try {
-      const response = await fetch(`${apiURL}/files/${params.idIncident}`);
-      const data = await response.json();
-
-      // Check if data is an object
-      if (typeof data !== "object" || Array.isArray(data)) {
-        console.error("Fetched data is not an object:", data);
-        return; // Exit the function early
-      }
-
-      // Decode Buffer data and map to IFiles interface
-      const decodedFile: IFiles = {
-        idFiles: data.idFiles,
-        file: new TextDecoder().decode(Uint8Array.from(data.file.data)),
-        Incidents_idIncident: data.Incidents_idIncident,
-      };
-
-      setFiles([decodedFile]);
     } catch (error) {
       console.error(error);
     }
@@ -119,14 +88,17 @@ export default function Home({ params }: { params: { idIncident: number } }) {
 
   const updateIncident = useCallback(async () => {
     try {
-      const response = await fetch(`${apiURL}/files/incidents/${params.idIncident}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(incident),
-      });
+      const response = await fetch(
+        `${apiURL}/files/incidents/${params.idIncident}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(incident),
+        }
+      );
       if (response.ok) {
         setIsEdit(false);
       } else {
@@ -137,35 +109,71 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     }
   }, [incident, params.idIncident]);
 
+  const getFiles = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/files/incidents/${params.idIncident}`);
+      const data = await response.json();
+
+      const filesData = Array.isArray(data) ? data : [data];
+
+      const decodedFiles = filesData.map((file: any) => ({
+        idFiles: file.idFiles,
+        file: Buffer.from(file.file, "binary").toString("base64"), // Convert buffer to base64 string
+        fileType: file.fileType,
+        Incidents_idIncident: file.Incidents_idIncident,
+      }));
+
+      setFiles(decodedFiles);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [params.idIncident]);
+
+  const createDownloadUrl = (content: string, fileType: string) => {
+    const byteCharacters = atob(content);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: fileType });
+    return URL.createObjectURL(blob);
+  };
+
   const renderFiles = () => {
     return (
       <div className={styles.filesContainer}>
         <h2>Files:</h2>
         <ul className={styles.filesList}>
-          {files.map((file, index) => (
-            <li key={index}>
-              <a
-                href={createDownloadUrl(file.file)}
-                download={`file_${file.idFiles}.${getFileExtension(file.file)}`}
-              >
-                File {file.idFiles}
-              </a>
+          {files.map((file) => (
+            <li key={file.idFiles}>
+              {file.fileType.startsWith("image/") ? (
+                <a
+                  href={createDownloadUrl(file.file, file.fileType)}
+                  download={`image_${file.idFiles}`}
+                >
+                  Download Image
+                </a>
+              ) : file.fileType === "application/pdf" ? (
+                <a
+                  href={createDownloadUrl(file.file, file.fileType)}
+                  download={`pdf_${file.idFiles}`}
+                >
+                  Download PDF
+                </a>
+              ) : (
+                <a
+                  href={createDownloadUrl(file.file, file.fileType)}
+                  download={`file_${file.idFiles}`}
+                >
+                  Download File {file.idFiles}
+                </a>
+              )}
             </li>
           ))}
         </ul>
       </div>
     );
-  };
-
-  // Function to create a download URL from file content
-  const createDownloadUrl = (content: string) => {
-    const blob = new Blob([content], { type: "application/octet-stream" });
-    return URL.createObjectURL(blob);
-  };
-
-  // Function to get the file extension
-  const getFileExtension = (fileName: string) => {
-    return fileName.split(".").pop();
   };
 
   return (
@@ -240,11 +248,11 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                       {isEdit ? (
                         <select
                           className={styles.select}
-                          value={incident.status.toString()} // Make sure incident.status is a string
+                          value={incident.status.toString()}
                           onChange={(e) =>
                             setIncident({
                               ...incident,
-                              status: parseInt(e.target.value), // Parse string value to number
+                              status: parseInt(e.target.value),
                             })
                           }
                         >
@@ -311,7 +319,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                             setIncident({
                               ...incident,
                               startDate: e.target.value
-                                ? new Date(e.target.value) // Convert string to Date object
+                                ? new Date(e.target.value)
                                 : null,
                             })
                           }
@@ -347,7 +355,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                             setIncident({
                               ...incident,
                               endDate: e.target.value
-                                ? new Date(e.target.value) // Convert string to Date object
+                                ? new Date(e.target.value)
                                 : null,
                             })
                           }
@@ -400,7 +408,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
           </div>
           {isEdit ? (
             <div className={styles.buttonsContainer}>
-              <button className={styles.buttonSave}>
+              <button className={styles.buttonSave} onClick={updateIncident}>
                 {languageValues.incidents.save}
               </button>
               <button className={styles.buttonCancel} onClick={cancelEdit}>
