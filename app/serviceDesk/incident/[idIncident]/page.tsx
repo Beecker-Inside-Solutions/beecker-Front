@@ -26,6 +26,8 @@ export default function Home({ params }: { params: { idIncident: number } }) {
   const [profileImg, setProfileImg] = useState(logo.src);
   const [isEdit, setIsEdit] = useState(false);
   const [files, setFiles] = useState<IFiles[]>([]);
+  const [fileInputs, setFileInputs] = useState(["file-0"]);
+
   const [incident, setIncident] = useState<IIncidences>({
     idIncident: 0,
     incidentName: "",
@@ -88,6 +90,24 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     getFiles();
   }, [fetchData]);
 
+  const deleteFile = async (idFiles: number) => {
+    try {
+      const response = await fetch(`${apiURL}/files/${idFiles}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        setFiles(files.filter((file) => file.idFiles !== idFiles));
+      } else {
+        console.error("Error deleting file");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const updateIncident = useCallback(async () => {
     try {
       const response = await fetch(
@@ -144,6 +164,18 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     return URL.createObjectURL(blob);
   };
 
+  const addFileInput = () => {
+    if (fileInputs.length < 3) {
+      setFileInputs([...fileInputs, `file-${fileInputs.length}`]);
+    }
+  };
+
+  const removeFileInput = (index: number) => {
+    if (fileInputs.length > 1) {
+      setFileInputs(fileInputs.filter((_, i) => i !== index));
+    }
+  };
+
   const renderFiles = () => {
     const handleDownload = (url: string, fileName: string) => {
       const link = document.createElement("a");
@@ -152,6 +184,36 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    };
+
+    const handleFileChange = async (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const newFile = event.target.files?.[0];
+      if (newFile) {
+        const formData = new FormData();
+        formData.append("file", newFile);
+        try {
+          const response = await fetch(
+            `${apiURL}/files/incidents/${params.idIncident}`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              body: formData,
+            }
+          );
+          if (response.ok) {
+            const newFileData = await response.json();
+            setFiles([...files, newFileData]);
+          } else {
+            console.error("Error uploading file");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
     };
 
     return (
@@ -235,9 +297,47 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                   </div>
                 </button>
               )}
+              {isEdit && (
+                <button
+                  onClick={() => deleteFile(file.idFiles)}
+                  className={styles.deleteButton}
+                  aria-label="Delete file"
+                >
+                  &#10005;
+                </button>
+              )}
             </li>
           ))}
         </ul>
+        {isEdit && (
+          <>
+            {fileInputs.map((input, index) => (
+              <div key={input} className={styles.addFileContainer}>
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className={styles.fileInput}
+                />
+                {index === fileInputs.length - 1 && (
+                  <button
+                    className={styles.addButton}
+                    onClick={() => addFileInput()}
+                  >
+                    Add File
+                  </button>
+                )}
+                {index !== 0 && (
+                  <button
+                    className={styles.removeButton}
+                    onClick={() => removeFileInput(index)}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+          </>
+        )}
       </div>
     );
   };
