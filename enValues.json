@@ -104,7 +104,9 @@
     "failed": "Failed",
     "monthly": "Monthly",
     "weekly": "Weekly",
-    "yearly": "Yearly"
+    "yearly": "Yearly",
+    "costs": "Cost",
+    "revenue": "Revenue"
   },
   "incidents": {
     "addButton": "Add Incident",

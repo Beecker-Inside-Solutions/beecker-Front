@@ -1,58 +1,69 @@
 import { useState, useEffect } from "react";
 import { apiURL } from "@/Constants";
 
-interface ChartData {
-  dataDollars: number[];
-  labelsDollars: string[];
-}
+const dollarsRate = (idBots: number, timeframe: string) => {
+  // State for success labels and data
+  const [clientLineLabelsCosts, setClientLineLabelsSuccess] = useState<
+    string[]
+  >([]);
+  const [clientLineDataCosts, setClientLineDataSuccess] = useState<number[]>(
+    []
+  );
 
-const dollarsRate = (idBots: number, timeframe: string): ChartData => {
-  // Explicitly define the initial state with correct types
-  const [chartData, setChartData] = useState<ChartData>({
-    dataDollars: [],
-    labelsDollars: [],
-  });
+  // State for failure labels and data
+  const [clientLineLabelsRevenue, setClientLineLabelsFailed] = useState<
+    string[]
+  >([]);
+  const [clientLineDataRevenue, setDataRevenue] = useState<number[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await fetch(`${apiURL}/costs/calculate/${idBots}`, {
+        const response = await fetch(`${apiURL}/costs/chart/${idBots}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ timeframe }),
+          body: JSON.stringify({
+            timeframe: timeframe,
+          }),
         });
-
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error("Failed to fetch projects");
         }
+        const data = await response.json();
+        console.log(data);
 
-        const result = await response.json();
-        let avgCost = 0;
-        let avgRevenue = 0;
-
-        // Calculate total average cost and revenue from the result
-        result.forEach((item: any) => {
-          avgCost += item.avgCost;
-          avgRevenue += item.avgRevenue;
-        });
-
-        // Set chart data
-        setChartData({
-          dataDollars: [avgCost, avgRevenue],
-          labelsDollars: ["Average Cost", "Average Revenue"],
-        });
+        // Check if data has necessary properties before setting state
+        if (
+          data &&
+          data.labelsCosts &&
+          data.dataCosts &&
+          data.labelsRevenue &&
+          data.dataRevenue
+        ) {
+          setClientLineLabelsSuccess(data.labelsCosts);
+          setClientLineDataSuccess(data.dataCosts);
+          setClientLineLabelsFailed(data.labelsRevenue);
+          setDataRevenue(data.dataRevenue);
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching projects:", error);
       }
     };
 
     fetchProject();
-  }, [idBots, timeframe]);
+  }, [idBots, timeframe]); // Add all dependencies that can trigger re-fetching the data
 
-  return chartData;
+  return {
+    clientLineLabelsCosts,
+    clientLineDataCosts,
+    clientLineLabelsRevenue,
+    clientLineDataRevenue,
+  };
 };
 
 export default dollarsRate;

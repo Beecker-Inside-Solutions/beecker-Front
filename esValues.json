@@ -105,7 +105,9 @@
     "failed": "Fallidos",
     "monthly": "Mensual",
     "weekly": "Semanal",
-    "yearly": "Anual"
+    "yearly": "Anual",
+    "costs": "Costo",
+    "revenue": "Ingresos"
   },
 
   "charts": {

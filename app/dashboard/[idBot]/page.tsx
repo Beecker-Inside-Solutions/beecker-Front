@@ -215,10 +215,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
     getSelectedTime
   );
 
-  const {
-    dataDollars,
-    labelsDollars,
-  } = dollarsRate(params.idBot, getSelectedTime);
+  const { clientLineLabelsCosts,
+    clientLineDataCosts,
+    clientLineLabelsRevenue,
+    clientLineDataRevenue
+   } = dollarsRate(params.idBot, getSelectedTime);
   /*
         Functions:
       */
@@ -493,14 +494,26 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 />
               </div>
               <div className={styles.graphContainer}>
-                <ChartComponent
-                  data={dataDollars}
-                  labels={labelsSF}
-                  chartType={selectedChart.chartOne as keyof ChartTypeRegistry}
-                  graphTitle={languageValues.dashboard.successFailRate}
-                  fillColor={["#803fe0", "#F44336"]} // green and red
-                  borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
-                  isFilled={true} // if applicable to pie chart, typically not used
+                <DoubleChartComponent
+                  chartType={selectedChart.chartThree as keyof ChartTypeRegistry}
+                  datasets={[
+                    {
+                      label: languageValues.dashboard.costs,
+                      data: clientLineDataCosts,
+                      borderColor: "#6200d1",
+                      backgroundColor: "#803fe0",
+                      fill: false,
+                    },
+                    {
+                      label: languageValues.dashboard.revenue,
+                      data: clientLineDataRevenue,
+                      borderColor: "#e74949",
+                      backgroundColor: "#e74949",
+                      fill: false,
+                    },
+                  ]}
+                  labels={clientLineLabelsCosts}
+                  graphTitle={languageValues.dashboard.botPerformance}
                 />
               </div>
             </div>
