@@ -18,6 +18,7 @@ import Modal from "../../components/ModalComponent/ModalComponent";
 import ExportComponent from "@/app/components/ExportComponent/ExportComponent";
 import IndicatorCheckboxGroup from "../../components/IndicatorsGroupComponent/IndicatorCheckboxGroup";
 import useSuccessAndFailRate from "@/app/hooks/ClientHooks/successAndFailRate/successAndFailRate";
+import dollarsRate from "@/app/hooks/ClientHooks/dollarsRate/dollarsRate";
 import customizeImg from "../../images/icons/settings.png";
 import { ChartTypeRegistry } from "chart.js/auto";
 import { Charts } from "@/app/interfaces/ICharts";
@@ -53,6 +54,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
   // success rate
   const [successRate, setSuccessRate] = useState(0);
   const [successRateProfit, setSuccessRateProfit] = useState(0);
+  const [costsRevenue, setCostsRevenue] = useState(0);
 
   /*
     Modal Hooks:
@@ -163,6 +165,38 @@ export default function Home({ params }: { params: { idBot: number } }) {
     }
   }, [params.idBot, getSelectedTime]);
 
+  const fetchCostsRevenue = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${apiURL}/costs/calculate/${params.idBot}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ timeframe: getSelectedTime }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json();
+
+      // Assuming the response is an array and you want to handle the first element
+      if (result.length > 0) {
+        const avgCost = result[0].avgCost;
+        setCostsRevenue(avgCost);
+      } else {
+        setCostsRevenue(0); // Handle the case where there's no data
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [params.idBot, getSelectedTime]);
+
   /*
         Graph Hooks:
       */
@@ -180,6 +214,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
     params.idBot,
     getSelectedTime
   );
+
+  const {
+    dataDollars,
+    labelsDollars,
+  } = dollarsRate(params.idBot, getSelectedTime);
   /*
         Functions:
       */
@@ -202,11 +241,13 @@ export default function Home({ params }: { params: { idBot: number } }) {
     fetchRoi();
     fetchSavedHours();
     fetchSuccessRate();
+    fetchCostsRevenue();
   }, [
     fetchBotInfo,
     fetchRoi,
     fetchSavedHours,
     fetchSuccessRate,
+    fetchCostsRevenue,
     getSelectedTime,
   ]);
 
@@ -333,7 +374,7 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   <div className={styles.indicatorContainer}>
                     <IndicatorComponent
                       title={languageValues.indicators.dollarsSaved}
-                      value={-1000}
+                      value={costsRevenue}
                       status={true}
                       profitActivator={true}
                       profit={-2}
@@ -451,7 +492,17 @@ export default function Home({ params }: { params: { idBot: number } }) {
                   graphTitle={languageValues.dashboard.botPerformance}
                 />
               </div>
-              <div className={styles.graphContainer}></div>
+              <div className={styles.graphContainer}>
+                <ChartComponent
+                  data={dataDollars}
+                  labels={labelsSF}
+                  chartType={selectedChart.chartOne as keyof ChartTypeRegistry}
+                  graphTitle={languageValues.dashboard.successFailRate}
+                  fillColor={["#803fe0", "#F44336"]} // green and red
+                  borderColor={["#803fe0", "#F44336"]} // same as fillColor for border
+                  isFilled={true} // if applicable to pie chart, typically not used
+                />
+              </div>
             </div>
           </div>
         </main>
