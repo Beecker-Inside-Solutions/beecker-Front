@@ -107,7 +107,10 @@
     "weekly": "Semanal",
     "yearly": "Anual",
     "costs": "Costo",
-    "revenue": "Ingresos"
+    "revenue": "Ingresos",
+    "leftChart": "Gráfico Izquierdo",
+    "middleChart": "Gráfico Central",
+    "rightChart": "Gráfico Derecha"
   },
 
   "charts": {

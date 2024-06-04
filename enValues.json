@@ -106,7 +106,10 @@
     "weekly": "Weekly",
     "yearly": "Yearly",
     "costs": "Cost",
-    "revenue": "Revenue"
+    "revenue": "Revenue",
+    "leftChart": "Left Chart",
+    "middleChart": "Middle Chart",
+    "rightChart": "Right Chart"
   },
   "incidents": {
     "addButton": "Add Incident",

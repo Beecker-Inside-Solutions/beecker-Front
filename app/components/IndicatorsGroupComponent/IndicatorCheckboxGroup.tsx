@@ -11,7 +11,10 @@ interface IndicatorsState {
 }
 
 interface IndicatorCheckboxGroupProps {
-  languageValues: { indicators: { [key: string]: string } };
+  languageValues: {
+    indicators: { [key: string]: string };
+    dashboard: { [key: string]: string };
+  };
   secondLanguageValues: { charts: Charts };
   checkedIndicators: IndicatorsState;
   onToggleCheckbox: (indicator: keyof IndicatorsState) => void;
@@ -49,6 +52,20 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
     onChartTypeChange(selectedType, chartId);
   };
 
+  const getChartPositionText = (chartId: string) => {
+    console.log(`Rendering text for chartId: ${chartId}`); // Debugging
+    switch (chartId) {
+      case "chartOne":
+        return languageValues.dashboard.leftChart;
+      case "chartTwo":
+        return languageValues.dashboard.middleChart;
+      case "chartThree":
+        return languageValues.dashboard.rightChart;
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className={styles.modalContent}>
       <div className={styles.leftContainer}>
@@ -58,13 +75,13 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
         {Object.entries(languageValues.indicators).map(([key, value]) => (
           <div className={styles.itemContainer} key={key}>
             <div className={styles.labelContainer}>
-              <label>{value}</label>
+              <label htmlFor={`checkbox-${key}`}>{value}</label>
             </div>
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
                 className={styles.checkbox}
-                id="checkbox"
+                id={`checkbox-${key}`}
                 checked={checkedIndicators[key as keyof IndicatorsState]}
                 onChange={() => onToggleCheckbox(key as keyof IndicatorsState)}
               />
@@ -80,7 +97,9 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
         {Object.entries(secondLanguageValues.charts).map(
           ([chartId, chartType]) => (
             <div className={styles.selectContainer} key={chartId}>
-              <p className={styles.chartTitle}></p>
+              <p className={styles.chartTitle}>
+                {getChartPositionText(chartId)}
+              </p>
               <select
                 className={styles.select}
                 value={chartType}

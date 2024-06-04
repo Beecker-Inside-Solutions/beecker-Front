@@ -528,6 +528,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 dollarsSaved: languageValues.indicators.dollarsSaved,
                 successRate: languageValues.indicators.successRate,
               },
+              dashboard: {
+                leftChart: languageValues.dashboard.leftChart,
+                rightChart: languageValues.dashboard.rightChart,
+                middleChart: languageValues.dashboard.middleChart,
+              },
             }}
             secondLanguageValues={{
               charts: selectedChart,
