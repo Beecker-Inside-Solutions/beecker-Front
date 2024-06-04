@@ -108,9 +108,9 @@
     "yearly": "Anual",
     "costs": "Costo",
     "revenue": "Ingresos",
-    "leftChart": "Gráfico Izquierdo",
-    "middleChart": "Gráfico Central",
-    "rightChart": "Gráfico Derecha"
+    "leftChart": "Gráfica Izquierda",
+    "middleChart": "Gráfica Central",
+    "rightChart": "Gráfica Derecha"
   },
 
   "charts": {

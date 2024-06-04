@@ -97,22 +97,26 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
         {Object.entries(secondLanguageValues.charts).map(
           ([chartId, chartType]) => (
             <div className={styles.selectContainer} key={chartId}>
-              <p className={styles.chartTitle}>
-                {getChartPositionText(chartId)}
-              </p>
-              <select
-                className={styles.select}
-                value={chartType}
-                onChange={(e) =>
-                  handleChartTypeChange(e, chartId as keyof Charts)
-                }
-              >
-                {validChartTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.chartTitleContainer}>
+                <p className={styles.chartTitle}>
+                  {getChartPositionText(chartId)}
+                </p>
+              </div>
+              <div className={styles.selectWrapper}>
+                <select
+                  className={styles.select}
+                  value={chartType}
+                  onChange={(e) =>
+                    handleChartTypeChange(e, chartId as keyof Charts)
+                  }
+                >
+                  {validChartTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )
         )}

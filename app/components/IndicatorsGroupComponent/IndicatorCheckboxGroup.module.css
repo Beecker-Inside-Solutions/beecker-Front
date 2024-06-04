@@ -117,7 +117,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
 }
 
@@ -132,13 +132,39 @@
   height: 3em;
 }
 
+.chartTitleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 10%;
+  border-left: 3px solid var(--morado-beecker);
+  padding: 1em;
+}
+
+.selectWrapper {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartTitle {
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
 .select {
   width: 100%;
-  height: 5em;
+  height: 3em;
   border-radius: 10px;
   border: 1px solid #e0dfdf;
   background-color: transparent;
   color: #000;
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 @media (max-width: 767px) {
@@ -160,17 +186,7 @@
     height: 10%;
   }
 
-  .itemContainer {
-    height: 90%;
-  }
-
-  .labelContainer {
-    width: 100%;
-    height: 50%;
-  }
-
   .selectContainer {
-    width: 100%;
-    height: 50%;
+    height: 90%;
   }
 }
