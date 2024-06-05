@@ -34,7 +34,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     responsible: "",
     startDate: null,
     endDate: null,
-    projectID: null,
+    Project_idProject: null,
     status: 0,
     description: "",
     progress: null,
@@ -49,6 +49,13 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     { value: 5, label: languageValues.statusTypes.cancelled },
   ];
 
+  const progressOptions = [
+    { value: 0, label: "0%" },
+    { value: 25, label: "25%" },
+    { value: 50, label: "50%" },
+    { value: 75, label: "75%" },
+    { value: 100, label: "100%" },
+  ];
   const onClickEdit = () => setIsEdit(!isEdit);
   const cancelEdit = () => setIsEdit(false);
 
@@ -56,6 +63,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     try {
       const response = await fetch(`${apiURL}/incidents/${params.idIncident}`);
       const data = await response.json();
+      console.log("Incident data", data);
       setIncident(data);
     } catch (error) {
       console.error(error);
@@ -88,6 +96,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     if (storedProfileImg) setProfileImg(storedProfileImg);
     fetchData();
     getFiles();
+    console.log("Project_idProject", incident.Project_idProject);
   }, [fetchData]);
 
   const deleteFile = async (idFiles: number) => {
@@ -107,22 +116,25 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       console.error(error);
     }
   };
-
   const updateIncident = useCallback(async () => {
     try {
-      const response = await fetch(
-        `${apiURL}/files/incidents/${params.idIncident}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(incident),
-        }
-      );
+      const updatedIncident = {
+        ...incident,
+        Project_idProject: incident.Project_idProject,
+      };
+
+      const response = await fetch(`${apiURL}/incidents/${params.idIncident}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(updatedIncident),
+      });
+
       if (response.ok) {
         setIsEdit(false);
+        console.log("Incident updated successfully");
       } else {
         console.error("Error updating incident");
       }
@@ -457,6 +469,36 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                       ) : (
                         <p className={styles.elementText}>
                           {incident.responsible}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.elementContainer}>
+                    <div className={styles.labelContainer}>
+                      <label className={styles.label}>
+                        {languageValues.incidents.progress}: &nbsp;
+                      </label>
+                    </div>
+                    <div className={styles.valueContainer}>
+                      {isEdit ? (
+                        <select
+                          value={incident.progress?.toString() || ""}
+                          onChange={(e) =>
+                            setIncident({
+                              ...incident,
+                              progress: parseInt(e.target.value),
+                            })
+                          }
+                        >
+                          {progressOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <p className={styles.elementText}>
+                          {incident.progress}
                         </p>
                       )}
                     </div>
