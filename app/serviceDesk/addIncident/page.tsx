@@ -129,7 +129,7 @@ export default function Home() {
       endDate: formData.get("endDate")
         ? new Date(formData.get("endDate") as string)
         : null,
-      projectID: formData.get("projects")
+      Project_idProject: formData.get("projects")
         ? Number(formData.get("projects") as string)
         : null,
       status: formData.get("status")
