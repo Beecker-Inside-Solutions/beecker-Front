@@ -45,6 +45,7 @@
   --morado-beecker: #6200d1;
   --gris-oscuro-beecker: #595959;
   --gris-claro-beecker: #f3f3f3;
+  --mainFont: 'Montserrat', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

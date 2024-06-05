@@ -30,10 +30,13 @@
   font-size: 2rem;
   font-weight: 100;
   margin-right: 1rem;
+  font-family: var(--mainFont);
 }
 
 .welcomeText {
   color: var(--rojo-beecker);
+  font-weight: 600;
+  font-family: var(--mainFont);
 }
 
 .bottomContainer {

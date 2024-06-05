@@ -82,6 +82,8 @@
   border-radius: 4px;
   font-size: 1rem;
   margin-right: 1em;
+  font-weight: 600;
+  font-family: var(--mainFont);
 }
 
 .buttonText {
@@ -125,11 +127,15 @@
 
 .incidentTable thead th {
   padding: 1rem;
-  font-weight: 100;
+  font-weight: 600;
+  font-size: 1.2rem;
+  font-family: var(--mainFont);
 }
 .incidentTable tbody {
   display: table-row-group; /* Change display property to table-row-group */
   vertical-align: middle; /* Vertically center content */
+  font-size: 1rem;
+  font-family: var(--mainFont);
 }
 .incidentTable tbody tr {
   border-bottom: 1px solid #803fe0;
@@ -176,6 +182,9 @@
   margin: 0 0.5rem;
   cursor: pointer;
   border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: var(--mainFont);
 }
 
 .pagination button:hover {

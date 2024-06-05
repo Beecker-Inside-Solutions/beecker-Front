@@ -275,7 +275,7 @@ export default function Home() {
                     <td className={styles.endDate}>
                       {parseDate(incident.endDate)}
                     </td>
-                    <td className={styles.progress}>{incident.progress}</td>
+                    <td className={styles.progress}>{incident.progress}%</td>
                     <td className={styles.responsible}>
                       {incident.responsible}
                     </td>
