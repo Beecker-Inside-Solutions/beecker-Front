@@ -11,7 +11,7 @@ import ukIcon from "./app/images/icons/uk.png";
 import serviceDesk from "./app/images/icons/serviceDesk.png";
 import { IDefaultColors } from "./app/interfaces/IDefaultColors";
 
-export const apiURL = "http://beecker-api-app-env.eba-krubzzpe.us-east-1.elasticbeanstalk.com";
+export const apiURL = "https://d0j2wztj69.execute-api.us-east-1.amazonaws.com";
 // export const apiURL = "http://localhost:3001";
 export const languages: ILanguage[] = [
   { value: "en", icon: ukIcon.src, label: "🇬🇧 English" },
