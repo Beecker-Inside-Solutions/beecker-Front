@@ -483,6 +483,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                       {isEdit ? (
                         <select
                           value={incident.progress?.toString() || ""}
+                          className={styles.select}
                           onChange={(e) =>
                             setIncident({
                               ...incident,
@@ -498,7 +499,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                         </select>
                       ) : (
                         <p className={styles.elementText}>
-                          {incident.progress}
+                          {incident.progress}%
                         </p>
                       )}
                     </div>
