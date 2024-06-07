@@ -157,7 +157,7 @@
     "fileRequiredError": "Al menos un archivo es requerido.",
     "fileTooLargeError": "El archivo es demasiado grande. El tamaño máximo permitido es de 3MB.",
     "addFileButton": "Añadir Archivo",
-    "removeFileButton": "Eliminar Archivo",
+    "removeFileButton": "X",
     "file": "Archivo",
     "successMessage": "Incidente añadido exitosamente.",
     "errorSubmittingForm": "Error al añadir el incidente. Por favor, inténtelo de nuevo."
@@ -180,5 +180,12 @@
     "queued": "En Cola",
     "cancelled": "Cancelado",
     "testing": "En Pruebas"
+  },
+
+  "deleteAlert": {
+    "titleDeleteFile": "Eliminar Archivo",
+    "textDeleteFile": "¿Estás seguro de que deseas eliminar este archivo?",
+    "confirmButton": "Eliminar",
+    "cancelButton": "Cancelar"
   }
 }

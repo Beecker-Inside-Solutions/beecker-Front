@@ -15,6 +15,7 @@ import { apiURL } from "@/Constants";
 import { IFiles } from "@/app/interfaces/IFiles";
 import downloadPDFIcon from "../../../images/icons/downloadPDF.png";
 import downloadFileIcon from "../../../images/icons/downloadFile.png";
+import { showConfirmAlert } from "@/app/lib/AlertUtils";
 
 export default function Home({ params }: { params: { idIncident: number } }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -101,17 +102,35 @@ export default function Home({ params }: { params: { idIncident: number } }) {
 
   const deleteFile = async (idFiles: number) => {
     try {
-      const response = await fetch(`${apiURL}/files/${idFiles}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      // Display a confirmation alert
+      showConfirmAlert(
+        languageValues.deleteAlert.titleDeleteFile,
+        languageValues.deleteAlert.textDeleteFile,
+        languageValues.deleteAlert.confirmButton,
+        async () => {
+          // If confirmed, proceed with file deletion
+          try {
+            const response = await fetch(`${apiURL}/files/${idFiles}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            });
+            if (response.ok) {
+              // Update state after successful deletion
+              setFiles(files.filter((file) => file.idFiles !== idFiles));
+            } else {
+              console.error("Error deleting file");
+            }
+          } catch (error) {
+            console.error(error);
+          }
         },
-      });
-      if (response.ok) {
-        setFiles(files.filter((file) => file.idFiles !== idFiles));
-      } else {
-        console.error("Error deleting file");
-      }
+        () => {
+          // If canceled, do nothing
+          console.log("File deletion canceled");
+        }
+      );
     } catch (error) {
       console.error(error);
     }
@@ -312,10 +331,10 @@ export default function Home({ params }: { params: { idIncident: number } }) {
               {isEdit && (
                 <button
                   onClick={() => deleteFile(file.idFiles)}
-                  className={styles.deleteButton}
+                  className={styles.deleteFile}
                   aria-label="Delete file"
                 >
-                  &#10005;
+                  X
                 </button>
               )}
             </li>
@@ -328,14 +347,14 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  className={styles.fileInput}
+                  className={styles.input}
                 />
                 {index === fileInputs.length - 1 && (
                   <button
                     className={styles.addButton}
                     onClick={() => addFileInput()}
                   >
-                    Add File
+                    {languageValues.addIncident.addFileButton}
                   </button>
                 )}
                 {index !== 0 && (
@@ -343,7 +362,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                     className={styles.removeButton}
                     onClick={() => removeFileInput(index)}
                   >
-                    Remove
+                    {languageValues.addIncident.removeFileButton}
                   </button>
                 )}
               </div>

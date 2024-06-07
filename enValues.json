@@ -156,7 +156,7 @@
     "fileRequiredError": "A file is required.",
     "fileTooLargeError": "One or more files exceed the 3MB limit.",
     "addFileButton": "Add File",
-    "removeFileButton": "Remove",
+    "removeFileButton": "X",
     "file": "File",
     "successMessage": "Incident   successfully added.",
     "errorSubmittingForm": "An error occurred while submitting the form."
@@ -179,5 +179,12 @@
     "queued": "Queued",
     "cancelled": "Cancelled",
     "testing": "Testing"
+  },
+
+  "deleteAlert": {
+    "titleDeleteFile": "Delete File",
+    "textDeleteFile": "Are you sure you want to delete this file?",
+    "confirmButton": "Delete",
+    "cancelButton": "Cancel"
   }
 }

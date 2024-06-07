@@ -16,4 +16,5 @@ export interface Values {
   userList: LanguageValues;
   errorsAlerts: LanguageValues;
   statusTypes: LanguageValues;
+  deleteAlert: LanguageValues;
 }
