@@ -33,7 +33,7 @@ export default function Home() {
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
   const [filteredIncidents, setFilteredIncidents] = useState<IIncidences[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const incidentsPerPage = 8;
+  const incidentsPerPage = typeof window !== 'undefined' && window.innerWidth <= 768 ? 4 : 8;
 
   const { user, fetchUserType } = useFetchUserType();
 
@@ -42,13 +42,11 @@ export default function Home() {
     const storedProfileImg = localStorage.getItem("profile_img");
     if (storedUserName) setUserName(storedUserName);
     if (storedProfileImg) setProfileImg(storedProfileImg);
-    //const testData = generateTestData();
-    //setIncidentsData(testData);
     fetchUserType();
     fetchData();
   }, []);
 
-  //Pagination logic
+  // Pagination logic
   const indexOfLastIncident = currentPage * incidentsPerPage;
   const indexOfFirstIncident = indexOfLastIncident - incidentsPerPage;
   const currentIncidents = filteredIncidents.length
