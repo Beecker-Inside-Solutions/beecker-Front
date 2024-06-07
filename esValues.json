@@ -187,5 +187,11 @@
     "textDeleteFile": "¿Estás seguro de que deseas eliminar este archivo?",
     "confirmButton": "Eliminar",
     "cancelButton": "Cancelar"
+  },
+
+  "notifications": {
+    "titleIncident": "Incidente Creado",
+    "message": "Incidente: ",
+    "messageTwo": "se te ha asignado."
   }
 }

@@ -12,7 +12,9 @@ import { IIncidences } from "@/app/interfaces/IIncidences";
 import { Project } from "@/app/interfaces/IProject";
 import { IUser } from "@/app/interfaces/IUser";
 import { showSuccessAlert, showErrorAlert } from "@/app/lib/AlertUtils";
+import { showSuccessToast, showErrorToast } from "@/app/lib/toastUtils";
 import styles from "./page.module.css";
+import { IUserList } from "@/app/interfaces/IIUserList";
 
 export default function Home() {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -103,6 +105,36 @@ export default function Home() {
     }
   };
 
+  const handleAddNotification = async (
+    responsibleUserID: number,
+    data: IIncidences
+  ) => {
+    try {
+      console.log("User: ", responsibleUserID);
+      console.log("Data: ", data);
+      const response = await fetch(`${apiURL}/notifications/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          name: `${languageValues.notifications.titleIncident} `,
+          description: `${data.incidentName} ${languageValues.notifications.messageTwo}`,
+          isActive: true,
+          Users_idUsers: responsibleUserID,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add notification");
+      }
+      showSuccessToast(`⚠️ ${languageValues.notifications.titleIncident}`);
+    } catch (error) {
+      console.error("Error adding notification:", error);
+      showErrorToast("Failed to add notification");
+    }
+  };
+
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -150,6 +182,8 @@ export default function Home() {
       progress: 0,
     };
 
+    //console.log("Data: ",data);
+
     try {
       const response = await fetch(`${apiURL}/incidents`, {
         method: "POST",
@@ -160,15 +194,16 @@ export default function Home() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log(result);
+      console.log("Result", result);
       if (response.ok) {
         showSuccessAlert(
           languageValues.alerts.successAlertTitle,
           languageValues.addIncident.successMessage
         );
         await fetchAddFiles(result.incidentID); // Ensure the correct key name here
+        handleAddNotification(result.responsibleUserID, data);
         form.reset();
-        window.location.href = "/serviceDesk";
+        //window.location.href = "/serviceDesk";
       } else {
         showErrorAlert(
           languageValues.alerts.errorAlertTitle,

@@ -17,4 +17,5 @@ export interface Values {
   errorsAlerts: LanguageValues;
   statusTypes: LanguageValues;
   deleteAlert: LanguageValues;
+  notifications: LanguageValues;
 }
