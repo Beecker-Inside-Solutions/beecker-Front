@@ -99,6 +99,10 @@ export default function Home() {
     }
   };
 
+  const redirectToServiceDesk = () => {
+    window.location.href = "/serviceDesk";
+  }
+
   const removeFileInput = (index: number) => {
     if (fileInputs.length > 1) {
       setFileInputs(fileInputs.filter((_, i) => i !== index));
@@ -198,12 +202,13 @@ export default function Home() {
       if (response.ok) {
         showSuccessAlert(
           languageValues.alerts.successAlertTitle,
-          languageValues.addIncident.successMessage
+          languageValues.addIncident.successMessage,
+          redirectToServiceDesk
+
         );
         await fetchAddFiles(result.incidentID); // Ensure the correct key name here
         handleAddNotification(result.responsibleUserID, data);
-        form.reset();
-        window.location.href = "/serviceDesk";
+        //form.reset();
       } else {
         showErrorAlert(
           languageValues.alerts.errorAlertTitle,
