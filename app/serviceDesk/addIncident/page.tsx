@@ -203,7 +203,7 @@ export default function Home() {
         await fetchAddFiles(result.incidentID); // Ensure the correct key name here
         handleAddNotification(result.responsibleUserID, data);
         form.reset();
-        //window.location.href = "/serviceDesk";
+        window.location.href = "/serviceDesk";
       } else {
         showErrorAlert(
           languageValues.alerts.errorAlertTitle,
