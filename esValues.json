@@ -150,15 +150,18 @@
   "addIncident": {
     "addIncidentHeader": "Información del Incidente",
     "incidentName": "Nombre del Incidente",
-    "file": "Adjuntar Archivo",
     "description": "Descripción",
-    "submitButton": "Agregar Incidente",
+    "submitButton": "Añadir Incidente",
     "cancelButton": "Cancelar",
-    "addFileButton": "Agregar Archivo",
-    "removeFileButton": "X",
-    "noFiles": "No hay archivos seleccionados"
+    "noFiles": "No hay archivos",
+    "fileRequiredError": "Al menos un archivo es requerido.",
+    "fileTooLargeError": "El archivo es demasiado grande. El tamaño máximo permitido es de 3MB.",
+    "addFileButton": "Añadir Archivo",
+    "removeFileButton": "Eliminar Archivo",
+    "file": "Archivo",
+    "successMessage": "Incidente añadido exitosamente.",
+    "errorSubmittingForm": "Error al añadir el incidente. Por favor, inténtelo de nuevo."
   },
-
   "userList": {
     "name": "Nombre",
     "email": "Correo",

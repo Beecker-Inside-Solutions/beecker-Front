@@ -149,13 +149,17 @@
   "addIncident": {
     "addIncidentHeader": "Incident Information",
     "incidentName": "Incident Name",
-    "file": "Add File",
     "description": "Description",
     "submitButton": "Add Incident",
     "cancelButton": "Cancel",
+    "noFiles": "No files added",
+    "fileRequiredError": "A file is required.",
+    "fileTooLargeError": "One or more files exceed the 3MB limit.",
     "addFileButton": "Add File",
-    "removeFileButton": "X",
-    "noFiles": "No files added"
+    "removeFileButton": "Remove",
+    "file": "File",
+    "successMessage": "Incident   successfully added.",
+    "errorSubmittingForm": "An error occurred while submitting the form."
   },
   "userList": {
     "name": "Name",

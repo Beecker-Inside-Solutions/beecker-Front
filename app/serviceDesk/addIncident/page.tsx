@@ -109,14 +109,25 @@ export default function Home() {
     const formData = new FormData(form);
 
     let hasFileAttached = false;
+    let fileTooLarge = false;
+
     fileInputs.forEach((fileInput) => {
-      if (formData.get(fileInput)) {
+      const file = formData.get(fileInput) as File;
+      if (file) {
         hasFileAttached = true;
+        if (file.size > 2 * 1024 * 1024) {
+          fileTooLarge = true;
+        }
       }
     });
 
     if (!hasFileAttached) {
       setFormError(languageValues.addIncident.fileRequiredError);
+      return;
+    }
+
+    if (fileTooLarge) {
+      setFormError(languageValues.addIncident.fileTooLargeError);
       return;
     }
 
@@ -184,14 +195,18 @@ export default function Home() {
     }
 
     const formData = new FormData(form);
-    const files = Array.from(fileInputs).map((fileInput) =>
-      formData.get(fileInput)
+    const files = Array.from(fileInputs).map(
+      (fileInput) => formData.get(fileInput) as File
     );
 
-    const promises = files.map(async (file) => {
+    for (const file of files) {
       if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          continue;
+        }
+
         const data = new FormData();
-        data.append("file", file as File);
+        data.append("file", file);
         data.append("incidentID", incidentId.toString()); // Ensure the correct key name here
 
         try {
@@ -208,9 +223,7 @@ export default function Home() {
           console.error("Error uploading file: ", error);
         }
       }
-    });
-
-    await Promise.all(promises);
+    }
   };
 
   return (
