@@ -53,7 +53,7 @@ export default function Home() {
   const fetchProjects = useCallback(async () => {
     try {
       const response = await fetch(
-        `${apiURL}/projects/user/${localStorage.getItem("userId")}`,
+        `${apiURL}/projects`, ///user/${localStorage.getItem("userId")}
         {
           method: "GET",
           headers: {
