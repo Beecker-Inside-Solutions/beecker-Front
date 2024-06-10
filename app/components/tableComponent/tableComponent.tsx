@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./TableComponent.module.css";
-import { exec } from "child_process";
 
 interface DataProps {
   labels: string[];
@@ -23,15 +22,9 @@ const TableComponent: React.FC<DataProps> = ({
     <table className={styles.table}>
       <thead>
         <tr>
-          <th>
-            {excutionDate}
-          </th>
-          <th>
-            {successCount}
-          </th>
-          <th>
-            {failureCount}
-          </th>
+          <th>{excutionDate}</th>
+          <th>{successCount}</th>
+          <th>{failureCount}</th>
         </tr>
       </thead>
       <tbody>

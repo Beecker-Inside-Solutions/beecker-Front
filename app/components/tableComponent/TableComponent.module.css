@@ -75,3 +75,23 @@
     border-radius: 0;
   }
 }
+
+@media print {
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 12px;
+  }
+
+  .table thead th {
+    font-size: 14px;
+    color: var(--morado-beecker);
+  }
+
+  .table thead {
+    border-radius: 0;
+  }
+}

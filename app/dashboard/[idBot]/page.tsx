@@ -521,7 +521,9 @@ export default function Home({ params }: { params: { idBot: number } }) {
                 />
               </div>
             </div>
-            <div>
+            <div
+            className={styles.tableWrapper}
+            >
               <h2 className={styles.graphTitle}>
                 {languageValues.dashboard.executionTable}
               </h2>
