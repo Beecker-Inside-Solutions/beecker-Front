@@ -197,6 +197,8 @@
   "notifications": {
     "titleIncident": "Incidente Creado",
     "message": "Incidente: ",
-    "messageTwo": "se te ha asignado."
+    "messageTwo": "se te ha asignado.",
+    "changeTitle": "Ha habido un cambio en el incidente: ",
+    "hasUpdated": "ACTUALIZADO"
   }
 }

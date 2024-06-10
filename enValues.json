@@ -195,6 +195,8 @@
   "notifications": {
     "titleIncident": "Incident Notification",
     "message": "Incident:  ",
-    "messageTwo": "has been assigned to you."
+    "messageTwo": "has been assigned to you.",
+    "changeTitle": "There has been a change in the status of the incident: ",
+    "hasUpdated": "UPDATED"
   }
 }

@@ -16,6 +16,8 @@ import { IFiles } from "@/app/interfaces/IFiles";
 import downloadPDFIcon from "../../../images/icons/downloadPDF.png";
 import downloadFileIcon from "../../../images/icons/downloadFile.png";
 import { showConfirmAlert } from "@/app/lib/AlertUtils";
+import { showErrorToast, showSuccessToast } from "@/app/lib/toastUtils";
+import { IUser } from "@/app/interfaces/IUser";
 
 export default function Home({ params }: { params: { idIncident: number } }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
@@ -28,6 +30,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
   const [isEdit, setIsEdit] = useState(false);
   const [files, setFiles] = useState<IFiles[]>([]);
   const [fileInputs, setFileInputs] = useState(["file-0"]);
+  const [responsibles, setResponsibles] = useState([]);
 
   const [incident, setIncident] = useState<IIncidences>({
     idIncident: 0,
@@ -97,7 +100,7 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     if (storedProfileImg) setProfileImg(storedProfileImg);
     fetchData();
     getFiles();
-    console.log("Project_idProject", incident.Project_idProject);
+    fetchResponsibles();
   }, [fetchData]);
 
   const deleteFile = async (idFiles: number) => {
@@ -135,6 +138,53 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       console.error(error);
     }
   };
+  const handleAddNotification = async (
+    responsibleId: number,
+    incidentName: string
+  ) => {
+    try {
+      const response = await fetch(`${apiURL}/notifications/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          name: `${languageValues.notifications.titleIncident} `,
+          description: `${languageValues.notifications.changeTitle} ${incidentName}`,
+          isActive: true,
+          Users_idUsers: responsibleId,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to add notification");
+      }
+      showSuccessToast(`⚠️ ${languageValues.notifications.titleIncident} `);
+    } catch (error) {
+      console.error("Error adding notification:", error);
+      showErrorToast("Failed to add notification");
+    }
+  };
+
+  const fetchResponsibles = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiURL}/users`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      const responsibleFullNames = data.map(
+        (responsible: IUser) => `${responsible.name} ${responsible.lastName}`
+      );
+      setResponsibles(responsibleFullNames);
+    } catch (error) {
+      console.error("Error fetching responsibles: ", error);
+    }
+  }, []);
+
   const updateIncident = useCallback(async () => {
     try {
       const updatedIncident = {
@@ -152,8 +202,12 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       });
 
       if (response.ok) {
+        const responseData = await response.json();
         setIsEdit(false);
-        console.log("Incident updated successfully");
+        handleAddNotification(
+          responseData.responsibleUserID,
+          responseData.incidentName
+        );
       } else {
         console.error("Error updating incident");
       }
@@ -474,17 +528,22 @@ export default function Home({ params }: { params: { idIncident: number } }) {
                     </div>
                     <div className={styles.valueContainer}>
                       {isEdit ? (
-                        <input
-                          type="text"
-                          className={styles.input}
+                        <select
                           value={incident.responsible}
+                          className={styles.select}
                           onChange={(e) =>
                             setIncident({
                               ...incident,
                               responsible: e.target.value,
                             })
                           }
-                        />
+                        >
+                          {responsibles.map((responsible) => (
+                            <option key={responsible} value={responsible}>
+                              {responsible}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         <p className={styles.elementText}>
                           {incident.responsible}
