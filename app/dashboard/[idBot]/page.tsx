@@ -525,9 +525,11 @@ export default function Home({ params }: { params: { idBot: number } }) {
               <h2 className={styles.graphTitle}>
                 {languageValues.dashboard.executionTable}
               </h2>
-              <div className={styles.tableContainer}>
+              <div
+              className={styles.tableContainer}
+              >
                 <TableComponent
-                  labels={clientLineLabelsSuccess} // Assuming labels are the same for both success and failure
+                  labels={clientLineLabelsSuccess}
                   successData={clientLineDataSuccess}
                   failureData={clientLineDataFailed}
                   excutionDate={languageValues.dashboard.executionDate}
