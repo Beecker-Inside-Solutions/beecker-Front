@@ -110,7 +110,12 @@
     "revenue": "Ingresos",
     "leftChart": "Gráfica Izquierda",
     "middleChart": "Gráfica Central",
-    "rightChart": "Gráfica Derecha"
+    "rightChart": "Gráfica Derecha",
+    "costVsRevenue": "Costo vs Ingresos",
+    "executionTable": "Tabla de Ejecuciones",
+    "executionDate": "Fecha de Ejecución",
+    "successCount": "Ejecuciones Correctas",
+    "failCount": "Ejecuciones Fallidas"
   },
 
   "charts": {

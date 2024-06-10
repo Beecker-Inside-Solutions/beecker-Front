@@ -109,7 +109,11 @@
     "revenue": "Revenue",
     "leftChart": "Left Chart",
     "middleChart": "Middle Chart",
-    "rightChart": "Right Chart"
+    "rightChart": "Right Chart",
+    "executionTable": "Execution Table",
+    "executionDate": "Fecha de Ejecución",
+    "successCount": "Ejecuciones Correctas",
+    "failCount": "Ejecuciones Fallidas"
   },
   "incidents": {
     "addButton": "Add Incident",
@@ -137,7 +141,8 @@
     "files": "Files",
     "downloadImage": "Download Image",
     "downloadFile": "Download File",
-    "downloadPDF": "Download PDF"
+    "downloadPDF": "Download PDF",
+    "costVsRevenue": "Cost vs Revenue"
   },
 
   "charts": {

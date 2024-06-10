@@ -23,6 +23,7 @@ import customizeImg from "../../images/icons/settings.png";
 import { ChartTypeRegistry } from "chart.js/auto";
 import { Charts } from "@/app/interfaces/ICharts";
 import { IndicatorsState } from "@/app/interfaces/IIndicatorsState";
+import TableComponent from "@/app/components/tableComponent/tableComponent";
 
 export default function Home({ params }: { params: { idBot: number } }) {
   const [userName, setUserName] = useState("");
@@ -215,11 +216,12 @@ export default function Home({ params }: { params: { idBot: number } }) {
     getSelectedTime
   );
 
-  const { clientLineLabelsCosts,
+  const {
+    clientLineLabelsCosts,
     clientLineDataCosts,
     clientLineLabelsRevenue,
-    clientLineDataRevenue
-   } = dollarsRate(params.idBot, getSelectedTime);
+    clientLineDataRevenue,
+  } = dollarsRate(params.idBot, getSelectedTime);
   /*
         Functions:
       */
@@ -495,7 +497,9 @@ export default function Home({ params }: { params: { idBot: number } }) {
               </div>
               <div className={styles.graphContainer}>
                 <DoubleChartComponent
-                  chartType={selectedChart.chartThree as keyof ChartTypeRegistry}
+                  chartType={
+                    selectedChart.chartThree as keyof ChartTypeRegistry
+                  }
                   datasets={[
                     {
                       label: languageValues.dashboard.costs,
@@ -513,7 +517,22 @@ export default function Home({ params }: { params: { idBot: number } }) {
                     },
                   ]}
                   labels={clientLineLabelsCosts}
-                  graphTitle={languageValues.dashboard.botPerformance}
+                  graphTitle={languageValues.dashboard.costVsRevenue}
+                />
+              </div>
+            </div>
+            <div>
+              <h2 className={styles.graphTitle}>
+                {languageValues.dashboard.executionTable}
+              </h2>
+              <div className={styles.tableContainer}>
+                <TableComponent
+                  labels={clientLineLabelsSuccess} // Assuming labels are the same for both success and failure
+                  successData={clientLineDataSuccess}
+                  failureData={clientLineDataFailed}
+                  excutionDate={languageValues.dashboard.executionDate}
+                  successCount={languageValues.dashboard.successCount}
+                  failureCount={languageValues.dashboard.failCount}
                 />
               </div>
             </div>

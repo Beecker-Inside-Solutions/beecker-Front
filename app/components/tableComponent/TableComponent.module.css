@@ -1,0 +1,21 @@
+/* TableComponent.module.css */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+  font-family: var(--mainFont);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.table thead th {
+  background-color: var(--morado-beecker);
+  font-weight: bold;
+    color: white;
+}
