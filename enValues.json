@@ -111,9 +111,9 @@
     "middleChart": "Middle Chart",
     "rightChart": "Right Chart",
     "executionTable": "Execution Table",
-    "executionDate": "Fecha de Ejecución",
-    "successCount": "Ejecuciones Correctas",
-    "failCount": "Ejecuciones Fallidas"
+    "executionDate": "Date of Execution",
+    "successCount": "Successful Executions",
+    "failCount": "Failed Executions"
   },
   "incidents": {
     "addButton": "Add Incident",

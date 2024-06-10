@@ -159,6 +159,8 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       if (!response.ok) {
         throw new Error("Failed to add notification");
       }
+      console.log("Notification added successfully");
+      console.log("incidentName", incidentName);
       showSuccessToast(`⚠️ ${languageValues.notifications.titleIncident} `);
     } catch (error) {
       console.error("Error adding notification:", error);

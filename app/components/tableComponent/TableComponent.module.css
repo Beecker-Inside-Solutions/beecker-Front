@@ -15,14 +15,47 @@
 }
 
 .table thead {
-  border-radius: 20px;
+  background-color: #6200d1;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  border-top-left-radius: 0.625rem;
+  border-top-right-radius: 0.625rem;
+}
+
+.table thead,
+.table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* even columns width , fix width of table too*/
 }
 
 .table thead th {
-  background-color: var(--morado-beecker);
-  font-weight: bold;
-  color: white;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  font-family: var(--mainFont);
 }
+.table tbody {
+  display: table-row-group; /* Change display property to table-row-group */
+  vertical-align: middle; /* Vertically center content */
+  font-size: 1rem;
+  font-family: var(--mainFont);
+}
+.table tbody tr {
+  border-bottom: 1px solid #803fe0;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none; /* Remove bottom border from last row */
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
 
 @media (max-width: 767px) {
   .table {
