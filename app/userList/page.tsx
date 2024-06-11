@@ -175,6 +175,8 @@ export default function Home() {
                 <SearchComponent
                   onSearch={handleSearch}
                   placeholder={languageValues.userList.searchInput}
+                  searchPlaceholder={languageValues.incidents.searchButton}
+                  clearPlaceholder={languageValues.incidents.clearButton}
                 />
               </div>
               <div className={styles.rightContainer}>

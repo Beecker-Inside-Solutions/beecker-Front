@@ -150,7 +150,9 @@
     "files": "Archivos",
     "downloadImage": "Descargar Imagen",
     "downloadFile": "Descargar Archivo",
-    "downloadPDF": "Descargar PDF"
+    "downloadPDF": "Download PDF",
+    "searchButton": "Buscar",
+    "clearButton": "Limpiar"
   },
   "addIncident": {
     "addIncidentHeader": "Información del Incidente",

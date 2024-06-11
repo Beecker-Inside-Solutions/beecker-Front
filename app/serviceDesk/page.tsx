@@ -33,7 +33,8 @@ export default function Home() {
   const [incidentsData, setIncidentsData] = useState<IIncidences[]>([]);
   const [filteredIncidents, setFilteredIncidents] = useState<IIncidences[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const incidentsPerPage = typeof window !== 'undefined' && window.innerWidth <= 768 ? 4 : 8;
+  const incidentsPerPage =
+    typeof window !== "undefined" && window.innerWidth <= 768 ? 4 : 8;
 
   const { user, fetchUserType } = useFetchUserType();
 
@@ -182,6 +183,8 @@ export default function Home() {
               <SearchComponent
                 onSearch={handleSearch}
                 placeholder={languageValues.incidents.searchInput}
+                searchPlaceholder={languageValues.incidents.searchButton}
+                clearPlaceholder={languageValues.incidents.clearButton}
               />
             </div>
             <div className={styles.rightContainer}>

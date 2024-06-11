@@ -142,7 +142,9 @@
     "files": "Files",
     "downloadImage": "Download Image",
     "downloadFile": "Download File",
-    "downloadPDF": "Download PDF"
+    "downloadPDF": "Download PDF",
+    "searchButton": "Search",
+    "clearButton": "Clear"
   },
 
   "charts": {
