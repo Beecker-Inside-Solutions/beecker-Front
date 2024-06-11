@@ -175,7 +175,10 @@
     "searchInput": "Buscar Usuario",
     "editUser": "Editar Usuario",
     "saveButton": "Guardar",
-    "cancelButton": "Cancelar"
+    "cancelButton": "Cancelar",
+    "administrator": "Administrador",
+    "internal": "Cliente Interno",
+    "external": "Cliente Externo"
   },
 
   "statusTypes": {

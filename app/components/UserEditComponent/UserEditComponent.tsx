@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, ChangeEvent } from "react";
 import { IUserList } from "@/app/interfaces/IIUserList";
 import styles from "./UserEdit.module.css";
 import { apiURL } from "@/Constants";
@@ -15,7 +15,8 @@ const UserList: React.FC<UserListProps> = ({
   Roles_idRole,
 }) => {
   const [userListData, setUserListData] = useState<IUserList[]>([]);
-  const [selectedType, setSelectedType] = useState<number>(1); // Ensure this is a valid and existing role ID.
+  const [selectedType, setSelectedType] = useState<number>(1);
+  const [formData, setFormData] = useState<Partial<IUserList>>({});
 
   const fetchUserList = useCallback(async () => {
     try {
@@ -32,7 +33,8 @@ const UserList: React.FC<UserListProps> = ({
       const data: IUserList[] = await response.json();
       setUserListData(data);
       if (data.length > 0) {
-        setSelectedType(data[0].Roles_idRole); // Set initial role based on the first user data fetched
+        setSelectedType(data[0].Roles_idRole);
+        setFormData(data[0]);
       }
     } catch (error) {
       console.error("Error fetching user list:", error);
@@ -82,7 +84,7 @@ const UserList: React.FC<UserListProps> = ({
           },
           body: JSON.stringify({ email, userTypeId: selectedType }),
         }
-      ); // Further debugging
+      );
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
@@ -97,7 +99,18 @@ const UserList: React.FC<UserListProps> = ({
       showErrorToast("Failed to update user");
     }
   };
-  const handleUserChange = (index: number, changes: Partial<IUserList>) => {
+
+  const handleInputChange = (field: keyof IUserList, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  const handleUserChange = (
+    index: number,
+    changes: Partial<IUserList>
+  ): void => {
     setUserListData((current) =>
       current.map((user, idx) =>
         idx === index ? { ...user, ...changes } : user
@@ -105,42 +118,61 @@ const UserList: React.FC<UserListProps> = ({
     );
   };
 
+  const handleSave = () => {
+    if (formData && userListData.length > 0) {
+      handleUpdateUser({ ...userListData[0], ...formData });
+    }
+  };
+
   return (
     <div className={styles.modalContent}>
       <div className={styles.topContainer}>
         <h2>{languageValues.userList.editUser}</h2>
         <div className={styles.elementContainer}>
-          <label htmlFor="name">{languageValues.userList.name}</label>
-          <p>{userListData[0]?.name}</p>
+          <div className={styles.labelContainer}>
+            <label htmlFor="name">{languageValues.userList.name}:</label>
+          </div>
+          <div className={styles.valueContainer}></div>
+          <p>{formData.name}</p>
         </div>
         <div className={styles.elementContainer}>
-          <label htmlFor="email">{languageValues.userList.email}</label>
-          <input
-            type="text"
-            value={userListData[0]?.email || ""}
-            onChange={(e) => handleUserChange(0, { email: e.target.value })}
-          />
+          <div className={styles.labelContainer}>
+            <label htmlFor="email">{languageValues.userList.email}:</label>
+          </div>
+          <div className={styles.valueContainer}>
+            <input
+              type="text"
+              value={formData.email || ""}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                handleInputChange("email", e.target.value)
+              }
+              className={styles.input}
+            />
+          </div>
         </div>
         <div className={styles.elementContainer}>
-          <label htmlFor="role">{languageValues.userList.role}</label>
-          <select
-            value={selectedType}
-            onChange={(e) => {
-              const newType = parseInt(e.target.value, 10); // Ensure correct parsing
-              setSelectedType(newType);
-            }}
-          >
-            <option value={1}>Administrator</option>
-            <option value={2}>Internal Client</option>
-            <option value={3}>External Client</option>
-          </select>
+          <div className={styles.labelContainer}>
+            <label htmlFor="role">{languageValues.userList.role}:</label>
+          </div>
+          <div className={styles.valueContainer}>
+            <select
+              value={selectedType}
+              onChange={(e) => {
+                const newType = parseInt(e.target.value, 10);
+                setSelectedType(newType);
+                handleInputChange("Roles_idRole", newType);
+              }}
+              className={styles.select}
+            >
+              <option value={1}>{languageValues.userList.administrator}</option>
+              <option value={2}>{languageValues.userList.internal}</option>
+              <option value={3}>{languageValues.userList.external}</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className={styles.bottomContainer}>
-        <button
-          className={styles.buttonSave}
-          onClick={() => userListData[0] && handleUpdateUser(userListData[0])}
-        >
+        <button className={styles.buttonSave} onClick={handleSave}>
           {languageValues.userList.saveButton}
         </button>
       </div>
