@@ -53,7 +53,6 @@ const IndicatorCheckboxGroup: React.FC<IndicatorCheckboxGroupProps> = ({
   };
 
   const getChartPositionText = (chartId: string) => {
-    console.log(`Rendering text for chartId: ${chartId}`); // Debugging
     switch (chartId) {
       case "chartOne":
         return languageValues.dashboard.leftChart;

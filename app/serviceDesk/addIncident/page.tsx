@@ -101,7 +101,7 @@ export default function Home() {
 
   const redirectToServiceDesk = () => {
     window.location.href = "/serviceDesk";
-  }
+  };
 
   const removeFileInput = (index: number) => {
     if (fileInputs.length > 1) {
@@ -114,8 +114,6 @@ export default function Home() {
     data: IIncidences
   ) => {
     try {
-      console.log("User: ", responsibleUserID);
-      console.log("Data: ", data);
       const response = await fetch(`${apiURL}/notifications/add`, {
         method: "POST",
         headers: {
@@ -198,13 +196,11 @@ export default function Home() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log("Result", result);
       if (response.ok) {
         showSuccessAlert(
           languageValues.alerts.successAlertTitle,
           languageValues.addIncident.successMessage,
           redirectToServiceDesk
-
         );
         await fetchAddFiles(result.incidentID); // Ensure the correct key name here
         handleAddNotification(result.responsibleUserID, data);
@@ -258,7 +254,6 @@ export default function Home() {
             body: data,
           });
           const result = await response.json();
-          console.log(result);
         } catch (error) {
           console.error("Error uploading file: ", error);
         }

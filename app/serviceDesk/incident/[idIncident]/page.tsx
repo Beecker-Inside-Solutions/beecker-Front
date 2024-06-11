@@ -67,7 +67,6 @@ export default function Home({ params }: { params: { idIncident: number } }) {
     try {
       const response = await fetch(`${apiURL}/incidents/${params.idIncident}`);
       const data = await response.json();
-      console.log("Incident data", data);
       setIncident(data);
     } catch (error) {
       console.error(error);
@@ -159,8 +158,6 @@ export default function Home({ params }: { params: { idIncident: number } }) {
       if (!response.ok) {
         throw new Error("Failed to add notification");
       }
-      console.log("Notification added successfully");
-      console.log("incidentName", incidentName);
       showSuccessToast(`⚠️ ${languageValues.notifications.titleIncident} `);
     } catch (error) {
       console.error("Error adding notification:", error);
