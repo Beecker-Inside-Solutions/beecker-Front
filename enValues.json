@@ -113,7 +113,8 @@
     "executionTable": "Execution Table",
     "executionDate": "Date of Execution",
     "successCount": "Successful Executions",
-    "failCount": "Failed Executions"
+    "failCount": "Failed Executions",
+    "costVsRevenue": "Cost vs Revenue"
   },
   "incidents": {
     "addButton": "Add Incident",
@@ -141,8 +142,7 @@
     "files": "Files",
     "downloadImage": "Download Image",
     "downloadFile": "Download File",
-    "downloadPDF": "Download PDF",
-    "costVsRevenue": "Cost vs Revenue"
+    "downloadPDF": "Download PDF"
   },
 
   "charts": {
