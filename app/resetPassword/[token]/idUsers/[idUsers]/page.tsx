@@ -12,13 +12,13 @@ import Link from "next/link";
 import { apiURL, routes, regex } from "@/Constants";
 import {
   showSuccessAlert,
-  showWarningAlert,
   showErrorAlert,
+  showInfoAlert,
 } from "../../../../lib/AlertUtils";
 export default function Home({
   params,
 }: {
-  params: { token: string; idUser: number };
+  params: { token: string; idUsers: number };
 }) {
   const { language, setLanguage, languageValues } = useMultilingualValues(
     "en",
@@ -30,8 +30,66 @@ export default function Home({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmitRecovery = (e: any) => {
+  const handleSubmitRecovery = async (e: any) => {
     e.preventDefault();
+    if (validatePassword()) {
+      try {
+        const response = await fetch(`${apiURL}/resetPassword`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: params.token,
+            password,
+            userId: params.idUsers,
+          }),
+        });
+        if (response.ok) {
+          showSuccessAlert(
+            languageValues.recoveryPage.successTitle,
+            languageValues.recoveryPage.success
+          );
+          setRecoverySent(true);
+        } else {
+          const data = await response.json();
+          showErrorAlert(
+            languageValues.recoveryPage.failureTitle,
+            data.message || languageValues.recoveryPage.failure
+          );
+        }
+      } catch (error) {
+        showErrorAlert(
+          languageValues.recoveryPage.errorTitle,
+          languageValues.recoveryPage.error
+        );
+      }
+    }
+  };
+
+  const validatePassword = () => {
+    if (password === "") {
+      showErrorAlert(
+        languageValues.registerPage.passwordEmptyTitle,
+        languageValues.registerPage.passwordEmpty
+      );
+      return false;
+    }
+    if (!regex.password.test(password)) {
+      showErrorAlert(
+        languageValues.registerPage.passwordInvalidTitle,
+        languageValues.registerPage.passwordInvalid
+      );
+      return false;
+    }
+    if (password !== confirmPassword) {
+      showErrorAlert(
+        languageValues.registerPage.passwordsNotMatchTitle,
+        languageValues.registerPage.passwordsNotMatch
+      );
+      return false;
+    }
+    return true;
   };
 
   return (
