@@ -44,7 +44,7 @@ export default function Home() {
         },
         body: JSON.stringify(recoveryData),
       };
-      fetch(`${apiURL}/forgotPassword`, requestData)
+      fetch(`${apiURL}/forgot`, requestData)
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "success") {
