@@ -36,7 +36,10 @@ export default function Home() {
     }else {
       const recoveryData = {
         email: email,
+        languageType: localStorage.getItem("selectedLanguage") || "en",
+        
       };
+      console.log(recoveryData);
       const requestData = {
         method: "POST",
         headers: {
@@ -47,7 +50,7 @@ export default function Home() {
       fetch(`${apiURL}/forgot`, requestData)
         .then((res) => res.json())
         .then((data) => {
-          if (data.status === "success") {
+          if (data.message === "Email sent") {
             showSuccessAlert(
               languageValues.alerts.successAlertTitle,
               languageValues.alerts.recoveryEmailSent,
