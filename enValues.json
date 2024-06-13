@@ -43,7 +43,8 @@
     "invalidEmail": "Invalid email.",
     "emptyFields": "Please fill in all fields.",
     "recoveryEmailSent": "Recovery email sent.",
-    "recoveryEmailFailed": "Recovery email failed. Please try again."
+    "recoveryEmailFailed": "Recovery email failed. Please try again.",
+    "successPassword": "Password successfully changed."
   },
   "loginPage": {
     "loginHeader": "Welcome",

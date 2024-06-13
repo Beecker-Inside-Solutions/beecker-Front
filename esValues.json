@@ -42,7 +42,8 @@
     "invalidEmail": "Correo electrónico inválido.",
     "emptyFields": "Por favor, rellene todos los campos.",
     "recoveryEmailSent": "Correo enviado. Regresando al inicio de sesión.",
-    "recoveryEmailFailed": "Correo no enviado. Por favor, inténtelo de nuevo."
+    "recoveryEmailFailed": "Correo no enviado. Por favor, inténtelo de nuevo.",
+    "successPassword": "Contraseña cambiada exitosamente."
   },
 
   "loginPage": {

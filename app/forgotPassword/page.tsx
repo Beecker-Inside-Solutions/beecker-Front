@@ -37,7 +37,6 @@ export default function Home() {
       const recoveryData = {
         email: email,
         languageType: localStorage.getItem("selectedLanguage") || "en",
-        
       };
       console.log(recoveryData);
       const requestData = {

@@ -47,21 +47,19 @@ export default function Home({
         });
         if (response.ok) {
           showSuccessAlert(
-            languageValues.recoveryPage.successTitle,
-            languageValues.recoveryPage.success
+            languageValues.alerts.successAlertTitle,
+            languageValues.alerts.successPassword
           );
           setRecoverySent(true);
+          window.location.href = "/";
         } else {
           const data = await response.json();
-          showErrorAlert(
-            languageValues.recoveryPage.failureTitle,
-            data.message || languageValues.recoveryPage.failure
-          );
+          showErrorAlert(languageValues.alerts.errorAlertTitle, data.message);
         }
       } catch (error) {
         showErrorAlert(
-          languageValues.recoveryPage.errorTitle,
-          languageValues.recoveryPage.error
+          languageValues.alerts.errorTitle,
+          languageValues.alerts.error
         );
       }
     }
