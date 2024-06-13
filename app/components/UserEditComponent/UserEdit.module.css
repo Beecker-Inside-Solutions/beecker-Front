@@ -88,3 +88,37 @@
   text-align: center;
   cursor: pointer;
 }
+
+@media (max-width: 767px) {
+  .modalContent {
+    padding: 10px;
+  }
+
+  .topContainer h2 {
+    font-size: 1.5rem;
+  }
+
+  .elementContainer {
+    flex-direction: column;
+  }
+
+  .labelContainer {
+    width: 100%;
+  }
+
+  .valueContainer {
+    width: 100%;
+  }
+
+  .select {
+    font-size: 1rem;
+  }
+
+  .input {
+    font-size: 1rem;
+  }
+
+  .buttonSave {
+    font-size: 1rem;
+  }
+}
