@@ -162,7 +162,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 6rem;
+    padding: 2rem;
     min-height: 200vh;
     background-color: #fff;
     color: var(--gris-oscuro-beecker);
@@ -171,6 +171,14 @@
 
   .rightContainer {
     display: none;
+  }
+
+  .formContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .leftContainer {
@@ -197,6 +205,13 @@
     align-items: center;
   }
 
+  .leftFormContainer {
+    height: 50%;
+  }
+
+  .rightFormContainer {
+    height: 50%;
+  }
   .form {
     display: flex;
     flex-direction: column;
