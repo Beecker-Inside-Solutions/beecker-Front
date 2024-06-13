@@ -60,8 +60,8 @@ export default function Home() {
   // Pagination logic
   const indexOfLastUser = currentPage * incidentsPerPage;
   const indexOfFirstUser = indexOfLastUser - incidentsPerPage;
-  const currentUsers = Array.isArray(userListData)
-    ? userListData.slice(indexOfFirstUser, indexOfLastUser)
+  const currentUsers = Array.isArray(filteredUserList)
+    ? filteredUserList.slice(indexOfFirstUser, indexOfLastUser)
     : [];
 
   // Change page
@@ -236,7 +236,11 @@ export default function Home() {
               </table>
               <div className={styles.pagination}>
                 {Array.from(
-                  { length: Math.ceil(userListData.length / incidentsPerPage) },
+                  {
+                    length: Math.ceil(
+                      filteredUserList.length / incidentsPerPage
+                    ),
+                  },
                   (_, i) => (
                     <button key={i} onClick={() => paginate(i + 1)}>
                       {i + 1}
